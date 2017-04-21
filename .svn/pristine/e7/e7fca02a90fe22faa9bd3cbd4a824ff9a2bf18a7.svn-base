@@ -1,0 +1,393 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.AceptacionRNLocal;
+import RN.AceptacionObservacionesRNLocal;
+import RN.PresentacionRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import RN.ProyectoRNbeanLocal;
+
+import entidad.Aceptacion;
+import entidad.AceptacionObservaciones;
+import entidad.Docente;
+import entidad.Estado;
+import entidad.Presentacion;
+import entidad.ProyectoAlumno;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.context.RequestContext;
+import recursos.Util;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@RequestScoped
+public class AceptacionBean {
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+
+    @ManagedProperty("#{listaCalificacionBean}")
+    private ListaCalificacioBean listaCalificacionBean;
+    private Proyecto proyecto;
+    private Aceptacion aceptacion;
+    private Aceptacion acep;
+    private List<ProyectoAlumno> lstProyAlumno;
+    private List<ProyectoDirector> lstProyDirector;
+    private Docente presidente;
+    private Docente vocal1;
+    private Docente vocal2;
+    private Docente suplente1;
+    private Docente suplente2;
+    private AceptacionObservaciones aceptacion_observacion;
+    private Estado estado;
+    private List<Presentacion> lstPresentacion;
+    private final boolean requisito = true;
+    private Long presentacionCodigo;
+    private Presentacion presentacion;
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+
+    @EJB
+    private ProyectoAlumnoRNLocal proy_alumnoRNbeanLocal;
+    @EJB
+    private ProyectoDirectorRNLocal proy_directorRNbeanLocal;
+    @EJB
+    private AceptacionRNLocal aceptacionRNbeanLocal;
+    @EJB
+    private AceptacionObservacionesRNLocal aceptacion_obsRNbeanLocal;
+    @EJB
+    private PresentacionRNLocal presentacionRNbeanLocal;
+
+    /**
+     * Creates a new instance of AceptacionBean
+     */
+    public AceptacionBean() {
+        this.aceptacion = new Aceptacion();
+        this.aceptacion_observacion = new AceptacionObservaciones();
+    }
+
+    public ListaCalificacioBean getListaCalificacionBean() {
+        return listaCalificacionBean;
+    }
+
+    public void setListaCalificacionBean(ListaCalificacioBean listaCalificacionBean) {
+        this.listaCalificacionBean = listaCalificacionBean;
+    }
+
+    public Aceptacion getAceptacion() {
+        return aceptacion;
+    }
+
+    public void setAceptacion(Aceptacion aceptacion) {
+        this.aceptacion = aceptacion;
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public List<ProyectoAlumno> getLstProyAlumno() {
+        return lstProyAlumno;
+    }
+
+    public void setLstProyAlumno(List<ProyectoAlumno> lstProyAlumno) {
+        this.lstProyAlumno = lstProyAlumno;
+    }
+
+    public List<ProyectoDirector> getLstProyDirector() {
+        return lstProyDirector;
+    }
+
+    public void setLstProyDirector(List<ProyectoDirector> lstProyDirector) {
+        this.lstProyDirector = lstProyDirector;
+    }
+
+    public Docente getPresidente() {
+        return presidente;
+    }
+
+    public void setPresidente(Docente presidente) {
+        this.presidente = presidente;
+    }
+
+    public Docente getVocal1() {
+        return vocal1;
+    }
+
+    public void setVocal1(Docente vocal1) {
+        this.vocal1 = vocal1;
+    }
+
+    public Docente getVocal2() {
+        return vocal2;
+    }
+
+    public void setVocal2(Docente vocal2) {
+        this.vocal2 = vocal2;
+    }
+
+    public Docente getSuplente1() {
+        return suplente1;
+    }
+
+    public void setSuplente1(Docente suplente1) {
+        this.suplente1 = suplente1;
+    }
+
+    public Docente getSuplente2() {
+        return suplente2;
+    }
+
+    public void setSuplente2(Docente suplente2) {
+        this.suplente2 = suplente2;
+    }
+
+    public Aceptacion getAcep() {
+        return acep;
+    }
+
+    public void setAcep(Aceptacion acep) {
+        this.acep = acep;
+    }
+
+    public AceptacionObservaciones getAceptacion_observacion() {
+        return aceptacion_observacion;
+    }
+
+    public void setAceptacion_observacion(AceptacionObservaciones aceptacion_observacion) {
+        this.aceptacion_observacion = aceptacion_observacion;
+    }
+
+    public List<Presentacion> getLstPresentacion() {
+        return lstPresentacion;
+    }
+
+    public void setLstPresentacion(List<Presentacion> lstPresentacion) {
+        this.lstPresentacion = lstPresentacion;
+    }
+
+    public Presentacion getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(Presentacion presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public void crear() throws Exception {
+
+        System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa");
+        this.setLstProyAlumno(proy_alumnoRNbeanLocal.findByProyAlumno(proyecto));
+        if (lstProyAlumno == null) {
+            System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+
+        } else {
+            System.out.println(" else llllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+        }
+
+        System.out.println("ahora para el proyecto");
+        this.setLstProyDirector(proy_directorRNbeanLocal.findByProyDirector(proyecto));
+        if (lstProyDirector == null) {
+            System.out.println("h proyecto  no tiene nadallllllllllllllaaaaaaaaaaa" + lstProyDirector + proyecto.getId());
+
+        } else {
+            System.out.println(" si hay un proyecto" + lstProyDirector + proyecto.getId());
+        }
+    }
+
+    public void create() {
+        String sMensaje = "";
+        String sDetalle = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            /*++++++++++++++++++++++++++++++++
+             Cargar los datos correpondientes a la clase aceptacion
+             */
+            acep = new Aceptacion();
+            System.out.println("el docente seleccionado es " + presidente);
+            System.out.println("si pasa x aca chango");
+            System.out.println("si pasa x aca chango" + proyecto.getTitulo());
+            aceptacion.setProyecto(proyecto);
+            aceptacion.setPresidente(presidente.getId());
+            aceptacion.setVocal1(vocal1.getId());
+            aceptacion.setVocal2(vocal2.getId());
+            aceptacion.setSuplente1(suplente1.getId());
+            aceptacion.setSuplente2(suplente2.getId());
+            //consulta que devuelve el codigo de la ultima presentacion que cumple con todos los requisitos del proyecto
+            presentacionCodigo = this.presentacionRNbeanLocal.findPresCodigo(proyecto, requisito);
+            System.out.println("EL CODIGO DE PRESENTACION ES......: " + presentacionCodigo);
+            //consulta que devuelve el registro de presentacion de acuerdo al codigo que me devuelve la consulta anteriro
+            presentacion = this.presentacionRNbeanLocal.findByPresentacion(presentacionCodigo);
+            System.out.println("EL REGISTRO CON EL CODIGO DE PRESENTACION ES::" + presentacion);
+            aceptacion.setPresentacion(presentacion);
+
+            aceptacionRNbeanLocal.create(aceptacion);
+
+            //cargando datos correspondientes a la clase aceptacion_obs
+            acep = this.aceptacionRNbeanLocal.findByAceptacion(aceptacion.getProyecto(), aceptacion.getPresentacion(), aceptacion.getCalificacion());
+            System.out.println("el objeto aceptacion es.............." + acep);
+            aceptacion_observacion.setFecha(aceptacion.getFecha());
+            aceptacion_observacion.setAceptacion(acep);
+            aceptacion_obsRNbeanLocal.create(aceptacion_observacion);
+            System.out.println("el objeto aceptacion es " + acep);
+
+            //si la  calificacion es: APROBADO el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
+            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado")) {
+                //si la  calificacion es: APROBADO el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
+                estado = proyectoRNbeanLocal.findByEstado(2);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("la calificacion seleccionada es  " + aceptacion.getCalificacion().getCalificacion());
+                sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
+
+            }
+            //si la  calificacion es: APROBADO con modificaciones el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
+            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado con modificaciones")) {
+
+                estado = proyectoRNbeanLocal.findByEstado(2);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("la calificacion seleccionada es  " + aceptacion.getCalificacion().getCalificacion());
+                sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
+            }
+            //si la  calificacion es: SE REQUIERE UNA NUEVA PRESENTACION el proyecto cambia el estado a: SE REQUIERE UNA NUEVA PRESENTACION
+
+            if (aceptacion.getCalificacion().getCalificacion().equals("Se requiere una nueva presentacion")) {
+                estado = proyectoRNbeanLocal.findByEstado(3);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("la calificacion seleccionada es " + aceptacion.getCalificacion().getCalificacion());
+                sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
+            }
+            //si la  calificacion es: RECHAZADO el proyecto cambia el estado a: pROYECTO RECHAZADO
+            if (aceptacion.getCalificacion().getCalificacion().equals("Rechazado")) {
+                estado = proyectoRNbeanLocal.findByEstado(7);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("la calificacion seleccionada es  " + aceptacion.getCalificacion().getCalificacion());
+                sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
+            }
+
+            sMensaje = "Aceptacion fue guardado exitosamente";
+
+            severity = FacesMessage.SEVERITY_INFO;
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("dlgAcepProyecto.hide()");
+
+            //pdf
+            //    this.imprimir();
+            //agregar a la lista
+            //limpiar campos
+            // this.limpiar();
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear Aceptacion de proyecto: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, sDetalle);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+            //this.imprimir();
+        }
+    }
+
+    public void imprimir() {
+       /* try {
+            //Generamos el archivo PDF
+            System.out.println("ENTRO AL PDFFFFFFFFFFFFffffFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+            String directorioArchivos;
+            ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+            directorioArchivos = ctx.getRealPath("/") + "reports";
+            String name = directorioArchivos + "/document-report.pdf";
+            System.out.println("------------------------------------" + name);
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(name));
+            document.open();
+            document.add(new Paragraph("FACULTAD DE TECNOLOGIA Y CIENCIAS APLICADAS"));
+            document.add(new Paragraph("DEPARTAMENTO DE SISTEMAS"));
+            document.add(new Paragraph("PROYECTO DE TRABAJO FINAL"));
+            document.add(new Paragraph("Nombre del proyecto: " + proyecto.getTitulo()));  
+            document.addTitle("SIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+
+            //Add Image
+            Image image1 = Image.getInstance("C:\\Users\\RafaTrossero\\Documents\\NetBeansProjects\\tfs\\tfs-war\\web\\Imagenes\\escudo.jpg");
+            //Fixed Positioning
+            image1.setAbsolutePosition(100f, 550f);
+            //Scale to new height and new width of image
+            image1.scaleAbsolute(100, 100);
+            //Add to document
+            document.add(image1);
+
+            document.add(new Paragraph("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"));
+            document.close();
+            System.out.println("PDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" + this.getProyecto());
+            //----------------------------
+            //Abrimos el archivo PDF
+            System.out.println("111111111111111111");
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.setContentType("application/pdf");
+            response.setHeader("Content-disposition",
+                    "inline=filename=" + name);
+            System.out.println("2222222222222222");
+
+            try {
+                response.getOutputStream().write(Util.getBytesFromFile(new File(name)));
+                response.getOutputStream().flush();
+                response.getOutputStream().close();
+                context.responseComplete();
+                System.out.println("33333333333333333333333");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("4444444444444444444");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+    }
+
+}

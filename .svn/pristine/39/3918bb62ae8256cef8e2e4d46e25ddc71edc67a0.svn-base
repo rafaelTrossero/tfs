@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5aab7aa9-58f5-4a5a-a82a-e17706887db3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<subDataset name="alumnoProyecto" uuid="6bf26e09-ab6c-4253-b020-1b5b3516477d">
+		<parameter name="idProyecto" class="java.lang.Long">
+			<defaultValueExpression><![CDATA[$P{idProyecto}]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     apellido ,nombre
+FROM
+     `proyectoalumno` proyectoalumno INNER JOIN `alumno` alumno ON proyectoalumno.`alumno_id` = alumno.`ID`
+     inner join persona on alumno.id=persona.id
+WHERE
+     proyectoalumno.proyecto_id = $P{idProyecto};]]>
+		</queryString>
+		<field name="apellido" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="director" uuid="94ebb07e-19c5-42fb-ad41-5102428061fc">
+		<parameter name="idProyecto" class="java.lang.Long"/>
+		<queryString>
+			<![CDATA[SELECT
+     persona.`apellido`,
+     persona.`nombre`
+FROM
+     `proyectodirector` proyectodirector INNER JOIN `persona` persona ON proyectodirector.`doc_id` = persona.`ID`
+WHERE
+     proyectodirector.proyecto_id = $P{idProyecto}]]>
+		</queryString>
+		<field name="apellido" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="Codirector" uuid="39b5dfad-8662-4ee7-95e6-27be896b7566">
+		<parameter name="idProyecto" class="java.lang.Long"/>
+		<queryString>
+			<![CDATA[SELECT
+     persona.`apellido`,
+     persona.`nombre`
+FROM
+     `proyectocodirector` proyectocodirector INNER JOIN `persona` persona ON proyectocodirector.`profesionla_id` = persona.`ID`
+WHERE
+     proyectocodirector.proyecto_id = $P{idProyecto}]]>
+		</queryString>
+		<field name="apellido" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="asesor" uuid="76aa85fa-8d97-4c52-8a07-b1322b0de3a0">
+		<parameter name="idProyecto" class="java.lang.Long"/>
+		<queryString>
+			<![CDATA[SELECT
+     persona.`apellido`,
+     persona.`nombre`
+FROM
+     `proyectoasesor` proyectoasesor INNER JOIN `persona` persona ON proyectoasesor.`profesional_id` = persona.`ID`
+WHERE
+     proyectoasesor.proyecto_id = $P{idProyecto}]]>
+		</queryString>
+		<field name="apellido" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="idProyecto" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     proyecto.`TITULO` AS proyecto_TITULO,
+     estado.`ESTADO` AS estado_ESTADO
+FROM
+     `proyecto` proyecto INNER JOIN `estado` estado ON proyecto.`estado_id` = estado.`id`
+WHERE
+     proyecto.id = $P{idProyecto}]]>
+	</queryString>
+	<field name="proyecto_TITULO" class="java.lang.String"/>
+	<field name="estado_ESTADO" class="java.lang.String"/>
+	<group name="grupo1">
+		<groupExpression><![CDATA[$F{proyecto_TITULO}]]></groupExpression>
+		<groupHeader>
+			<band height="69">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="0fa6d52e-00eb-4220-b5fd-bb2652dae1e2"/>
+					<text><![CDATA[Alumnos:]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table 8" style="table 8" x="43" y="20" width="360" height="49" uuid="d16e0e2e-bb7e-4b3e-8f48-659241537895"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="alumnoProyecto" uuid="e89016cd-3304-48d2-a3d3-93aa8ecd20f4">
+							<datasetParameter name="idProyecto">
+								<datasetParameterExpression><![CDATA[$P{idProyecto}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="e74c4c71-fd29-49cb-9264-425c5c91f33d">
+							<jr:columnHeader style="table 8_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 8_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 8_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="279e1e49-a001-4ff8-8f8c-12324cb7fb63"/>
+									<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="dcc7e860-3d3c-403c-90e9-9d5f4bdccadf">
+							<jr:columnHeader style="table 8_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 8_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 8_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="34d5343c-0287-4e7e-8822-f9c785f7ebb2"/>
+									<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="director">
+		<groupExpression><![CDATA[$F{proyecto_TITULO}]]></groupExpression>
+		<groupHeader>
+			<band height="70">
+				<staticText>
+					<reportElement x="2" y="1" width="100" height="20" uuid="37e16132-5762-4bd5-8f6f-8e021077354b"/>
+					<text><![CDATA[Director:]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table 9" style="table 9" x="43" y="21" width="360" height="49" uuid="bd4ae286-3327-46fa-b121-40cbc2866513"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="director" uuid="0862472e-64b3-420b-b9d7-244fc0b5ae2a">
+							<datasetParameter name="idProyecto">
+								<datasetParameterExpression><![CDATA[$P{idProyecto}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="67779861-9879-4f73-a8fd-88ff70de8425">
+							<jr:columnHeader style="table 9_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 9_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 9_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="3f7c65b0-0c3b-42b2-a06b-76a7779a4e97"/>
+									<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="e37b2648-ee6d-45e5-b55f-3ca33f82a493">
+							<jr:columnHeader style="table 9_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 9_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 9_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="57411a75-30a5-45d8-8f6a-dc6e01e82e6a"/>
+									<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="codirector">
+		<groupExpression><![CDATA[$F{proyecto_TITULO}]]></groupExpression>
+		<groupHeader>
+			<band height="69">
+				<staticText>
+					<reportElement x="2" y="0" width="100" height="20" uuid="66a3ced0-bc69-4f45-b5e7-01fee2be4c19"/>
+					<text><![CDATA[Codirector:]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table 10" style="table 10" x="43" y="20" width="360" height="49" uuid="47d05145-403a-43d7-a892-48fdf0c9e474"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Codirector" uuid="901b1199-d5d5-4fc5-9d26-1d745ab0c052">
+							<datasetParameter name="idProyecto">
+								<datasetParameterExpression><![CDATA[$P{idProyecto}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="0adbf55e-3080-4fc3-a8a5-ea1a4c8521d8">
+							<jr:columnHeader style="table 10_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 10_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 10_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="d1609c6b-1770-4936-b6d2-d635f0d2c061"/>
+									<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="d16cc2be-ec94-4c25-98d6-a7506102fd23">
+							<jr:columnHeader style="table 10_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 10_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 10_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="b423609e-59e2-44ea-a90f-ee165576d44c"/>
+									<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="asesor">
+		<groupExpression><![CDATA[$F{proyecto_TITULO}]]></groupExpression>
+		<groupHeader>
+			<band height="71">
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="85d78fff-67c5-4ed9-820c-956765644104"/>
+					<text><![CDATA[Asesor:]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table 11" style="table 11" x="43" y="22" width="360" height="49" uuid="883e0f4e-159e-43c2-99ae-0989eed9f832"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="asesor" uuid="ad57a251-5f86-4311-a50d-95098bb9d2b6">
+							<datasetParameter name="idProyecto">
+								<datasetParameterExpression><![CDATA[$P{idProyecto}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="90" uuid="723ea2f7-548c-4055-87dc-81205f2939c6">
+							<jr:columnHeader style="table 11_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 11_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 11_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="0e495565-3748-4b4e-a2e3-28570306d6cb"/>
+									<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="76a83d57-46bb-4249-9b6d-fcff386b1c68">
+							<jr:columnHeader style="table 11_CH" height="0" rowSpan="1"/>
+							<jr:columnFooter style="table 11_CH" height="0" rowSpan="1"/>
+							<jr:detailCell style="table 11_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="b506b454-f262-455c-9bc2-076131cce83a"/>
+									<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<staticText>
+				<reportElement x="146" y="30" width="225" height="20" uuid="9e59b106-19f7-4480-b9c8-3726794215e0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Facultad de Tecnología y Ciencias Aplicadas]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="a90b8978-6eb9-4b1e-b710-0ef924056240"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="125" y="0" width="265" height="20" uuid="57fe4af6-466c-409f-acae-e939ec7c9179"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional de Catamarca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="49" width="555" height="92" uuid="c652cd5a-7e8e-4b41-a53b-c877b937036f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="94" width="553" height="20" uuid="9d16ba37-5545-48a5-bf61-5c744afdf545"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{proyecto_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="146" y="50" width="225" height="29" uuid="e7230189-3e2c-4106-a7e2-521018db6696"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Proyecto Trabajo Final]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="114" width="553" height="20" uuid="14c9cd84-d992-4842-85f8-ed9f374b9ac5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado_ESTADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

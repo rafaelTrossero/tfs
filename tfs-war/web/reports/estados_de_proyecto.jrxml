@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="468" leftMargin="85" rightMargin="42" topMargin="56" bottomMargin="42">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="estado" class="java.lang.String"/>
+	<parameter name="numero_estado" class="java.lang.Integer"/>
+	<parameter name="escudo1" class="java.lang.String"/>
+	<parameter name="escudo2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from proyecto where estado_id= $P{numero_estado}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="active" class="java.lang.Boolean"/>
+	<field name="fecha_ingreso" class="java.sql.Date"/>
+	<field name="ruta" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="carrera_id" class="java.lang.Long"/>
+	<field name="estado_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="133" splitType="Stretch">
+			<staticText>
+				<reportElement x="138" y="38" width="225" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Facultad de Tecnología y Ciencias Aplicadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="78" width="334" height="29"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Proyecto Trabajo Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="18" width="265" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional de Catamarca]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="1" width="84" height="93"/>
+				<imageExpression><![CDATA[$P{escudo1}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="401" y="1" width="67" height="57"/>
+				<imageExpression><![CDATA[$P{escudo2}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="468" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="0" width="467" height="33"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["*  " + $F{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

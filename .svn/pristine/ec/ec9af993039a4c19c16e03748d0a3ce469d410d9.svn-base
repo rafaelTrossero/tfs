@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.ProyectoFacadeLocal;
+import entidad.Estado;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author jorge
+ */
+@Stateless
+public class ProyectoRNbean implements ProyectoRNbeanLocal {
+
+    @EJB
+    private ProyectoFacadeLocal proyectoFacadeLocal;
+
+    @Override
+    public void create(Proyecto proyecto) throws Exception {
+        this.proyectoFacadeLocal.create(proyecto);
+    }
+
+    @Override
+    public void remove(Proyecto proyecto) throws Exception {
+        this.proyectoFacadeLocal.remove(proyecto);
+    }
+
+    @Override
+    public void edit(Proyecto proyecto) throws Exception {
+        this.proyectoFacadeLocal.edit(proyecto);
+        System.out.println("ENTRO AL EDIT DE PROYECTORNBEAN ----" + proyecto.getTitulo());
+    }
+
+    @Override
+    public List<Proyecto> findAll() throws Exception {
+        return (this.proyectoFacadeLocal.findAll());
+    }
+
+    @Override
+    public void activate(Proyecto p, Boolean bEstado) throws Exception {
+        proyectoFacadeLocal.activate(p, bEstado);
+    }
+
+    @Override
+    public Estado findByEstado(Integer estado) throws Exception {
+        return proyectoFacadeLocal.findByEstado(estado);
+    }
+
+    @Override
+    public Proyecto findProyectoName(Proyecto proy) throws Exception {
+        return proyectoFacadeLocal.findProyectoName(proy);
+    }
+
+    @Override
+    public List<Proyecto> findProyByEstado(Integer estado) throws Exception {
+        return proyectoFacadeLocal.findProyByEstado(estado);
+    }
+
+}

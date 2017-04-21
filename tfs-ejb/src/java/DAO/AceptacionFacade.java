@@ -1,0 +1,91 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.Aceptacion;
+import entidad.BorradorEvaluacion;
+import entidad.Calificacion;
+import entidad.Presentacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class AceptacionFacade extends AbstractFacade<Aceptacion> implements AceptacionFacadeLocal {
+    @PersistenceContext(unitName = "tfs-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public AceptacionFacade() {
+        super(Aceptacion.class);
+    }
+
+    @Override
+    public Aceptacion findbyAceptacion(Proyecto proy, Presentacion pres, Calificacion cal) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Aceptacion.findByAceptacion");
+            q.setParameter("proy", proy);
+            q.setParameter("presentacion", pres);
+            q.setParameter("calificacion", cal);
+           
+            return (Aceptacion) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Aceptacion findByProyAceptacion(Proyecto pro, Integer cal) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Aceptacion.findByProyAceptacion");
+            q.setParameter("proy", pro);
+       
+            q.setParameter("calificacion", cal);
+           
+            return (Aceptacion) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+  @Override
+    public Aceptacion findByProyAceptacion1(Proyecto pro) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Aceptacion.findByProyAceptacion1");
+            q.setParameter("proy", pro);
+       
+           
+           
+            return (Aceptacion) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+        @Override
+    public List<Aceptacion> findByAceptacion1(Proyecto pro) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Aceptacion.findByAceptacion1");
+            q.setParameter("proy", pro);
+            
+
+            return (List<Aceptacion>) q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+}

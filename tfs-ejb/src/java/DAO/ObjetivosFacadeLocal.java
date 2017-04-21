@@ -1,0 +1,41 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.Objetivos;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author cristian
+ */
+@Local
+public interface ObjetivosFacadeLocal {
+
+    void create(Objetivos objetivos);
+
+    void edit(Objetivos objetivos);
+
+    void remove(Objetivos objetivos);
+
+    Objetivos find(Object id);
+
+    List<Objetivos> findAll();
+
+    List<Objetivos> findRange(int[] range);
+
+    int count();
+    
+    public List<Objetivos> findObjGeneralByProyectoId (Proyecto proy) throws Exception;
+    
+    public List<Objetivos> findObjEspecificoslByProyectoId (Proyecto proy) throws Exception;
+    
+    List<Objetivos> findAllById(Proyecto proy) throws Exception;;
+    
+}

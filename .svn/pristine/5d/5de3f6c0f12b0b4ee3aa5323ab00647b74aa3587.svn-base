@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dNuevaPresBorrador" 
+                  widgetVar="dlgNuevaPresBorrador" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Nueva Presentacion De Borrador"/>
+            </f:facet>
+
+
+            <p:panel id="display">
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{borradorBean.proyecto.titulo}" />
+
+                            <h:outputLabel value="Carrera: "/>
+                            <h:outputText value="#{borradorBean.proyecto.carrera.carrera}- Plan #{presentacionBean.proyecto.carrera.plan}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{borradorBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{borradorBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentacion: "/>
+                            <h:outputText value="#{borradorBean.proyecto.fecha_ingreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{borradorBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{borradorBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Datos de nueva presentacion de Borrador">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Nota de director: " />
+                            <p:selectBooleanCheckbox value="#{borradorBean.notaDirector}" />
+                            
+                            <h:outputText value="Nota de Codirector : " />
+                            <p:selectBooleanCheckbox value="#{borradorBean.notaCodirector}" />
+
+
+                            <h:outputText value="Fecha de Presentacion: "/>
+                            <p:calendar value="#{borradorBean.borrador.fecha}"
+                                        pattern="dd/MM/yyyy"
+                                        />
+
+                        </h:panelGrid>
+
+                      
+                    </p:tab>               
+
+                </p:accordionPanel>
+
+            </p:panel>  
+
+            <p:growl id="message" showDetail="true"  />
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgNuevaPresBorrador.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction"
+                             value="Guardar " 
+                             actionListener="#{borradorBean.create()}"
+
+                             update=":frmMain: message, display">
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+            <div style="clear: both;"/>
+        </p:dialog>
+        <p:panel   header="Nueva presentacion de Borrador" style="text-align:center;">
+
+            <!--<p:commandButton  value="buscar" 
+                              actionListener="#/{listaProyectoBean.cargar_proyectosByEstado(3)}"
+                              update="somProyecto"/>
+                 !-->
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto" 
+                             converter="ConversorGenerico"
+                             value="#{borradorBean.proyecto}"  
+                             >
+                <f:selectItem itemLabel="Seleccionar.." itemValue="" />
+                <f:selectItems
+                    value="#{listaProyectoBean.lstSIProyectoByEstado}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="dlgNuevaPresBorrador.show()"
+                    update="display"
+                    actionListener="#{borradorBean.crear()}"
+
+                    />
+
+
+
+            </div>
+        </p:panel>
+
+
+    </ui:define>
+
+</ui:composition>

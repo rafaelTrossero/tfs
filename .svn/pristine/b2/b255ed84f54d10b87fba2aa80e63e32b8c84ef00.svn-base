@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <!-- DIALOGO cronograma !-->
+        <p:dialog id="dCronograma" 
+                  widgetVar="dlgCronograma" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Cronograma"/>
+            </f:facet>
+            <p:panel id="pCronograma" style="float:left;">
+                <p:focus context="pCronograma"/> 
+                <h:inputHidden value="#{operacionBean.cronogramaObj.id}"/>
+
+
+
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apCrono" style="width: 600px;">
+
+                    <p:tab title="Información de Actividad">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Descripcon de actividad:"/>
+                            <p:inputText value="#{operacionBean.cronogramaObj.descripcion_act}"
+                                         label="Nombre"
+
+                                         />
+
+                            <h:outputLabel value="Fecha de inicio: " ></h:outputLabel>  
+                            <p:calendar 
+                                value="#{operacionBean.cronogramaObj.fecha_inicio}"  />  
+
+                            <h:outputLabel value="Fecha de fin: " ></h:outputLabel>  
+                            <p:calendar 
+                                value="#{operacionBean.cronogramaObj.fecha_fin}" /> 
+
+                            <h:outputText value="Numero de actividad:"/>
+                            <p:inputText value="#{operacionBean.cronogramaObj.numero}"
+                                         label="dni"
+                                         />
+                          
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+
+
+                <p:commandButton id="btnActiones"
+                                 icon="ui-icon-disk"
+                                 value="modificar" 
+                                 actionListener="#{operacionBean.editCronograma()}" 
+                                 update=":frmMain:dtCronograma,:frmMain:pCronograma, message @this"
+
+                                 >
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgCronograma.hide()"
+                                 update=":frmMain:pCronograma, 
+                                 :frmMain:dtCronograma"
+                                 process="@this"
+                                 /> 
+
+
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+
+        <p:dataTable id="dtCronograma"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaCronogramaBean.lstCronogramaActividad}"
+                     var="crono">
+            <p:column>
+                <p:commandButton id="cbEdit"
+                                 title="Editar"
+                                 update=":frmMain:dCronograma"
+                                 oncomplete="dlgCronograma.show();"
+                                 icon="ui-icon-pencil" 
+
+                                 > 
+                    <f:setPropertyActionListener value="#{crono}" target="#{operacionBean.cronogramaObj}"/>  
+
+                </p:commandButton>
+
+            </p:column>
+
+            <p:column  filterBy="#{crono.descripcion_act}" sortBy="#{crono.descripcion_act}" >
+                <f:facet name="header">
+                    <h:outputText value="Descripción"/>
+                </f:facet>
+                <h:outputText value="#{crono.descripcion_act}"/>
+            </p:column>
+            <p:column  filterBy="#{crono.fecha_inicio}" sortBy="#{crono.fecha_inicio}" >
+                <f:facet name="header">
+                    <h:outputText value="Fecha Inicio"/>
+                </f:facet>
+                <h:outputText value="#{crono.fecha_inicio}"/>
+            </p:column>    
+            <p:column  filterBy="#{crono.fecha_fin}" sortBy="#{crono.fecha_fin}" >
+                <f:facet name="header">
+                    <h:outputText value="Fecha Inicio"/>
+                </f:facet>
+                <h:outputText value="#{crono.fecha_fin}"/>
+            </p:column> 
+            <p:column  filterBy="#{crono.numero}" sortBy="#{crono.numero}" >
+                <f:facet name="header">
+                    <h:outputText value="Numero"/>
+                </f:facet>
+                <h:outputText value="#{crono.numero}"/>
+            </p:column>                
+            <p:column  filterBy="#{crono.cronograma.id}" sortBy="#{crono.cronograma.id}" >
+                <f:facet name="header">
+                    <h:outputText value="Cronograma"/>
+                </f:facet>
+                <h:outputText value="#{crono.cronograma.id}"/>
+            </p:column> 
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

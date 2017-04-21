@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+
+
+        <title>Facelets Template</title>
+        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>
+    </h:head>
+
+    <h:body>
+        <h:form id="frmMain">
+            <div id="top" style="height: 120px; width: 100%; border-bottom: 1px solid #000;">
+                <div id="top_left" style="float: left; width: 150px; height: 100%;" align="center">
+                    <p:graphicImage value="./Imagenes/escudo.jpg" height="80px" width="80px"/>
+                </div>
+                <div id="top_content" style="position: relative; margin-left: 150px; height: 100%" align="center">
+                    <p:graphicImage value="./Imagenes/logo_depto.jpg" height="110px" width="400px"/>
+                </div>
+            </div>
+            <!--<div style="height: 600px; width: 100%;">!-->
+            <div style="float: left; width: 100%; border: 3px solid #000000;">
+                <!--<div id="content" style="position: relative; margin-left: 150px; height: 100%">!-->
+                <p:menubar style="font-size: 13px; width: 99.4%; height: 5%"  >
+                    <p:submenu label="Administración">
+                        <p:submenu label="Lugares">
+                            <p:menuitem value="Paises" action="#{navegarBean.entrarFormPais()}"
+                                        immediate="true" icon="fa fa-arrow-circle-o-right"/>
+                            <p:menuitem value="Provincias" action="#{navegarBean.entrarFormProvincia()}"
+                                        immediate="true" icon="fa fa-arrow-circle-o-right"/>
+                            <p:menuitem value="Departamentos" action="#{navegarBean.entrarFormDepartamento()}"
+                                        immediate="true" icon="fa fa-arrow-circle-o-right"/>
+                            <p:menuitem value="Localidades" action="#{navegarBean.entrarFormLocalidad()}"
+                                        immediate="true" icon="fa fa-arrow-circle-o-right"/>
+                            <p:menuitem value="Barrios" action="#{navegarBean.entrarFormBarrio()}"
+                                        immediate="true" icon="fa fa-arrow-circle-o-right"/>
+                        </p:submenu>
+
+                        <p:menuitem value="Departamentos" action="depto.xhtml?faces-redirect=true"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+                        <p:menuitem value="Carreras" action="#{navegarBean.entrarFormCarrera()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+                        <p:menuitem value="Docentes" action="#{navegarBean.entrarFormDocente()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+                        <p:menuitem value="Alumnos" action="#{navegarBean.entrarFormAlumnos()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+
+                        <p:menuitem value="Profesionales" action="#{navegarBean.entrarFormProfesional()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+                        <p:menuitem value="Comisiones" url="comision.xhtml?faces-redirect=true"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"/>
+
+                    </p:submenu>
+
+                   <p:submenu label="Trabajos Finales">
+                        <p:menuitem value="Alta de proyectos" action="#{navegarBean.entrarFormProyectos()}"
+                                    immediate="true" />
+                        
+                         <p:submenu label="Nueva Presentacion">
+                        <p:menuitem value=" de Proyecto" action="#{navegarBean.entrarFormPresentacion()}"
+                                    immediate="true" />
+                        <p:menuitem value=" de Borrador" action="#{navegarBean.entrarFormNuevaPresentacionBorrador()}"
+                                    immediate="true" />
+                        </p:submenu>
+                        <p:menuitem value="Aceptacion de Proyectos" action="#{navegarBean.entrarFormAceptacion()}"
+                                    immediate="true" />
+                        <p:menuitem value="Asignacion de Comision Evaluadora" action="#{navegarBean.entrarFormAsiganacionComisionEvaluadora()}"
+                                    immediate="true"/>
+
+                        <p:menuitem value="Evaluacion de proyecto" action="#{navegarBean.entrarFormEvaluacion()}"
+                                    immediate="true"/>
+                        <p:menuitem value="Presentacion de modificaciones de Proyectos" action="#{navegarBean.entrarFormPresentacionModificacionesProyecto()}"
+                                    immediate="true"/>
+                        <p:menuitem value="Presentacion de Borradores de Proyectos" action="#{navegarBean.entrarFormBorradoresProyecto()}"
+                                    immediate="true"/>
+                        <p:menuitem value="Evaluacion de Borradores de Proyectos" action="#{navegarBean.entrarFormEvaluacionBorradoresProyecto()}"
+                                    immediate="true"/>
+                        <p:menuitem value="Presentacion de modificaciones de Borrador" action="#{navegarBean.entrarFormPresentacionModificacionesBorrador()}"
+                                    immediate="true"/>
+                        <p:menuitem value="Asentar operaciones de proyecto" action="#{navegarBean.entrarFormAsentarOperacionProyecto()}"
+                                    immediate="true"/>
+
+                         <p:menuitem value="Defensa Final" action="#{navegarBean.entrarFormDefensaFinal()}"
+                                    immediate="true"/>
+                          
+                    </p:submenu>
+                    
+                    <p:menuitem id="closeSesion"
+                                    value="Close Session" 
+                                    action="#{controlSesionBean.cerrarSession()}">
+
+                        </p:menuitem>  
+                    
+                </p:menubar>
+
+                <ui:insert name="content">Content</ui:insert>
+                <!--</div>!-->
+            </div>
+            <div id="bottom" style="float: bottom; border-top: 1px solid #000;">
+                <h:outputText value="Facultad de Tecnología y Ciencias Aplicadas - Universidad Nacional de Catamarca"/>
+            </div>
+        </h:form>
+    </h:body>
+
+</html>
+

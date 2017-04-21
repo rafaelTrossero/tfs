@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.ProyectoDirectorFacadeLocal;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author jorge
+ */
+@Stateless
+public class ProyectoDirectorRN implements ProyectoDirectorRNLocal {
+
+    @EJB
+    private ProyectoDirectorFacadeLocal proy_directorFacadeLocal;
+
+    @Override
+    public void create(ProyectoDirector director) throws Exception {
+        this.proy_directorFacadeLocal.create(director);
+    }
+
+    @Override
+    public void remove(ProyectoDirector director) throws Exception {
+        this.proy_directorFacadeLocal.remove(director);
+    }
+
+    @Override
+    public void edit(ProyectoDirector director) throws Exception {
+        this.proy_directorFacadeLocal.edit(director);
+    }
+
+    @Override
+    public List<ProyectoDirector> findAll() throws Exception {
+        return (this.proy_directorFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    @Override
+    public List<ProyectoDirector> findByProyDirector(Proyecto pro) throws Exception {
+        return (this.proy_directorFacadeLocal.findByProyDirector(pro));
+
+    }
+
+    @Override
+    public ProyectoDirector findProyDirectorActivo(Proyecto pro, boolean activo) throws Exception {
+      return proy_directorFacadeLocal.findProyDirectorActivo(pro, activo);
+    }
+}

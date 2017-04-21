@@ -1,0 +1,138 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- DIALOGO RECIBO -->
+    <h:panelGroup id="dialogoCatedra" >
+
+        <div id="modalCatedra" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-lg" role="document">
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                        <h4 class="modal-title">Cátedra</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div >
+                            <!--
+                            
+                           
+                            -->
+
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <div class="panel panel-default" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">Información de la Cátedra</h4>
+                                            </div>
+                                            <div class="panel-body" >
+                                                <center>
+                                                    <ul class="list-inline">
+
+                                                        <li>Nombre: #{listaCatedraBean.selectedCatedra.nombre}</li>
+                                                        <li>Curso: #{listaCatedraBean.selectedCatedra.curso}</li>
+                                                        <li>Cuatrimestre: #{listaCatedraBean.selectedCatedra.cuatrimetre}</li>
+                                                    </ul>
+                                                </center>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <div class="col-sm-5" style="margin-left: 3%; margin-right: 3%" >
+                                        <div class="panel panel-default"   >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">Horarios</h4>
+                                            </div>
+                                            <table class="table" style="background: #ffffff; font-size: 14px"  >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Día</th>
+                                                        <th>Inicia</th>
+                                                        <th>Finaliza</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#{listaCatedraBean.buscarHorarios()}" var="book" >
+                                                        <tr>
+                                                            <td> #{book.dia}</td>
+                                                            <td>#{book.hora_inicio}</td>
+                                                            <td>#{book.hora_fin}</td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5" style="margin-left:  3%; margin-right: 3%" >
+                                        <div class="panel panel-default" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">Profesores</h4>
+                                            </div>
+
+                                            <table class="table" style="background: #ffffff; font-size: 14px">
+                                                <thead>
+
+                                                    <tr>
+                                                        <th>Apellido y Nombre</th>
+                                                        <th>Cargo</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#/{listaCatedraBean}" var="book" >
+
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-10" style="margin-left:  3%; margin-right: 3%" >
+                                        <div class="panel panel-default" >
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">Contenidos Minimos</h4>
+                                            </div>
+                                            <div class="well">
+                                                <h:outputText value="#{listaCatedraBean.selectedCatedra.contenidos_minimos}" id="apContenidos"/>
+                                                <br></br>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <h:form >
+                                    <ul class="payment-sendbtns">
+
+                                        <h:commandButton value="Descargar programa" action="#{fileDownloadView.downloadFile(listaCatedraBean.selectedCatedra.dias)}"/>
+                                    </ul>
+                                </h:form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </h:panelGroup>
+    <!-- FIN DIALOGO RECIBO -->
+
+</ui:composition>

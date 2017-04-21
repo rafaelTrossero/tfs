@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <style  type="text/css">                 
+                    .colored {
+                    background-color: #c1e2b3;
+                    color: white;
+            </style>
+            
+       <p:dataTable var="cronos" value="#{listaCronogramaBean.cronogramaActividadRNbeanLocal.findByFueraDeFecha()}">
+
+               
+           <p:column headerText="Proyectos con actividades atrasadas #{listaCronogramaBean.cronogramaActividadRNbeanLocal.findByFueraDeFecha().size()}">
+                    <h:outputText value="#{cronos.cronograma.proyecto.titulo}" />
+                </p:column>
+                
+                  <p:column headerText="FUERA DE FECHAAAA">
+                      <p:commandButton actionListener="#{listaCronogramaBean.cargar_Cronograma(cronos.cronograma.proyecto)}"
+                                       action="cronograma.xhtml?faces-redirect=true"
+                                       value="Ver Cronograma" 
+                                        icon="ui-icon-circle-plus" 
+                    />
+                </p:column>
+
+
+            </p:dataTable>
+</h:form>
+    </ui:define>
+
+</ui:composition>

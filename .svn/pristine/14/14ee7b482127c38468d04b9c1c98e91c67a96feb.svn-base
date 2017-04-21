@@ -1,0 +1,121 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.ProfesionalFacadeLocal;
+import entidad.Profesional;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import recursos.cadenas;
+
+/**
+ *
+ * @author jorge
+ */
+@Stateless
+public class ProfesionalRN implements ProfesionalRNLocal {
+private Integer azul;
+    @EJB
+    private ProfesionalFacadeLocal profesionalFacadeLocal;
+
+    @Override
+    public void create(Profesional pro) throws Exception {
+          this.convertir_strings(pro);
+           this.validar(pro, 0);
+        this.profesionalFacadeLocal.create(pro);
+    }
+
+    @Override
+    public void remove(Profesional pro) throws Exception {
+        this.profesionalFacadeLocal.remove(pro);
+    }
+
+    @Override
+    public void edit(Profesional pro) throws Exception {
+        this.profesionalFacadeLocal.edit(pro);
+    }
+
+    @Override
+    public List<Profesional> findAll() throws Exception {
+        return (this.profesionalFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    @Override
+    public Profesional findByDni(Integer dni) throws Exception {
+        return profesionalFacadeLocal.findByDni(dni);
+    }
+
+    @Override
+    public void activate(Profesional profesional, Boolean bEstado) throws Exception {
+
+        profesionalFacadeLocal.activate(profesional, bEstado);
+    }
+    private void convertir_strings(Profesional p) {
+    p.setNombre(cadenas.convertir(p.getNombre()));
+    p.setApellido(cadenas.convertir(p.getApellido()));
+    p.setDomicilio(cadenas.convertir(p.getDomicilio()));
+
+  }
+     private void validar(Profesional p, int op) throws Exception {
+    //verifica si el código es menor o igual a cero
+   
+
+    //verifica si es una línea en blanco
+    if (p.getNombre().trim().length() == 0) {
+      throw new Exception("El nombre del profesional no puede estar vacio");
+    }
+    if(!cadenas.es_letras(p.getNombre())){
+        throw new Exception("El nombre del profesional deben ser caracteres alfabéticos");
+    }
+     if (p.getApellido().trim().length() == 0) {
+      throw new Exception("El apellido del profesional no puede estar vacio");
+    }
+//Valida si contine letras
+    if(!cadenas.es_letras(p.getApellido())){
+        throw new Exception("El nombre del profesional deben ser caracteres alfabéticos");
+    }
+     if (p.getEspecialidad() == null) {
+      throw new Exception("debe seleccionar una especialidad");
+    }
+     if (p.getProfesion()== null) {
+      throw new Exception("debe seleccionar una especialidad");
+    }
+      if(!cadenas.es_numero(p.getMat_profesional().toString())){
+        throw new Exception("el campo matricula profesional debe ser numerico");
+    }
+ 
+//Valida si contine letras
+   
+    
+    if (p.getDomicilio().trim().length() == 0) {
+      throw new Exception("debe ingresar el domicilio");
+    }
+    if(!cadenas.es_letras(p.getDomicilio())){
+        throw new Exception("El del domicilio deben ser alfabeticos");
+    }
+    if (p.getEmail().trim().length() == 0) {
+      throw new Exception("debe ingresar la direccion de mail");
+    }
+    if(!cadenas.es_email(p.getEmail())){
+        throw new Exception("los caracteres ingresados en el mail no son validos");
+    }
+     if (p.getMat_profesional()<= 0) {
+      throw new Exception("la matricula debe  ser mayor o igual a cero");
+    }
+    
+    //verificando duplicados  
+    /*if (paisDAOFacadeLocal.bFindByCodigoPais(p, op)) {
+      throw new Exception("Ya existe un país con ese código");
+    }//fin if
+    if (paisDAOFacadeLocal.bFindByNombrePais(p, op)) {
+      throw new Exception("Ya existe un país con ese nombre");
+    }//fin if
+*/
+  }//fin validar
+}

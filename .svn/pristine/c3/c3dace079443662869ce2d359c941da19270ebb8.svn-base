@@ -1,0 +1,334 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.BorradorRNLocal;
+import RN.PresentacionRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import RN.ProyectoRNbeanLocal;
+import entidad.Borrador;
+import entidad.Estado;
+import entidad.Presentacion;
+import entidad.ProyectoAlumno;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.context.RequestContext;
+
+/**
+ *
+ * @author Trossero
+ */
+@ManagedBean
+@RequestScoped
+public class BorradorBean {
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+     @ManagedProperty("#{navegarBean}")
+    private navegarBean navegarBean;
+
+    private Proyecto proyecto;
+    private Borrador borrador;
+
+    @EJB
+    private PresentacionRNLocal presentacionRNbeanLocal;
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+    @EJB
+    private BorradorRNLocal borradorRNbeanLocal;
+
+    private Estado estado;
+    private boolean notaDirector = false;
+    private boolean notaCodirector = false; 
+    private String notaAceptacion = "0";
+    private String certificadoRegular = "0";
+
+    private CommandButton cbAction;
+
+    private List<ProyectoAlumno> lstProyAlumno;
+    private List<ProyectoDirector> lstProyDirector;
+
+    @EJB
+    private ProyectoAlumnoRNLocal proy_alumnoRNbeanLocal;
+    @EJB
+    private ProyectoDirectorRNLocal proy_directorRNbeanLocal;
+
+    public BorradorBean() {
+        this.borrador = new Borrador();
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public Borrador getBorrador() {
+        return borrador;
+    }
+
+    public void setBorrador(Borrador borrador) {
+        this.borrador = borrador;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public boolean isNotaDirector() {
+        return notaDirector;
+    }
+
+    public void setNotaDirector(boolean notaDirector) {
+        this.notaDirector = notaDirector;
+    }
+
+    public boolean isNotaCodirector() {
+        return notaCodirector;
+    }
+
+    public void setNotaCodirector(boolean notaCodirector) {
+        this.notaCodirector = notaCodirector;
+    }
+
+ 
+
+    public String getNotaAceptacion() {
+        return notaAceptacion;
+    }
+
+    public void setNotaAceptacion(String notaAceptacion) {
+        this.notaAceptacion = notaAceptacion;
+    }
+
+    public String getCertificadoRegular() {
+        return certificadoRegular;
+    }
+
+    public void setCertificadoRegular(String certificadoRegular) {
+        this.certificadoRegular = certificadoRegular;
+    }
+
+    public CommandButton getCbAction() {
+        return cbAction;
+    }
+
+    public void setCbAction(CommandButton cbAction) {
+        this.cbAction = cbAction;
+    }
+
+    public List<ProyectoAlumno> getLstProyAlumno() {
+        return lstProyAlumno;
+    }
+
+    public void setLstProyAlumno(List<ProyectoAlumno> lstProyAlumno) {
+        this.lstProyAlumno = lstProyAlumno;
+    }
+
+    public List<ProyectoDirector> getLstProyDirector() {
+        return lstProyDirector;
+    }
+
+    public void setLstProyDirector(List<ProyectoDirector> lstProyDirector) {
+        this.lstProyDirector = lstProyDirector;
+    }
+
+    public navegarBean getNavegarBean() {
+        return navegarBean;
+    }
+
+    public void setNavegarBean(navegarBean navegarBean) {
+        this.navegarBean = navegarBean;
+    }
+
+    public void limpiar(){
+      this.borrador = new Borrador();
+      this.setNotaDirector(false);
+    }
+    public void crear() throws Exception {
+
+        System.out.println("hoooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa");
+        this.setLstProyAlumno(proy_alumnoRNbeanLocal.findByProyAlumno(proyecto));
+        if (lstProyAlumno == null) {
+            System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+
+        } else {
+            System.out.println(" else llllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+        }
+
+        System.out.println("ahora para el proyecto");
+        this.setLstProyDirector(proy_directorRNbeanLocal.findByProyDirector(proyecto));
+        if (lstProyDirector == null) {
+            System.out.println("h proyecto  no tiene nadallllllllllllllaaaaaaaaaaa" + lstProyDirector + proyecto.getId());
+
+        } else {
+            System.out.println(" si hay un proyecto" + lstProyDirector + proyecto.getId());
+        }
+    }
+
+    public void create() {
+        String sMensaje = "";
+        String sDetalle = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+           
+            borrador.setProyecto(this.proyecto);
+            System.out.println("holaaaaaaaaaaaaaaaa" + this.notaDirector);
+            System.out.println("notaCodirector " + this.notaCodirector);
+            System.out.println("holeeeeeeeeeeeeeee" + this.certificadoRegular);
+            System.out.println("holiiiiiiiiiiiiiii" + this.notaAceptacion);
+
+            System.out.println("assssssssasasasasasas" + borrador.getProyecto().getEstado().getId());
+            
+
+            /* ----------------------------------------------------------
+             Para la presentacion de Borradores de Proyectos
+             ----------------------------------------------------------------*/
+            if ((this.notaDirector==true || this.notaCodirector==true)  && borrador.getProyecto().getEstado().getId().equals(5L) || borrador.getProyecto().getEstado().getId().equals(11L)) {
+
+              
+                //consulta me devuelve el registro del estado igual a 8 "En proceso de revisión de borradores"
+                estado = proyectoRNbeanLocal.findByEstado(8);
+
+                if (borrador.getFecha()!= null){
+                proyecto.setEstado(estado);
+
+                //Realiza el alta en tabla Borrador
+                borrador.setProyecto(this.proyecto);
+                borrador.setNota_director(true);
+                borrador.setNota_codirector(true);// Como notaDirector= 's' . en la tabla pongo un 1
+                System.out.println(":::::::::::::::::::::::::::::::ESTADO:::::" + borrador.getProyecto().getEstado().getId());
+                }
+                borradorRNbeanLocal.create(borrador);
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta asuuuuuuuuuuuuuuuuuuuuuuuuuuu" + borrador.getFecha());
+                 sDetalle="El estado del proyecto es ahora : "+estado.getEstado();
+                  
+            }
+
+            if ((this.notaDirector==false && this.notaCodirector==false) && borrador.getProyecto().getEstado().getId().equals(5L)) {
+
+            
+                //consulta me devuelve el registro del estado igual a 11 "Se requiere una nueva presentación del Borrador"
+                estado = proyectoRNbeanLocal.findByEstado(11);
+                System.out.println("El estado es:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                //Realiza el alta de Borrador
+
+                borrador.setProyecto(proyecto);
+                System.out.println("hasta aca nomaaa 2");
+                borrador.setNota_director(false); // Como notaDirector= 's' . en la tabla pongo un 0
+                borrador.setNota_codirector(false);
+                System.out.println("hasta aca nomaaa 3");
+                borradorRNbeanLocal.create(borrador);
+                System.out.println("hasta aca nomaaa 4");
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                
+                System.out.println("hasta aseeeeeeeeeeeeeeeeeeeeee" + borrador.getFecha());
+                 sDetalle="El estado del proyecto es ahora : "+estado.getEstado();
+            }
+
+            /* ----------------------------------------------------------
+             Para la presentacion de modificaciones de Borradores
+             ----------------------------------------------------------------*/
+            if ((this.notaDirector==true || this.notaCodirector== true) && borrador.getProyecto().getEstado().getId().equals(10L)) {
+
+          
+                //consulta me devuelve el registro del estado igual a 8
+                estado = proyectoRNbeanLocal.findByEstado(8);
+
+                proyecto.setEstado(estado);
+
+                //Realiza el alta de la presentacion
+                borrador.setProyecto(this.proyecto);
+
+                borrador.setNota_director(true);
+                borrador.setNota_codirector(true);
+
+                borradorRNbeanLocal.create(borrador);
+
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + borrador.getFecha());
+                
+                 sDetalle="El estado del proyecto es ahora : "+estado.getEstado();
+
+            }
+
+            if ((this.notaDirector==false && this.notaCodirector==false) && borrador.getProyecto().getEstado().getId().equals(10L)) {
+
+                System.out.println("pasaasasasasasasassa MODIFICACIONESSS!!" + notaDirector);
+             
+                //consulta me devuelve el registro del estado igual a 11
+                estado = proyectoRNbeanLocal.findByEstado(11);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaa :(");
+                //Realiza el alta de la presentacion
+                borrador.setProyecto(this.proyecto);
+                System.out.println("hasta aca nomaaa :(" + proyecto);
+
+                borrador.setNota_director(false);
+                borrador.setNota_codirector(false);
+
+                borradorRNbeanLocal.create(borrador);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + borrador.getFecha());
+                 sDetalle="El estado del proyecto es ahora : "+estado.getEstado();
+
+            }
+            
+            sMensaje = "Borrador fue guardado exitosamente";
+            severity = FacesMessage.SEVERITY_INFO;
+            
+            RequestContext context = RequestContext.getCurrentInstance();
+           context.execute("dlgBorrProyecto.hide()");
+            
+            navegarBean.entrarFormBorradoresProyecto();
+            // context.execute("dlgNuevaPresBorrador.hide()");
+            
+            //limpiar campos
+            this.limpiar();
+
+        } catch (Exception ex) {
+
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error : " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, sDetalle);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }// fin crear
+
+   
+}

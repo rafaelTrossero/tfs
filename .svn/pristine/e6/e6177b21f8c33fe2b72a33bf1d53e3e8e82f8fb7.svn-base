@@ -1,0 +1,186 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.Alumno;
+import entidad.Depto;
+import entidad.Docente;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class DocenteFacade extends AbstractFacade<Docente> implements DocenteFacadeLocal {
+    @PersistenceContext(unitName = "tfs-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public DocenteFacade() {
+        super(Docente.class);
+    }
+
+    @Override
+    public Docente findByDocente(String dni) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Docente.findByDocente");
+
+            q.setParameter("cuil", dni);
+           
+            return (Docente) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+      @Override
+    public void activate(Docente doc, Boolean bEstado) {
+  Query q = em.createNamedQuery("Docente.ActualizarEstado");
+        q.setParameter("active", bEstado);
+        q.setParameter("id", doc.getId());
+        // Query q = em.createQuery("UPDATE Agenda p SET p.habilitado = " + estado + " WHERE p.id = " +  id);    
+         /*q.setParameter("id", id);
+         q.setParameter("estado", estado);  */
+        q.executeUpdate();
+    
+    }
+    
+      @Override
+    public List<Docente> findByDocenteTribunal(long pre, long voc1, long voc2, long sup1, long sup2) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Docente.findByDocenteTribunal");
+
+            q.setParameter("preID", pre);
+            q.setParameter("voc1ID", voc1);
+            q.setParameter("voc2ID", voc2);
+            q.setParameter("sup1ID", sup1);
+            q.setParameter("sup2ID", sup2);
+           
+            return (List<Docente>) q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public Docente findById(Long id) throws Exception {
+        try {
+            Query q = em.createNamedQuery("Docente.findById");
+
+            q.setParameter("id", id);
+           
+            return (Docente) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Docente> findAllActivo() {
+             try {
+            Query q = em.createNamedQuery("Docente.SelectAll");
+
+            q.setParameter("active", true);
+
+            return (List<Docente>) q.getResultList();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean findByCuil(String cuil) throws Exception {
+       
+            
+        
+        Query q = em.createNamedQuery("Docente.findByCuil");
+
+            q.setParameter("cuil", cuil);
+           
+               
+        try {
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean bFindByDniDocente(Docente p, int op) throws Exception {
+       
+        Query q = null;
+
+        if (op == 0) {
+            //guardar
+            q = em.createNamedQuery("Docente.findByDocente");
+
+        } else {
+            //modificar
+            q = em.createNamedQuery("Docente.findByCuilID");
+            q.setParameter("id", p.getId());
+
+        }//fin if
+
+        q.setParameter("cuil", p.getCuil());
+        try {
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Docente> SeleccionarTodo() throws Exception {
+        try {
+            Query q = em.createNamedQuery("Docente.SeleccionarTodo");
+
+
+            return (List<Docente>) q.getResultList();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    }
+     
+/*
+public Boolean bFindByCodigoPais(Pais p, int op) throws Exception {
+        Query q = null;
+
+        if (op == 0) {
+            //guardar
+            q = em.createNamedQuery("Pais.findByCodigoPais");
+
+        } else {
+            //modificar
+            q = em.createNamedQuery("Pais.findByCodigoPaisID");
+            q.setParameter("id", p.getId());
+
+        }//fin if
+
+        q.setParameter("codigo", p.getCodigo());
+
+        try {
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+    }
+*/

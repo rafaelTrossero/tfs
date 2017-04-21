@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <p:dialog id="dProyectosCarrera" 
+                  widgetVar="dlgProyectosCarrera" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Cantidad de proyectos por carrera"/>
+            </f:facet>
+
+
+
+
+            <p:panel id="display">
+                <p:accordionPanel  style="width: 1200px;" id="accordionPanelId" widgetVar="accordionPanelWidget" >
+                    <p:tab  closable="true" title="Proyectos por carrera" >
+                    <p:dataTable id="dtProyecto"
+                                 paginator="true"
+                                 rows="50"
+                                 scrollable="true"
+                                 value="#{listaProyectoBean.lstProyectoCarrera}"
+                                 var="proy"
+                                 >
+
+
+
+
+
+                        <p:column filterBy="#{proy.titulo}" sortBy="#{proy.titulo}" >
+                            <f:facet name="header">
+                                <h:outputText value="Título"/>
+                            </f:facet>               
+                            <h:outputText value="#{proy.titulo}"/>
+
+                        </p:column>
+
+                        <p:column filterBy="#{proy.fecha_ingreso}" sortBy="#{proy.fecha_ingreso}">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha de Ingreso" />
+                            </f:facet>               
+                            <h:outputText value="#{proy.fecha_ingreso}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column filterBy="#{proy.estado.estado}" sortBy="#{proy.estado.estado}">
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>               
+                            <h:outputText value="#{proy.estado.estado}"/>
+
+                        </p:column>
+
+                 
+
+
+
+                    </p:dataTable>
+                        </p:tab>
+
+                </p:accordionPanel>
+
+
+
+
+            </p:panel>    
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+                <p:growl id="message" showDetail="true"   />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 actionListener="#/{aceptacionBean.create()}" 
+                                 icon="ui-icon-disk"
+                                 update=":frmMain: message, display">
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert"  />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   >
+                    <p:commandButton  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="PF('dlgProyectosCarrera').hide()"
+                                 icon="ui-icon-close"
+                                 process="@this"
+                                 />
+                <h:commandButton    actionListener="#{proyectoBean.generar('proyecto_carrera.jasper', null, null, 3, null ,null, proyectosCarreraBean.carrera, null, null)}"
+                                    onclick="this.form.target = '_blank'"
+                                    onblur="this.form.target = '_self'"
+
+                                    value="Ver PDF"
+                             
+                              />
+
+               
+
+                <div style="clear: both;"/>
+
+                <div>
+                    <p:messages autoUpdate="true"/>
+                </div>
+
+
+                <div style="clear: both;"/>
+            </div>
+
+        </p:dialog>
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+
+        <p:panel   header="Proyectos por carrera" style="text-align:center;">
+
+            <h:outputText value="Carrera:  "/>
+            <p:selectOneMenu id="somCarrera"
+                             converter="ConversorGenerico"
+                             value="#{proyectosCarreraBean.carrera}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaCarreraBean.lstSICarreraActiva}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgProyectosCarrera').show()"
+                    update="display"
+                    actionListener="#{proyectosCarreraBean.crear()}"
+
+                    />
+
+
+
+
+            </div>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

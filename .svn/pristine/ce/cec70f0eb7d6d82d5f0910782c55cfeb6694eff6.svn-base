@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import entidad.Comision;
+import entidad.DocenteComision;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author cristian
+ */
+@Local
+public interface DocenteComisionRNLocal {
+     void create(DocenteComision p) throws Exception;
+
+    void remove(DocenteComision p) throws Exception;
+
+    void edit(DocenteComision p) throws Exception;
+
+    List<DocenteComision> findAll() throws Exception;
+    
+    
+    public DocenteComision findByDocente(DocenteComision doc) throws Exception;
+    
+    public Comision findByIdDocente (long idDoc) throws Exception;
+}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{sub_report1}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Docente" class="java.lang.Long"/>
+	<parameter name="nombre_docente" class="java.lang.String"/>
+	<parameter name="escudo1" class="java.lang.String"/>
+	<parameter name="escudo2" class="java.lang.String"/>
+	<parameter name="sub_report1" class="java.lang.String"/>
+	<parameter name="sub_report2" class="java.lang.String"/>
+	<parameter name="sub_report3" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="159" splitType="Stretch">
+			<staticText>
+				<reportElement x="93" y="40" width="370" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Facultad de Tecnología y Ciencias Aplicadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="12" width="345" height="28"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional de Catamarca]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="3" width="90" height="106"/>
+				<imageExpression><![CDATA[$P{escudo1}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="473" y="4" width="80" height="80"/>
+				<imageExpression><![CDATA[$P{escudo2}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="117" width="128" height="20"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[El/La docente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="128" y="117" width="401" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_docente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="68" width="225" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Proyectos  por Docente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="138" width="325" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Se encuentra afectado en los siguientes proyectos:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="372" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="3" y="0" width="550" height="71"/>
+				<subreportParameter name="docente">
+					<subreportParameterExpression><![CDATA[$P{Docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "proyecto_como_director.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="4" y="78" width="549" height="74"/>
+				<subreportParameter name="docente">
+					<subreportParameterExpression><![CDATA[$P{Docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "proyecto_como_codirector.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="4" y="161" width="549" height="71"/>
+				<subreportParameter name="docente">
+					<subreportParameterExpression><![CDATA[$P{Docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "proyecto_como_asesor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch"/>
+	</detail>
+</jasperReport>

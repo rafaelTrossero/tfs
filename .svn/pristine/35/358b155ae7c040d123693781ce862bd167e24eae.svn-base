@@ -1,0 +1,368 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.DocenteComisionRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import RN.ProyectoAsesorRNLocal;
+import RN.ProyectoCodirectorRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import entidad.CronogramaActividad;
+import entidad.Docente;
+import entidad.Proyecto;
+import entidad.ProyectoAlumno;
+import entidad.ProyectoAsesor;
+import entidad.ProyectoCodirector;
+import entidad.ProyectoDirector;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@ManagedBean
+@SessionScoped
+public class EnvioMailsBean {
+
+    /**
+     * Creates a new instance of EnvioMailsBean
+     */
+    @EJB
+    private DocenteComisionRNLocal DocenteComisionRNbeanLocal;
+    
+    @EJB
+    private ProyectoAlumnoRNLocal proyAluRNLocal;
+    
+    @EJB
+    private ProyectoAsesorRNLocal proyAsesRNLocal;
+    
+    @EJB
+    private ProyectoCodirectorRNLocal proyCodRNLocal;
+    
+    @EJB
+    private ProyectoDirectorRNLocal proyDirRNLocal;
+    
+    
+    private List<Docente> comisionSeg;
+    private Docente docComisionSeg;
+    private List<String> mails;
+    
+    private List<ProyectoAlumno> proyAlu;
+    private List<ProyectoAsesor> proyAse;
+    private List<ProyectoCodirector> proyCod;
+    private ProyectoDirector proyDir;
+    private String correos;
+    private Date fechaActual;
+    
+    public EnvioMailsBean() {
+       
+
+        this.proyAlu = new ArrayList<ProyectoAlumno>();
+        this.proyDir = new ProyectoDirector();
+        this.proyAse = new ArrayList<ProyectoAsesor>();
+        this.proyCod = new ArrayList<ProyectoCodirector>();
+        mails = new ArrayList<String>();
+        this.docComisionSeg = new Docente();
+        correos = new String();
+    }
+
+    public List<Docente> getComisionSeg() {
+        return comisionSeg;
+    }
+
+    public void setComisionSeg(List<Docente> comisionSeg) {
+        this.comisionSeg = comisionSeg;
+    }
+
+    public ProyectoDirectorRNLocal getProyDirRNLocal() {
+        return proyDirRNLocal;
+    }
+
+    public void setProyDirRNLocal(ProyectoDirectorRNLocal proyDirRNLocal) {
+        this.proyDirRNLocal = proyDirRNLocal;
+    }
+
+    public Docente getDocComisionSeg() {
+        return docComisionSeg;
+    }
+
+    public void setDocComisionSeg(Docente docComisionSeg) {
+        this.docComisionSeg = docComisionSeg;
+    }
+
+    public List<String> getMails() {
+        return mails;
+    }
+
+    public void setMails(List<String> mails) {
+        this.mails = mails;
+    }
+
+    public List<ProyectoAlumno> getProyAlu() {
+        return proyAlu;
+    }
+
+    public void setProyAlu(List<ProyectoAlumno> proyAlu) {
+        this.proyAlu = proyAlu;
+    }
+
+    public List<ProyectoAsesor> getProyAse() {
+        return proyAse;
+    }
+
+    public void setProyAse(List<ProyectoAsesor> proyAse) {
+        this.proyAse = proyAse;
+    }
+
+    public List<ProyectoCodirector> getProyCod() {
+        return proyCod;
+    }
+
+    public void setProyCod(List<ProyectoCodirector> proyCod) {
+        this.proyCod = proyCod;
+    }
+
+    public ProyectoDirector getProyDir() {
+        return proyDir;
+    }
+
+    public void setProyDir(ProyectoDirector proyDir) {
+        this.proyDir = proyDir;
+    }
+
+    public String getCorreos() {
+        return correos;
+    }
+
+    public void setCorreos(String correos) {
+        this.correos = correos;
+    }
+     public Date getFechaActual() {
+        return fechaActual;
+    }
+
+    public void setFechaActual(Date fechaActual) {
+        this.fechaActual = Date.from(Instant.now());
+    }
+    public void ReporteCambioDeEstado(Proyecto pro){
+        
+        try {
+
+            /*
+            Buscar comision de seguimiento
+            */
+            System.out.println("++++++++++++ENTRO A REPORTE CAMBIO DE ESTADOOOOOOOO++++++");
+            try {
+                this.setComisionSeg(this.DocenteComisionRNbeanLocal.findDocentesbyComision(1));
+            } catch (Exception ex) {
+                Logger.getLogger(ListaCronogramaBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("LA COMISION ES ###############" +comisionSeg);
+            /*
+            Recuperar mail de docentes de la comision de seguimiento
+            */
+            Iterator<Docente> mailDoc = comisionSeg.iterator();
+            
+            while (mailDoc.hasNext()) {
+                docComisionSeg = mailDoc.next();
+                this.mails.add(docComisionSeg.getEmail());
+            }
+            
+            /*
+            Recuperar mail de alumnos del proyecto
+            */
+            this.setProyAlu(this.proyAluRNLocal.findByProyAlumno(pro));
+            
+            Iterator<ProyectoAlumno> mailAlu = proyAlu.iterator();
+            
+            while (mailAlu.hasNext()) {
+               
+                ProyectoAlumno aluProyecto = mailAlu.next();
+               
+                this.mails.add(aluProyecto.getAlumno().getEmail());
+            }
+            
+            /*
+            Recuperar mail de direcotr del proyecto
+            */
+            this.setProyDir(this.proyDirRNLocal.findProyDirectorActivo(pro, true));
+            
+                this.mails.add(proyDir.getDocente().getEmail());
+            
+            /*
+            Recuperar mail de Co-direcotr del proyecto
+            */
+                 this.setProyCod(this.proyCodRNLocal.findByProyCodirector(pro, true));
+            
+            Iterator<ProyectoCodirector> mailCod = proyCod.iterator();
+            
+            while (mailCod.hasNext()) {
+               
+                ProyectoCodirector codProyecto = mailCod.next();
+               
+                this.mails.add(codProyecto.getProfesional().getEmail());
+            }
+            
+            /*
+            Recuperar mail de asesores del proyecto
+            */
+             this.setProyAse(this.proyAsesRNLocal.findByProyAsesor(pro, true));
+            
+            Iterator<ProyectoAsesor> mailAse = proyAse.iterator();
+            
+            while (mailAse.hasNext()) {
+               
+                ProyectoAsesor aseProyecto = mailAse.next();
+               
+                this.mails.add(aseProyecto.getProfesional().getEmail());
+            }
+            
+            System.out.println("LOS MAILS SOOON!!!! --->" +mails + pro.getEstado().getEstado());
+            System.out.println("LOS MAILS CON EL toString() SOOON!!!! --->" +mails.toString());
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(EnvioMailsBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             
+          try {
+            // Propiedades de la conexión
+            System.out.println("DURANTE de enviar mail");
+
+            Properties props = new Properties();
+            props.setProperty("mail.smtp.host", "smtp.gmail.com");
+            props.setProperty("mail.smtp.starttls.enable", "true");
+            props.setProperty("mail.smtp.port", "587");
+            props.setProperty("mail.smtp.user", "departamentoinformaticaunca@gmail.com");
+            props.setProperty("mail.smtp.auth", "true");
+
+            // Preparamos la sesion
+            Session session = Session.getDefaultInstance(props);
+
+            // Construimos el mensaje
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("departamentoinformaticaunca@gmail.com"));
+        
+            System.out.println("POR ENTRAR A CARGAR LOS MAILS!!!"+mails.size());
+            for(int i=0;i<mails.size();i++){
+                System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii!!!"+i);
+                correos = correos.concat(mails.get(i));
+              
+                 System.out.println("ENTRO A CARGAR LOS MAILS!!!"+mails.get(i));
+                 if(i!= mails.size()-1){
+                 correos= correos.concat(", ");
+                 }
+                  System.out.println("LOS MAILS SONNNN!!!"+correos);
+            }
+             message.addRecipients(Message.RecipientType.TO, correos);
+            
+            message.setSubject("Departamento Informatica");
+            message.setText("Hola le informamamos que el proyecto "+pro.getTitulo()+ " del cual forma parte ha cambiado su estado a: "+pro.getEstado().getEstado());
+
+            // Lo enviamos.
+            Transport t = session.getTransport("smtp");
+            t.connect("departamentoinformaticaunca@gmail.com", "LabUnca2011");
+            t.sendMessage(message, message.getAllRecipients());
+
+            // Cierre.
+            t.close();
+           
+        }   catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("DESPUES de enviar mail");
+              
+    }
+    
+    public void NotificarRetrasoActividad(CronogramaActividad crono) {
+        setFechaActual(Date.from(Instant.EPOCH));
+          System.out.println("++++++++++++ENTRO A NOTIFICAR RETRASO++++++"+this.fechaActual.getTime());
+          
+          System.out.println("++++++++++++ENTRO A NOTIFICAR RETRASO++++++"+crono.getFecha_fin().getTime());
+         
+         int diferencia = (int) (this.fechaActual.getTime() - crono.getFecha_fin().getTime());
+        try {
+            this.setComisionSeg(this.DocenteComisionRNbeanLocal.findDocentesbyComision(1));
+        } catch (Exception ex) {
+            Logger.getLogger(ListaCronogramaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaa" +crono.getFecha_fin());
+        System.out.println("LA COMISION ES ###############" +comisionSeg);
+           /*
+                Recuperar mail de docentes de la comision de seguimiento
+                */
+                Iterator<Docente> mailDoc = comisionSeg.iterator();
+               
+                while (mailDoc.hasNext()) {
+                    docComisionSeg = mailDoc.next();
+                    this.mails.add(docComisionSeg.getEmail());
+                   }
+         try {
+            // Propiedades de la conexión
+            System.out.println("DURANTE de enviar mail");
+
+            Properties props = new Properties();
+            props.setProperty("mail.smtp.host", "smtp.gmail.com");
+            props.setProperty("mail.smtp.starttls.enable", "true");
+            props.setProperty("mail.smtp.port", "587");
+            props.setProperty("mail.smtp.user", "departamentoinformaticaunca@gmail.com");
+            props.setProperty("mail.smtp.auth", "true");
+
+            // Preparamos la sesion
+            Session session = Session.getDefaultInstance(props);
+
+            // Construimos el mensaje
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("departamentoinformaticaunca@gmail.com"));
+        
+            System.out.println("POR ENTRAR A CARGAR LOS MAILS!!!"+mails.size());
+            for(int i=0;i<mails.size();i++){
+                System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii!!!"+i);
+                correos = correos.concat(mails.get(i));
+              
+                 System.out.println("ENTRO A CARGAR LOS MAILS!!!"+mails.get(i));
+                 if(i!= mails.size()-1){
+                 correos= correos.concat(", ");
+                 }
+                  System.out.println("LOS MAILS SONNNN!!!"+correos);
+            }
+             message.addRecipients(Message.RecipientType.TO, correos);
+            
+            message.setSubject("Departamento Informatica");
+            message.setText("Hola hay un retraso de "+diferencia+" en la actividad N° "+crono.getNumero()+ ": "+crono.getDescripcion_act()+" del proyecto: " +crono.getCronograma().getProyecto().getTitulo()+".");
+
+            // Lo enviamos.
+            Transport t = session.getTransport("smtp");
+            t.connect("departamentoinformaticaunca@gmail.com", "LabUnca2011");
+            t.sendMessage(message, message.getAllRecipients());
+
+            // Cierre.
+            t.close();
+           
+        }   catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("DESPUES de enviar mail");
+    }
+}

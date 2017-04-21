@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <head>
+
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="author" content=""></meta>
+
+        <title>Departamento Informática</title>
+        <!-- for-mobile-apps -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
+        <meta name="keywords" content="Inventor Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+              Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" ></meta>
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+            function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <!-- //for-mobile-apps -->
+        <link href="../resources/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"></link>
+        <link href="../resources/css/style.css" rel="stylesheet" type="text/css" media="all" ></link>
+        <!-- Bootstrap Core CSS -->
+
+        <!-- Custom Fonts -->
+        <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+
+        <!-- js -->
+        <script src="../resources/js/jquery-1.11.1.min.js"></script>
+        <!-- //js -->
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'></link>
+        <link href='//fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'></link>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,600italic,600,400italic,300italic,300' rel='stylesheet' type='text/css'></link>
+    </head>
+
+    <body>
+        <!-- bannner -->
+        <div class="banner1">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.xhtml">Departamento de Inform&aacute;tica <span>Facultad de Tecnologia y Ciencias Aplicadas</span></a>
+                </div>
+                <div class="navigation">
+                    <nav class="navbar navbar-default">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+                            <nav class="cl-effect-13" id="cl-effect-13">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="../index.xhtml" class="active">Inicio</a></li>
+                                    <li>
+                                        <a href="autoridades.xhtml">Autoridades</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="comision.xhtml">Comisiones</a>
+                                    </li> 
+                                    <li>
+                                        <a href="reglamentacion.html">Reglamentación</a>
+                                    </li>  
+                                    <li>
+                                        <a href="plantel_docente.xhtml">Docentes</a>
+                                    </li>
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.xhtml">Inicio</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="about.html">Autoridades</a>
+                    </li>
+                    <li>
+                        <a href="comisiones.html">Comisiones</a>
+                    </li> 
+                     <li>
+                        <a href="reglamentacion.html">Reglamentación</a>
+                    </li>  
+                    <li>
+                        <a href="plantel_docente.xhtml">Docentes</a>
+                    </li>
+                     <li>
+                        <a href="carreras.html">Carreras</a>
+                    </li>
+                     <li>
+                         <a href="proyectosInvestigacion.xhtml">Proyectos de Investigacion</a>
+                    </li>
+                                        
+                     <li>
+                        <a href="contact.html">Contacto</a>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otras Paginas <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="http://www.unca.edu.ar/">UNCa</a>
+                            </li>
+                            <li>
+                                <a href="http://www.tecno.unca.edu.ar/">FTyCA</a>
+                            </li>
+                            <li>
+                                <a href="http://www.tecno.unca.edu.ar/moodle/">Aula virtual tecno</a>
+                            </li>
+                            <li>
+                                <a href="404.html">404</a>
+                            </li>
+                            <li>
+                                <a href="pricing.html">Pricing Table</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact.html">Contacto</a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otras Paginas <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="http://www.unca.edu.ar/">UNCa</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.tecno.unca.edu.ar/">FTyCA</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.tecno.unca.edu.ar/moodle/">Aula virtual tecno</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://170.210.139.197/tecno/">SIU Guaraní</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.confedi.org.ar/riisic">RIISIC | CONFEDI</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Page Heading/Breadcrumbs
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Reglamentos 
+                        <span>y Formularios</span>
+                    </h2>
+
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Image Header
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="../Imagenes/reglamento.jpg" alt="">
+                </div>
+
+            </div> -->
+            <!-- /.row -->
+
+            <!-- Service Panels -->
+            <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Reglamentos</h2>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-institution fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento de Departamentos</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/reglamento_departamentos.pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-book fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento de Trabajos Finales</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/Reglamento_Trabajo_Final_Sistemas.pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-trophy fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4 >Reglamento de Becas para finalización de Carreras</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/REGLAMENTO_DE_BECAS_108_05.pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento de Práctica Profesional Supervisada</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/Reglamento_PPS_(OCD002-2013).pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-group fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento de Concurso Docente</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/Reglamento_PPS_(OCD002-2013).pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento del Laboratorio de Informática</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/Reglamento_PPS_(OCD002-2013).pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-gears fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Reglamento del Laboratorio de Sistemas Embebidos</h4>
+
+                            <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/Reglamento_PPS_(OCD002-2013).pdf" class="btn btn-primary">Ver</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- Service List -->
+            <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Formularios</h2>
+                </div>
+                <div class="col-md-5">
+                    <div class="media">
+                        <div class="pull-left">
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/SOLICITUD%20DE%20INICIO%20DE%20LA%20PRACTICA%20PROFESIONAL%20SUPERVISADA-FSI-PPS.doc" class="fa fa-download fa-stack-1x fa-inverse"></a>
+
+                            </span> 
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Formulario solicitud de inicio de la práctica profesional supervisada FSI-PPS</h4>
+
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="pull-left">
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/COMPROMISO%20DE%20ACEPTACION%20DE%20LA%20ENTIDAD%20RECEPTORA-FAER-PPS.doc" class="fa fa-download fa-stack-1x fa-inverse"></a>
+                            </span> 
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Formulario compromiso de aceptación de la entidad receptora FAER-PPS</h4>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+
+                    <div class="media">
+                        <div class="pull-left">
+                            <span class="fa-stack fa-2x">
+                                <i  class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/SEGUIMIENTO%20ACADEMICO%20DE%20LA%20PRACTICA%20PROFESIONAL%20SUPERVISADA-FSA-PPS.doc" class="fa fa-download fa-stack-1x fa-inverse"></a>
+                            </span> 
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Formulario seguimiento académico de la práctica profesional supervisada FSA-PPS</h4>
+
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="pull-left">
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <a href="http://www.tecno.unca.edu.ar/descargas/departamentos/dpto-informatica/SOLICITUD%20DE%20EQUIVALENCIA%20DE%20PRACTICA%20PROFESIONAL%20SUPERVISADA-FE-PPS.doc" class="fa fa-download fa-stack-1x fa-inverse"></a>
+                            </span> 
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Formulario solicitud de equivalencia de práctica profesional supervisada FE-PPS</h4>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4">
+
+
+
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <hr>
+
+        </div>
+        <!-- /.container -->
+
+
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- jQuery -->
+        <script src="../resources/js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../resources/js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

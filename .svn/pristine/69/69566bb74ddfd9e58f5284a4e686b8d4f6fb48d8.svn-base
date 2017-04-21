@@ -1,0 +1,53 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.EvaluacionProyectoFacadeLocal;
+import entidad.EvaluacionProyecto;
+import entidad.Presentacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class EvaluacionProyectoRN implements EvaluacionProyectoRNLocal {
+@EJB
+private EvaluacionProyectoFacadeLocal  evaluacion_ProyectoFacadeLocal;
+    @Override
+    public void create(EvaluacionProyecto p) throws Exception {
+this.evaluacion_ProyectoFacadeLocal.create(p);
+    }
+
+    @Override
+    public void remove(EvaluacionProyecto p) throws Exception {
+   this.evaluacion_ProyectoFacadeLocal.remove(p);
+    }
+
+    @Override
+    public void edit(EvaluacionProyecto p) throws Exception {
+  this.evaluacion_ProyectoFacadeLocal.edit(p);
+    }
+
+    @Override
+    public List<EvaluacionProyecto> findAll() throws Exception {
+  return(this.evaluacion_ProyectoFacadeLocal.findAll());
+  
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+
+    @Override
+    public EvaluacionProyecto findByEvaluacionl(Proyecto pro, Presentacion pres) throws Exception {
+    return this.evaluacion_ProyectoFacadeLocal.findByEvaluacion(pro, pres);
+    }
+}

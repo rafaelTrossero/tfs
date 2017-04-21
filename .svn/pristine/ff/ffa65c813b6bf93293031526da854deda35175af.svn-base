@@ -1,0 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.Aceptacion;
+import entidad.Calificacion;
+import entidad.Presentacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Trossero
+ */
+@Local
+public interface AceptacionFacadeLocal {
+
+    void create(Aceptacion aceptacion);
+
+    void edit(Aceptacion aceptacion);
+
+    void remove(Aceptacion aceptacion);
+
+    Aceptacion find(Object id);
+
+    List<Aceptacion> findAll();
+
+    List<Aceptacion> findRange(int[] range);
+
+    int count();
+    public Aceptacion findbyAceptacion(Proyecto proy, Presentacion pres, Calificacion cal) throws Exception;
+    public Aceptacion findByProyAceptacion(Proyecto pro, Integer cal)  throws Exception;
+    public Aceptacion findByProyAceptacion1(Proyecto pro)  throws Exception;
+    
+}

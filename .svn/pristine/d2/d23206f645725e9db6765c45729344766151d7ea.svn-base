@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 template="./Template/TfsTemplate.xhtml"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <p:dialog id="dClave" 
+                  widgetVar="dlgClave" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Cambiar Contraseña"/>
+            </f:facet>
+            <p:panel id="pClave" style="float:left;">
+                <!--<p:focus context="pClave"/> 
+                <h:inputHidden value="#/{usuarioBean.usuario.id}"/>
+
+                <h:inputHidden value="#/{listaAlumnoBean.iActionBtnSelect}"/>!-->
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apClave" style="width: 600px;">
+
+                    <p:tab title="Información de Password">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="usuario:"/>
+                            <p:inputText value="#{loginBean.user}"
+                                         label="contraseña"
+
+                                         />
+                            <h:outputText value="Contraseña Actual:"/>
+                            <p:password value="#{loginBean.password}"
+                                        label="contraseña"
+
+                                        />
+
+
+                            <h:outputText value="Nueva Contraseña:"/>
+
+                            <p:password value="#{loginBean.passwordNueva}"
+                                        label="nueva Contraseña"
+                                        accesskey="2"
+
+                                        />
+
+                        </h:panelGrid> 
+                        
+                        
+                        <center>  
+                            <div style="clear: both;"/>
+                            <h:outputText value="! importante: Distinguir Mayúsculas de Minúsculas en la contraseña !"/>
+                        </center>
+
+                    </p:tab>
+
+
+
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="messagess" showDetail="true"  />
+                <div style="clear: both;"/>
+
+
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{loginBean.actionBtn}" 
+                                 update=" 
+                                 :frmMain:pClave, @this"
+                                 binding="#{loginBean.cbAction}">
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgClave.hide()"
+                                 update=":frmMain:pClave"
+                                 process="@this"
+                                 /> 
+
+
+            </div>
+
+        </p:dialog>
+
+
+
+
+
+        <p:panel   id = "pPrincipal" header="Seguimiento de Proyecto" style="text-align:center;">
+            <h:panelGrid columns="5" cellpadding="2" style="alignment-adjust: central">
+
+
+
+                <p:commandButton id="cbNuevo"
+                                 value="Cambiar Clave" 
+                                 icon="ui-icon-circle-plus" 
+                                 oncomplete="dlgClave.show();"
+                                 actionListener="#{loginBean.setBtnSelect}"
+                                 update=":frmMain:dClave"
+                                 process="@this"/><br/><br/>
+
+
+
+            </h:panelGrid>
+
+
+
+        </p:panel>
+    </ui:define>
+
+</ui:composition>
+

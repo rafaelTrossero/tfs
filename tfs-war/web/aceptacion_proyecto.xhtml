@@ -1,0 +1,629 @@
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="content">
+
+        <div >
+            <!-- DIALOGO PROYECTO PASO 1 !-->
+ 
+            <p:dialog id="dNuevaPres" 
+                      widgetVar="dlgAcepProyecto" 
+                      
+                      height="570"
+                      width="900"
+                      position="top"
+                      
+                      closeOnEscape="true"
+                       >
+                <f:facet name="header">
+                    <h:outputText value="Aceptación De Proyecto"/>
+                </f:facet>
+
+
+
+
+                <p:panel id="display" >
+                    <p:accordionPanel  style="width: auto;" id="accordionPanelId" widgetVar="accordionPanelWidget" >
+                        <p:tab title="Información del Proyecto"> 
+                            <h:panelGrid columns="2" cellpadding="2" >
+                                <h:outputLabel value="Título:" style="text-align:center"/>
+                                <h:outputText value="#{aceptacionBean.proyecto.titulo}" />
+
+
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{aceptacionBean.proyecto.id}" />
+
+
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{aceptacionBean.proyecto.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{aceptacionBean.proyecto.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                            </h:panelGrid>
+                        </p:tab>
+
+                        <p:tab id="alumno" title="Alumno/s">
+
+                            <p:dataList value="#{aceptacionBean.lstProyAlumno}"
+                                        var="alu" 
+                                        emptyMessage="No existen alumnos">
+                                <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                            </p:dataList>
+                        </p:tab>
+                        <p:tab id="director" title="Director">
+
+                            <p:dataList value="#{aceptacionBean.lstProyDirector}"
+                                        var="dir" 
+                                        emptyMessage="No existen directores">
+                                <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                            </p:dataList>
+                        </p:tab>
+                        <p:tab  title="Aceptación del proyecto">
+
+
+
+                            <p:panelGrid id="guia" style="margin-top:20px" >
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="7">2.1 Guía para la evaluación formal del proyeto de TF</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column >Indicador</p:column>
+                                        <p:column >Cumple</p:column>
+                                        <p:column>Observaciones</p:column>
+                                    </p:row>
+
+                                </f:facet>
+                                <!-- INDICADORES -->
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">a) ¿El formato se ajusta a lo establecido en el ANEXO 1 de la reglamentación de TF?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton value="#{listaIndicadores21Bean.indicador.si}" onLabel="Si" offLabel="No" style="width:60px">
+                                            <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador.si, 0)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row >
+                                    <p:column style="font-weight: bold;">b) ¿El contenido se ajusta a los criterios establecidos en el ANEXO 1 de la reglamentación de TF?</p:column>
+
+
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador2.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador2.si, 1)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador2.observaciones}" />
+                                    </p:column>
+
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">c) ¿Incluye Certificado Analítico de materias aprobadas por el alumno, expedido por el Departamento Alumnos de la FTyCA?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador3.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador3.si, 2)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador3.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+                                <p:row>
+                                    <p:column style="font-weight: bold;">d) ¿El alumno reúne los requisitos establecidos por las reglamentaciones vigentes de cada carrera para inciar el Trabajo Final?</p:column>
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador4.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador4.si, 3)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador4.observaciones}" />
+                                    </p:column>
+
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">e) ¿Incluye Aval del Director de Trabajo Final?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador5.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador5.si, 4)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador5.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">f) ¿El director de Trabajo Final dispone de tiempo suficiente de acuerdo a su dedicación y/o compromisos con otros Trabajos Finales?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador6.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador6.si, 5)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador6.observaciones}" />
+                                    </p:column>
+
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">g) ¿Incluye Aval del Co-Director de Trabajo Final?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador7.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador7.si, 6)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador7.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">h) ¿Incluye nota de aceptación del Asesor de TF?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador8.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador8.si, 7)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador8.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">i) ¿Incluye Curriculum Vitae abreviado del Asesor de TF?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador9.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador9.si, 8)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador9.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">j) ¿El tema de trabajo final responde al artículo 1° de la presente reglamentación?</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador10.si}" onLabel="Si" offLabel="No" style="width:60px">
+                                            <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador10.si, 9)}"/>                                         
+                                        </p:selectBooleanButton>
+                                        </p:column>
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador10.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">k) ¿Incluye nota de institución que acredite demanda? Art. 4° c)</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton  value="#{listaIndicadores21Bean.indicador11.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador11.si, 10)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador11.observaciones}" />
+                                    </p:column>
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column style="font-weight: bold;">i) ¿Incluye certificación del Director de proyecto acreditado? Art. 4° d)</p:column>
+
+                                    <p:column >
+                                        <p:selectBooleanButton value="#{listaIndicadores21Bean.indicador12.si}" onLabel="Si" offLabel="No" style="width:60px" >
+                                             <p:ajax  update="somCalificacion" listener="#{listaIndicadores21Bean.control_indicadores(listaIndicadores21Bean.indicador12.si, 11)}"/>                                         
+                                        </p:selectBooleanButton>
+                                    </p:column>
+
+                                    <p:column  style="font-weight: bold;">
+                                        <p:inputTextarea value="#{listaIndicadores21Bean.indicador12.observaciones}" />
+                                    </p:column>
+
+
+                                </p:row>
+
+                            </p:panelGrid>
+
+
+
+                            <h:panelGrid columns="2" cellpadding="2" >
+                                <h:outputText value="Fecha: "/>
+                                <p:calendar value="#{aceptacionBean.aceptacion.fecha}"
+                                            />
+                                <h:outputText value="Observación: "/>
+                                <p:inputTextarea value="#{aceptacionBean.aceptacion_observacion.observacion}"
+                                                 label="Observacion" rows="3" cols="25"/>
+                                <h:outputText value="Resultado de Evaluación:  "/>
+                                
+
+                                <p:selectOneMenu id="somCalificacion"
+                                                 converter="ConversorGenerico"
+                                                 value="#{aceptacionBean.aceptacion.calificacion}"
+                                                 
+                                                 >
+                                    <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                                    <f:selectItem itemDisabled="#{listaIndicadores21Bean.indAprobado}" itemLabel="Aprobado" itemValue="#{listaCalificacioBean.lstCalificacion.get(0)}" />
+                                    
+                                    <f:selectItem itemDisabled="#{listaIndicadores21Bean.indObservado}" itemLabel="Observado" itemValue="#{listaCalificacioBean.lstCalificacion.get(2)}" />
+                                    <f:selectItem  itemDisabled="#{listaIndicadores21Bean.indRechazado}" itemLabel="Rechazado" itemValue="#{listaCalificacioBean.lstCalificacion.get(3)}" />
+                                    
+                                    <p:ajax listener="#{listaCalificacioBean.control_calificacion(aceptacionBean.aceptacion.calificacion)}" 
+                                           
+                                              /> 
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+
+                          
+                        </p:tab>
+                    </p:accordionPanel>
+
+
+
+
+                </p:panel>    
+                <div  style="float: left; margin: 10px;
+                      width: 100%;
+                      text-align: center;">
+                    <p:growl id="message" showDetail="true"   />
+                    <div style="clear: both;"/>
+
+                    <p:commandButton id="btnAction"
+                                     value="Guardar " 
+                                     actionListener="#{aceptacionBean.create()}" 
+                                     icon="ui-icon-disk"
+                                     update=":frmMain: message, display">
+                        <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert"  />
+                    </p:commandButton>
+                    <p:confirmDialog id="cDialog2" global="true" showEffect="fade" hideEffect="explode"   >
+                        <p:commandButton  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                    <p:commandButton id="btnSalir"
+                                     value="Salir" 
+                                     oncomplete="PF('dlgAcepProyecto').hide()"
+                                     icon="ui-icon-close"
+                                     process="@this"
+                                     />
+
+
+
+                    <div style="clear: both;"/>
+
+                    <div>
+                        <p:messages autoUpdate="true"/>
+                    </div>
+
+
+                    <div style="clear: both;"/>
+                </div>
+
+            </p:dialog>
+        </div>
+        <p:dialog id="dCronograma" 
+                  widgetVar="dlgCronograma" 
+                  modal="true"
+                  header="Cronograma de Actividades"
+                  closable="false" resizable="true">
+
+            <p:growl   id="msgs" />  
+
+            <p:panel header="Crear una nueva actividad">  
+                <h:panelGrid columns="2" id="grid">  
+
+                    <h:outputLabel value="Número: " ></h:outputLabel> 
+                    <p:inputText disabled="true"  size="1" value="#{listaCronogramaBean.cronogramaActividadObj.numero}"/>
+
+
+                    <h:outputLabel value="Descripción: " ></h:outputLabel> 
+                    <p:inputTextarea value="#{listaCronogramaBean.cronogramaActividadObj.descripcion_act}"
+                                     label="Título" rows="3" cols="25"/>
+
+
+                    <h:outputLabel value="Fecha de inicio: " ></h:outputLabel>  
+                    <p:calendar 
+                        value="#{listaCronogramaBean.cronogramaActividadObj.fecha_inicio}"  />  
+
+                    <h:outputLabel value="Fecha de fin: " ></h:outputLabel>  
+                    <p:calendar 
+                        value="#{listaCronogramaBean.cronogramaActividadObj.fecha_fin}" />  
+
+                    <p:commandButton   update="grid" value="Limpiar" action="#{listaCronogramaBean.reinit()}" />  
+
+                    <p:commandButton  update="cronograma" action="#{listaCronogramaBean.setCronogramaActividadObj(listaCronogramaBean.cronogramaActividadObj)}" value="Añadir"></p:commandButton> 
+
+                </h:panelGrid>  
+            </p:panel>  
+
+            <p:outputPanel id="cronograma">  
+                <p:dataTable id="cronogramaTable" value="#{listaCronogramaBean.listaCronActiv}" var="cronograma" >  
+
+
+                    <p:column  >  
+                        <f:facet name="header" >  
+                            <h:outputText value="N°" />   
+                        </f:facet>   
+                        <h:outputText value="#{cronograma.numero}"  />  
+                    </p:column> 
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Descripción" />  
+                        </f:facet>  
+                        <h:outputText value="#{cronograma.descripcion_act}" />  
+                    </p:column>  
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Fecha de Inicio" />  
+                        </f:facet>  
+                        <h:outputText value="#{cronograma.fecha_inicio}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>  
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Fecha de Fin" />  
+                        </f:facet>  
+                        <h:outputText value="#{cronograma.fecha_fin}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>  
+                    </p:column>  
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Operación" />  
+                        </f:facet>  
+                        <p:commandButton  update=":frmMain:cronogramaTable, :frmMain:grid, @this"  action="#{listaCronogramaBean.deleteAction(cronograma)}"
+                                          value="Borrar"></p:commandButton>
+                        <br/>
+                    </p:column>  
+                </p:dataTable>  
+            </p:outputPanel>  
+
+
+            <div  style="float: left; margin: 10px;
+                      width: 100%;
+                      text-align: center;">
+                    <p:growl id="message3" showDetail="true"   />
+                    <div style="clear: both;"/>
+
+                    <p:commandButton id="btnActionObj"
+                                     value="Guardar " 
+                                     actionListener="#{aceptacionBean.mostrarDialogTribunal()}"
+                                     icon="ui-icon-disk"
+                                     update=":frmMain:display"
+                                     oncomplete="PF('dlgCronograma').hide()">
+                        <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert"  />
+                        
+                    </p:commandButton>
+                    <p:confirmDialog id="cDialog3" global="true" showEffect="fade" hideEffect="explode"  >
+                        <p:commandButton  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                    <p:commandButton id="btnSalirObj"
+                                     value="Salir" 
+                                     oncomplete="PF('dlgCronograma').hide()"
+                                     icon="ui-icon-close"
+                                     process="@this"
+                                     />
+
+
+
+                    <div style="clear: both;"/>
+
+                    <div>
+                        <p:messages autoUpdate="true"/>
+                    </div>
+
+
+                    <div style="clear: both;"/>
+                </div>
+        </p:dialog>
+
+        <p:dialog id="dTribunalPropuesto" 
+                  widgetVar="dlgTribunal" 
+                  modal="true" closeOnEscape="true" responsive="true"
+                  header="Tribunal Propuesto por la comisión de seguimiento"
+                  closable="false" resizable="true">
+
+           
+
+              <h:panelGrid   id="gridTribunal" columns="2" cellpadding="2"  >
+                                <h:outputText value="Presidente:  "/>
+                                <p:selectOneMenu id="somPresidente"
+                                                 converter="ConversorGenerico"
+                                                 value="#{aceptacionBean.presidente}"
+                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                    <f:selectItems 
+                                        value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                                </p:selectOneMenu>
+
+                                <h:outputText value="Vocal 1:  "/>
+                                <p:selectOneMenu id="somVocal1" 
+                                                 converter="ConversorGenerico"
+
+                                                 value="#{aceptacionBean.vocal1}"
+                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                    <f:selectItems 
+                                       value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                                </p:selectOneMenu>
+                                <h:outputText value="Vocal 2:  "/>
+                                <p:selectOneMenu id="somVocal2"
+                                                 converter="ConversorGenerico"
+                                                 value="#{aceptacionBean.vocal2}"
+                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                    <f:selectItems 
+                                        value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                                </p:selectOneMenu>
+                                <h:outputText value="Suplente 1:  "/>
+                                <p:selectOneMenu id="somSuplente1"
+                                                 converter="ConversorGenerico"
+                                                 value="#{aceptacionBean.suplente1}"
+                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                    <f:selectItems 
+                                       value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                                </p:selectOneMenu>
+                                <h:outputText value="Suplente 2:  "/>
+                                <p:selectOneMenu id="somSuplente2"
+                                                 converter="ConversorGenerico"
+                                                 value="#{aceptacionBean.suplente2}"
+                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                    <f:selectItems 
+                                        value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+
+
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+
+
+
+
+           <div  style="float: left; margin: 10px;
+                      width: 100%;
+                      text-align: center;">
+                    <p:growl id="message2" showDetail="true"   />
+                    <div style="clear: both;"/>
+
+                    <p:commandButton id="btnActionTrib"
+                                     value="Guardar " 
+                                     process="@this"
+                                     icon="ui-icon-disk"
+                                     
+                                     update="message2"
+                                     oncomplete="PF('dlgTribunal').hide()">
+                        <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert"  />
+                    </p:commandButton>
+                    <p:confirmDialog id="cDialog" global="true" showEffect="fade" hideEffect="explode"   >
+                        <p:commandButton  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+
+                    <p:commandButton id="btnSalirTrib"
+                                     value="Salir" 
+                                     oncomplete="PF('dlgTribunal').hide()"
+                                     icon="ui-icon-close"
+                                     process="@this"
+                                     />
+
+
+
+                    <div style="clear: both;"/>
+
+                    <div>
+                        <p:messages autoUpdate="true"/>
+                    </div>
+
+
+                    <div style="clear: both;"/>
+                </div>
+          
+        </p:dialog>
+                    
+                    <p:ajaxStatus  onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="Imagenes/ajaxloadingbar.gif" />
+            </p:dialog>
+
+        <p:panel   id="pAceptacionProyecto" header="Gestión de Proyectos" style="text-align:center;"   >
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto" 
+                             converter="ConversorGenerico"
+                             value="#{aceptacionBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyectoByEstado}"/>
+
+            </p:selectOneMenu>
+
+
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgAcepProyecto').show()"
+                    update="display"
+                    actionListener="#{aceptacionBean.crear()}"
+                    >              
+                                      
+                </p:commandButton>
+
+
+
+            </div>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

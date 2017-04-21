@@ -1,0 +1,277 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.ProyectosInvestigacionRNLocal;
+import entidad.ProyectosInvestigacion;
+import javax.ejb.EJB;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.component.commandbutton.CommandButton;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+
+public class ProyectosInvestigacionBean {
+
+    
+    @ManagedProperty("#{listaProyectosInvestigacionBean}")
+    private ListaProyectosInvestigacionBean listaProyectosInvestigacionBean;
+    private ProyectosInvestigacion proyectos;
+    private Boolean bCamposEditables;
+     
+     
+    private CommandButton cbAction;
+    
+    
+      @EJB
+    private ProyectosInvestigacionRNLocal proyectosInvestigacionRNLocal;
+    /**
+     * Creates a new instance of ProyectosInvestigacionBean
+     */
+    public ProyectosInvestigacionBean() {
+        this.proyectos = new ProyectosInvestigacion();
+    }
+
+    public ListaProyectosInvestigacionBean getListaProyectosInvestigacionBean() {
+        return listaProyectosInvestigacionBean;
+    }
+
+    public void setListaProyectosInvestigacionBean(ListaProyectosInvestigacionBean listaProyectosInvestigacionBean) {
+        this.listaProyectosInvestigacionBean = listaProyectosInvestigacionBean;
+    }
+
+    public ProyectosInvestigacion getProyectos() {
+        return proyectos;
+    }
+
+    public void setProyectos(ProyectosInvestigacion proyectos) {
+        this.proyectos = proyectos;
+    }
+
+    public Boolean getbCamposEditables() {
+        return bCamposEditables;
+    }
+
+    public void setbCamposEditables(Boolean bCamposEditables) {
+        this.bCamposEditables = bCamposEditables;
+    }
+
+    public CommandButton getCbAction() {
+        return cbAction;
+    }
+
+    public void setCbAction(CommandButton cbAction) {
+        this.cbAction = cbAction;
+    }
+
+    public ProyectosInvestigacionRNLocal getProyectosInvestigacionRNLocal() {
+        return proyectosInvestigacionRNLocal;
+    }
+
+    public void setProyectosInvestigacionRNLocal(ProyectosInvestigacionRNLocal proyectosInvestigacionRNLocal) {
+        this.proyectosInvestigacionRNLocal = proyectosInvestigacionRNLocal;
+    }
+
+    
+
+  
+    
+    
+     public void actionBtn() {
+
+        switch (this.getListaProyectosInvestigacionBean().getiActionBtnSelect()) {
+            case 0:
+                create();
+                //limíar campos
+                //this.limpiar();
+                break;
+            case 1:
+                this.edit();
+                break;
+            case 2:
+                //deshabilita el campo
+                this.activate(Boolean.FALSE);
+                break;
+            case 3:
+                //habilita el campo
+                this.activate(Boolean.TRUE);
+                break;
+
+        }//fin switch
+    }//fin actionBtn
+     
+     public void setBtnSelect(ActionEvent e) {
+        CommandButton btnSelect = (CommandButton) e.getSource();
+        System.out.println("boton select PROYiNV: " + btnSelect.getId());
+    //0 crea
+        //1: edit
+        //2 delete
+
+        //activo el boton
+        this.getCbAction().setDisabled(false);
+
+        if (btnSelect.getId().equals("cbCreate")) {
+            System.out.println("ENTRA??" + btnSelect.getId());
+            this.getListaProyectosInvestigacionBean().setiActionBtnSelect(0);
+             this.getCbAction().setValue("Guardar");
+            
+             System.out.println("valor del iactionbtn" + getListaProyectosInvestigacionBean().getiActionBtnSelect());
+            
+           
+            //campos requeridos
+            //this.setbCamposRequeridos(true);
+
+        } else if (btnSelect.getId().equals("cbEditar")) {
+            this.getCbAction().setValue("Modificar");
+            this.getListaProyectosInvestigacionBean().setiActionBtnSelect(1);
+            
+            
+            System.out.println("valor del boton: " + listaProyectosInvestigacionBean.getiActionBtnSelect());
+
+            //campos requeridos
+            // this.setbCamposRequeridos(true);
+        } else if (btnSelect.getId().equals("cbDeshabilitado")) {
+            this.getListaProyectosInvestigacionBean().setiActionBtnSelect(2);
+
+            this.setbCamposEditables(true);
+            this.getCbAction().setValue("Desactivar");
+
+        } else if (btnSelect.getId().equals("cbHabilitado")) {
+            this.getListaProyectosInvestigacionBean().setiActionBtnSelect(3);
+
+            this.setbCamposEditables(true);
+            this.getCbAction().setValue("Reactivar");
+
+        }
+
+        //fin else
+    }//fin setBtnSelect
+     
+      public void create() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            proyectos.setActive(Boolean.TRUE);
+            proyectosInvestigacionRNLocal.create(proyectos);
+            sMensaje = "Carrera guardada exitosamente";
+            severity = FacesMessage.SEVERITY_INFO;
+             this.getCbAction().setDisabled(true);
+             
+            //agregar a la lista
+            this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().add(proyectos);
+            
+            //limpiar campos
+            this.limpiar();
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }// fin crear
+    
+    public void edit() {
+        System.out.println("Entro al edit");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            //get la fila seleccionada   
+            proyectos.setActive(Boolean.TRUE);
+
+            
+            proyectosInvestigacionRNLocal.edit(this.getProyectos());
+          
+
+            sMensaje = "Datos actualizados correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+            //elimino y agrego el organismo modificado a la lista
+            int iPos = this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().indexOf(this.getProyectos());
+            this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().remove(iPos);
+            this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().add(iPos, this.getProyectos());
+
+            //this.getCbAction().setValue("Update");
+            this.getCbAction().setDisabled(true);
+
+          //  this.setbCamposRequeridos(false);
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al actualizar: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin edit
+    
+     public void activate(Boolean bEstado) {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+
+        try {
+
+            proyectosInvestigacionRNLocal.activate(this.getProyectos(), bEstado);
+
+            //elimino el organismo de la lista
+
+            int iPos = this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().indexOf(this.getProyectos());
+            
+            this.setProyectos(this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().get(iPos));
+            this.getProyectos().setActive(bEstado);
+            this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().remove(iPos);
+            this.getListaProyectosInvestigacionBean().getLstProyectoInvestigacion().add(iPos, this.getProyectos());
+
+            if (!bEstado) {
+                sMensaje = "Carrera deshabilitada correctamente";
+            } else {
+                sMensaje = "Carrera habilitada correctamente";
+            }
+            severity = FacesMessage.SEVERITY_INFO;
+
+            this.getCbAction().setDisabled(true);
+
+            //limíar campos
+           this.clear();
+           // this.setbCamposRequeridos(false);
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Ocurrio un error duracte la operación: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin recuperar
+     private void limpiar() {
+        this.proyectos = new ProyectosInvestigacion();
+    }
+    
+      private void clear() {
+          this.setProyectos(new ProyectosInvestigacion());
+        
+    }//fin limpiar
+     
+    
+}

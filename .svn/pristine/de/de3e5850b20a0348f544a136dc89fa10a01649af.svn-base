@@ -1,0 +1,54 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.ProyectoAsesorFacadeLocal;
+import entidad.Proyecto;
+import entidad.ProyectoAsesor;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class ProyectoAsesorRN implements ProyectoAsesorRNLocal {
+@EJB
+private ProyectoAsesorFacadeLocal proy_ascesorFacadeLocal; 
+    @Override
+    public void create(ProyectoAsesor alu) throws Exception {
+   this.proy_ascesorFacadeLocal.create(alu);
+    }
+
+    @Override
+    public void remove(ProyectoAsesor alu) throws Exception {
+   this.proy_ascesorFacadeLocal.remove(alu);
+    }
+
+    @Override
+    public void edit(ProyectoAsesor alu) throws Exception {
+     this.proy_ascesorFacadeLocal.edit(alu);
+    
+    }
+
+    @Override
+    public List<ProyectoAsesor> findAll() throws Exception {
+
+      return(this.proy_ascesorFacadeLocal.findAll());
+    }
+
+    @Override
+    public List<ProyectoAsesor> findByProyAsesor(Proyecto pro, boolean active) throws Exception {
+     return(this.proy_ascesorFacadeLocal.findByProyAsesor(pro, active));
+    }
+
+  
+
+   
+}

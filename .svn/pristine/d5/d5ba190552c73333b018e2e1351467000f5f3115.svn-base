@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import RN.ProyectoRNbeanLocal;
+import entidad.Carrera;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@RequestScoped
+public class ProyectosCarreraBean {
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    private Carrera carrera;
+    
+      @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+
+    /**
+     * Creates a new instance of ProyectosCarreraBean
+     */
+    public ProyectosCarreraBean() {
+        carrera= new Carrera();
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+    
+    
+    
+      public void crear() throws Exception {
+      System.out.println("la carrera seleccionada es " + carrera);
+        listaProyectoBean.cargar_proyectos_carrera(carrera);
+    }
+    
+}

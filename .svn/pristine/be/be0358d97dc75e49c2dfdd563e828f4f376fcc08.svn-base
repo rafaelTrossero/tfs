@@ -1,0 +1,164 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.ProyectoRNbeanLocal;
+import entidad.Carrera;
+import entidad.Depto;
+import entidad.Docente;
+import entidad.docente_proyecto;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@RequestScoped
+public class ProyectosDocenteBean {
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    private Carrera carrera;
+    private Depto departamento;
+    private Docente docente;
+    private docente_proyecto doc_proyecto;
+    private List<docente_proyecto> lstdoc_proyecto;
+
+    public ProyectosDocenteBean() {
+        carrera = new Carrera();
+        departamento = new Depto();
+        docente = new Docente();
+        doc_proyecto = new docente_proyecto();
+        lstdoc_proyecto = new ArrayList<docente_proyecto>();
+    }
+
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+
+    /**
+     * Creates a new instance of ProyectosCarreraBean
+     */
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+
+    public Depto getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Depto departamento) {
+        this.departamento = departamento;
+    }
+
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
+    /*
+     public docente_proyecto getDoc_proyecto() {
+     return doc_proyecto;
+     }
+
+     public void setDoc_proyecto(docente_proyecto doc_proyecto) {
+     this.doc_proyecto = doc_proyecto;
+     }
+
+     public List<docente_proyecto> getLstdoc_proyecto() {
+     return lstdoc_proyecto;
+     }
+
+     public void setLstdoc_proyecto(List<docente_proyecto> lstdoc_proyecto) {
+     this.lstdoc_proyecto = lstdoc_proyecto;
+     }
+     */
+
+    public void crear() throws Exception {
+        System.out.println("la carrera seleccionada es " + docente);
+        listaProyectoBean.cargar_proyectos_director_docente(docente);
+        listaProyectoBean.cargar_proyectos_codirector_docente(docente.getId());
+        listaProyectoBean.cargar_proyectos_asesor_docente(docente.getId());
+    }
+
+    /**
+     * Creates a new instance of ProyectosDocenteBean
+     */
+    public void imprimir() throws JRException, IOException {
+        doc_proyecto.setLstProyectoDirectorDocente(listaProyectoBean.getLstProyectoDirectorDocente());
+        doc_proyecto.setLstProyectoCodirectorDocente(listaProyectoBean.getLstProyectoCodirectorDocente());
+        doc_proyecto.setLstProyectoAsesorDocente(listaProyectoBean.getLstProyectoAsesorDocente());
+        lstdoc_proyecto.add(doc_proyecto);
+        String path;
+        //List<Object[]> l = turnoRNLocal.findHistorialTurnosServicios(1, this.getFechaInicio(), this.getFechaFin());
+        System.out.println("funcionando");
+
+        try {
+            path = "reports\\proyecto_docente.jasper";
+            FacesContext context = FacesContext.getCurrentInstance();
+            System.out.println("entrooooooooooooooooooooooooooooooo1" + path);
+            String reportPath = context.getExternalContext().getRealPath(path);
+            System.out.println("entrooooooooooooooooooooooooooooooo2" + reportPath);
+
+            /*
+             HashMap parametro = new HashMap();
+             System.out.println("entrooooooooooooooooooooooooooooooo3"+reportPath);
+             parametro.put("lista_codirector",listaProyectoBean.getLstProyectoCodirectorDocente());
+           
+             */
+            HashMap parametro = new HashMap();
+            parametro.put("docente_director",listaProyectoBean.getLstProyectoDirectorDocente() );
+            //System.out.println("entroooooooooooo000oooooooooooooooo4" + parametro);
+
+            JRBeanCollectionDataSource beanCollectionDataSource =null;
+            System.out.println("entroooooooooooooooooooooooooooo5" + parametro);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parametro, beanCollectionDataSource);
+            JasperExportManager.exportReportToPdfFile(jasperPrint, context.getExternalContext().getRealPath("reports\\proyecto_docente.pdf"));
+            System.out.println("entroooooooooooooooooooooooooooo6" + parametro);
+
+            HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            JRPdfExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
+            exporter.exportReport();
+            context.responseComplete();
+
+        } catch (Exception ex) {
+            System.out.println(ex + "CAUSAaaaaaaaaaaaaaaaaaaaaaa: " + ex.getCause().getMessage());
+        }
+
+    }
+}

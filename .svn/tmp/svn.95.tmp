@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+     <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+
+    <title>Departamento Informática</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"></link>
+
+    <!-- Custom CSS -->
+    <link href="../resources/css/modern-business.css" rel="stylesheet"></link>
+
+    <!-- Custom Fonts -->
+    <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<h:head>
+</h:head>
+<h:body>
+    
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../index.xhtml">Inicio</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="about.html">Autoridades</a>
+                        </li>
+                        <li>
+                            <a href="comisiones.html">Comisiones</a>
+                        </li> 
+                        <li>
+                            <a href="reglamentacion.html">Reglamentación</a>
+                        </li>  
+                        <li>
+                            <a href="plantel_docente.xhtml">Docentes</a>
+                        </li>
+                        <li>
+                            <a href="carreras.html">Carreras</a>
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contacto</a>
+                        </li>
+                       
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otras Paginas <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="http://www.unca.edu.ar/">UNCa</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.tecno.unca.edu.ar/">FTyCA</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.tecno.unca.edu.ar/moodle/">Aula virtual tecno</a>
+                                </li>
+                                <li>
+                                    <a href="404.html">404</a>
+                                </li>
+                                <li>
+                                    <a href="pricing.html">Pricing Table</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+       <div class="container"> 
+
+            <!-- Page Heading/Breadcrumbs -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Docentes
+                        <small>Plantel Docente</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Inicio</a>
+                        </li>
+                        <li class="active">Docentes</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Intro Content -->
+            <div class="row">
+                <div class="col-md-6">
+                    <img  class="img-responsive" src="../Imagenes/rostro-vacio.jpg" alt=""/>
+                </div>
+                <div class="col-md-6">
+                    <h2>About Modern Business</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed voluptate nihil eum consectetur similique? Consectetur, quod, incidunt, harum nisi dolores delectus reprehenderit voluptatem perferendis dicta dolorem non blanditiis ex fugiat.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, magni, aperiam vitae illum voluptatum aut sequi impedit non velit ab ea pariatur sint quidem corporis eveniet. Odit, temporibus reprehenderit dolorum!</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, consequuntur, modi mollitia corporis ipsa voluptate corrupti eum ratione ex ea praesentium quibusdam? Aut, in eum facere corrupti necessitatibus perspiciatis quis?</p>
+                </div>
+            </div>
+            <!-- /.row -->
+
+
+            <!-- /.row -->
+    <h:form id="form">
+      
+
+                    <div class="col-lg-12">
+                        <h2 class="page-header">Plantel Docente</h2>
+                    </div>
+
+                    <h:dataTable id="dtDocentes"
+                                 styleClass="table"
+                                 rows="50"
+                                 value="#{listaDocenteBean.lstDocenteCatedra}"
+                                 var="item"    >
+
+
+                        <p:column    width="500" >
+                            <f:facet name="header">
+                                <h:outputText value="Apellido y Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.docente.apellido}, #{item.docente.nombre}"/>
+                        </p:column>                
+
+
+                        <p:column  width="500">
+                            <f:facet name="header">
+                                <h:outputText value="Cargo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.docente.cargo.descripcion}"/>
+                        </p:column> 
+
+                        <p:column headerText="Catedra">
+                            <p:commandLink value="#{item.catedra.nombre}" oncomplete="PF('test').show()"
+                                           update=":form:dialog">
+                                <f:setPropertyActionListener target="#{listaDocenteBean.selectedDocenteCatedra}"
+                                                             value="#{item}" />
+                            </p:commandLink>
+                        </p:column>
+
+
+                        <p:column  width="500">
+                            <f:facet name="header">
+                                <h:outputText value="E-mail"/>
+                            </f:facet>
+                            <h:outputText value="#{item.docente.email}"/>
+                        </p:column> 
+
+                    </h:dataTable>   
+        <p:dialog modal="true" width="500" height="500" widgetVar="test"
+            id="dialog">
+            <p:outputLabel value="Nombre de la Cátedra:  "/>
+            <h:outputText  value="  #{listaDocenteBean.selectedDocenteCatedra.catedra.nombre}"/>
+            <div style="clear: both;"/>
+             <p:outputLabel value="Carrera:  "/>
+             <h:outputText value="  #{listaDocenteBean.selectedDocenteCatedra.catedra.carrera.carrera}"/>
+            
+        </p:dialog>
+    </h:form>
+            
+            <!-- /.row -->
+
+            <hr></hr>
+
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright  Your Website 2014</p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.container -->
+
+
+        
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../resources/js/bootstrap.min.js"></script>
+
+</h:body>
+    
+</html>

@@ -1,0 +1,90 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.DefensaFinalRNLocal;
+import RN.PaisRNLocal;
+import entidad.DefensaFinal;
+import entidad.Pais;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@SessionScoped
+public class ListaProyectosAprobadosBean {
+
+    private List<DefensaFinal> lstProyectosAprobados;
+    private List<SelectItem> lstSIProyectosAprobados;
+    @EJB
+    private DefensaFinalRNLocal defensafinalRNLocal;
+    
+    public ListaProyectosAprobadosBean() {
+        lstProyectosAprobados = new ArrayList<DefensaFinal>();
+    }
+
+    public List<DefensaFinal> getLstProyectosAprobados() {
+        return lstProyectosAprobados;
+    }
+
+    public void setLstProyectosAprobados(List<DefensaFinal> lstProyectosAprobados) {
+        this.lstProyectosAprobados = lstProyectosAprobados;
+    }
+
+    public List<SelectItem> getLstSIProyectosAprobados() {
+        return lstSIProyectosAprobados;
+    }
+
+    public void setLstSIProyectosAprobados(List<SelectItem> lstSIProyectosAprobados) {
+        this.lstSIProyectosAprobados = lstSIProyectosAprobados;
+    }
+
+    public DefensaFinalRNLocal getDefensafinalRNLocal() {
+        return defensafinalRNLocal;
+    }
+
+    public void setDefensafinalRNLocal(DefensaFinalRNLocal defensafinalRNLocal) {
+        this.defensafinalRNLocal = defensafinalRNLocal;
+    }
+    
+    public void cargarProyectosAprobadoslista() {
+        try {
+            this.setLstProyectosAprobados(defensafinalRNLocal.findAll());
+        } catch (Exception ex) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error al cargar los paises: " + ex,
+                    null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin cargarNacionalidad
+    
+      public void cargarSIProyectosAprobadoslista() {
+
+        this.setLstSIProyectosAprobados(new ArrayList<SelectItem>());
+
+        for (DefensaFinal p : this.getLstProyectosAprobados()) {
+            
+                SelectItem si = new SelectItem(p, p.getProyecto().getTitulo());
+                this.getLstSIProyectosAprobados().add(si);
+            
+        }//fin for
+        System.out.println("Termino cargar Pais: " + this.getLstSIProyectosAprobados());
+    }
+    
+}

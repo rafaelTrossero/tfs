@@ -1,0 +1,157 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entidad;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+
+/**
+ *
+ * @author jorge
+ */
+@Entity
+@NamedQueries({
+    @NamedQuery(name = "Presentacion.findPresentacion", query = "SELECT u FROM Presentacion u WHERE u.id = :codigoPresentacion"),
+    @NamedQuery(name = "Presentacion.findPresentacionCodigo", query = "SELECT MAX(u.id) FROM Presentacion u WHERE u.proyecto = :proyecto and u.certificados = :requisito and u.nota_aprobacion = :requisito and (u.nota_director = :requisito or u.nota_codirector = :requisito)"),})
+public class Presentacion implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //Integer cod_proyecto
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha;
+
+    private boolean nota_aprobacion;
+
+    private boolean certificados;
+
+    private boolean nota_director;
+    
+    private boolean nota_codirector;
+
+    @ManyToOne
+    @JoinColumn(name = "proyect_id", referencedColumnName = "id", nullable = false)
+    private Proyecto proyecto;
+
+    @OneToMany(mappedBy = "presentacion")
+    private List<EvaluacionProyecto> evaluacion_proyecto;
+
+    @OneToMany(mappedBy = "presentacion")
+    private List<Aceptacion> aceptacion;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public List<Aceptacion> getAceptacion() {
+        return aceptacion;
+    }
+
+    public void setAceptacion(List<Aceptacion> aceptacion) {
+        this.aceptacion = aceptacion;
+    }
+
+    public List<EvaluacionProyecto> getEvaluacion_proyecto() {
+        return evaluacion_proyecto;
+    }
+
+    public void setEvaluacion_proyecto(List<EvaluacionProyecto> evaluacion_proyecto) {
+        this.evaluacion_proyecto = evaluacion_proyecto;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public boolean isNota_aprobacion() {
+        return nota_aprobacion;
+    }
+
+    public void setNota_aprobacion(boolean nota_aprobacion) {
+        this.nota_aprobacion = nota_aprobacion;
+    }
+
+    public boolean isCertificados() {
+        return certificados;
+    }
+
+    public void setCertificados(boolean certificados) {
+        this.certificados = certificados;
+    }
+
+    public boolean isNota_director() {
+        return nota_director;
+    }
+
+    public void setNota_director(boolean nota_director) {
+        this.nota_director = nota_director;
+    }
+
+    public boolean isNota_codirector() {
+        return nota_codirector;
+    }
+
+    public void setNota_codirector(boolean nota_codirector) {
+        this.nota_codirector = nota_codirector;
+    }
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Presentacion)) {
+            return false;
+        }
+        Presentacion other = (Presentacion) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidad.Presentacion[ id=" + id + " ]";
+    }
+
+}

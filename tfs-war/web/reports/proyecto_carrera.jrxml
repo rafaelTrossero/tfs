@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="carrera" class="java.lang.Long"/>
+	<parameter name="escudo1" class="java.lang.String"/>
+	<parameter name="escudo2" class="java.lang.String"/>
+	<parameter name="nombre_carrera" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     proyecto.titulo,proyecto.fecha_ingreso,estado.estado,carrera.carrera
+FROM
+     Proyecto,
+     carrera,
+      estado
+WHERE
+     proyecto.estado_id = estado.id and proyecto.carrera_id=carrera.id and carrera.id=$P{carrera}]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.sql.Date"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="carrera" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="155" y="45" width="225" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Facultad de Tecnología y Ciencias Aplicadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="15" width="265" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional de Catamarca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="72" width="379" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajos Finales por carrera]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="1" width="90" height="106"/>
+				<imageExpression><![CDATA[$P{escudo1}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="472" y="1" width="80" height="80"/>
+				<imageExpression><![CDATA[$P{escudo2}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42">
+			<textField>
+				<reportElement x="3" y="12" width="552" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Carrera:" +$P{nombre_carrera}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="13" width="242" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="13" width="97" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="13" width="214" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="3" y="0" width="241" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["*" + $F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="0" width="97" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="0" width="213" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

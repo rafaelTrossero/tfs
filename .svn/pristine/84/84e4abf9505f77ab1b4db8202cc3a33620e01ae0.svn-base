@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+
+    <title>Departamento Informática</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet"></link>
+
+    <!-- Custom CSS -->
+    <link href="../resources/css/modern-business.css" rel="stylesheet"></link>
+
+    <!-- Custom Fonts -->
+    <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <h:head>
+    </h:head>
+    <body>
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../index.xhtml">Inicio</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="about.html">Autoridades</a>
+                        </li>
+                        <li>
+                            <a href="comisiones.html">Comisiones</a>
+                        </li> 
+                        <li>
+                            <a href="reglamentacion.html">Reglamentación</a>
+                        </li>  
+                        <li>
+                            <a href="plantel_docente.xhtml">Docentes</a>
+                        </li>
+                        <li>
+                            <a href="carreras.html">Carreras</a>
+                        </li>
+                        <li>
+                            <a href="catedras.xhtml">Catedras</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contacto</a>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otras Paginas <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="http://www.unca.edu.ar/">UNCa</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.tecno.unca.edu.ar/">FTyCA</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.tecno.unca.edu.ar/moodle/">Aula virtual tecno</a>
+                                </li>
+                                <li>
+                                    <a href="404.html">404</a>
+                                </li>
+                                <li>
+                                    <a href="pricing.html">Pricing Table</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container"> 
+
+            <!-- Page Heading/Breadcrumbs -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Cátedras
+
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Inicio</a>
+                        </li>
+                        <li class="active">Cátedras</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Intro Content -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="../Imagenes/catedras.jpg" alt=""/>
+                </div>
+
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Cátedras por carrera</h2>
+                    <p>Los alumnos pueden consultar cada una de las páginas de cátedra de las asignaturas que dicta el departamento de Informatica  de la Facultad de Tecnologia y Ciencias Aplicadas de la UNCa.</p>
+                </div>
+                <div class="col-lg-12">
+
+                    <ul id="myTab" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#service-one" data-toggle="tab"><i class="fa fa-star"></i>  Ing. Informatica 2006</a>
+                        </li>
+                        <li class=""><a href="#service-two" data-toggle="tab"><i class="fa fa-star"></i>  Ing. Informatica 2010</a>
+                        </li>
+
+                    </ul>
+
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="service-one">
+
+                            <!-- /.row -->
+                            <h:form  id="form12">
+
+                                <div class="col-lg-12">
+                                    <h2 class="page-header">Catedras por año</h2>
+                                </div>
+
+                                <p:accordionPanel id ="apPrimero" >
+
+                                    <p:tab title="Primer año">
+                                        <h:dataTable styleClass="table"
+                                                     rows="50"
+                                                     value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Primero')}"
+                                                     var="primer" >
+
+
+                                            <p:column    width="700" >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Catedra"/>
+                                                </f:facet>
+                                                <p:commandLink value="#{primer.nombre}" oncomplete="PF('test').show()"
+                                                               update=":form12:apInformacionCatedra,:form12:apDocentes,:form12:apContenidos">
+                                                    <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                 value="#{primer}" />
+                                                </p:commandLink>
+                                            </p:column>
+
+
+                                        </h:dataTable> 
+                                    </p:tab>
+
+
+                                    <p:tab title="Segundo año">
+                                        <h:dataTable styleClass="table"
+                                                     rows="50"
+                                                     value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Segundo')}"
+                                                     var="segundo" >
+
+
+                                            <p:column    width="700" >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Catedra"/>
+                                                </f:facet>
+                                                <p:commandLink value="#{segundo.nombre}" oncomplete="PF('test').show()"
+                                                               update=":form12:apInformacionCatedra,:form12:apDocentes,:form12:apContenidos">
+                                                    <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                 value="#{segundo}" />
+                                                </p:commandLink>
+                                            </p:column>
+
+
+                                        </h:dataTable> 
+                                    </p:tab>
+
+
+                                    <p:tab title="Tercer año">
+                                        <h:dataTable styleClass="table"
+                                                     rows="50"
+                                                     value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Tercero')}"
+                                                     var="tercero" >
+
+
+                                            <p:column    width="700" >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Catedra"/>
+                                                </f:facet>
+                                                <p:commandLink value="#{tercero.nombre}" oncomplete="test.show()"
+                                                               update=":form12:apInformacionCatedra,:form12:apDocentes,:form12:apContenidos">
+                                                    <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                 value="#{tercero}"/>
+                                                </p:commandLink>
+                                            </p:column>
+
+
+                                        </h:dataTable> 
+                                    </p:tab>
+
+
+                                    <p:tab title="Cuarto año">
+                                        <h:dataTable styleClass="table"
+                                                     rows="50"
+                                                     value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('cuarto')}"
+                                                     var="proycuarto" >
+
+
+                                            <p:column    width="700" >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Catedra"/>
+                                                </f:facet>
+                                                <p:commandLink value="#{proycuarto.nombre}" oncomplete="test.show()"
+                                                               update=":form12:apInformacionCatedra,:form12:apDocentes,:form12:apContenidos">
+                                                    <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                 value="#{proycuarto}"  />
+                                                </p:commandLink>
+                                            </p:column>
+
+
+
+                                        </h:dataTable> 
+                                    </p:tab>
+
+
+                                    <p:tab title="Quinto año">
+                                        <h:dataTable styleClass="table"
+                                                     rows="50"
+                                                     value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Quinto')}"
+                                                     var="proys" >
+
+
+                                            <p:column    width="700" >
+                                                <f:facet name="header">
+                                                    <h:outputText value="Catedra"/>
+                                                </f:facet>
+                                                <p:commandLink value="#{proys.nombre}" oncomplete="PF('test').show()"
+                                                               update=":form12:apInformacionCatedra,:form12:apDocentes,:form12:apContenidos">
+                                                    <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}" 
+                                                                                 value="#{proys}" />
+                                                </p:commandLink>
+                                            </p:column>
+
+
+                                        </h:dataTable> 
+                                    </p:tab>
+                                </p:accordionPanel>
+
+
+                                <p:dialog modal="true" width="800" height="500" widgetVar="test"
+                                          id="dialog">
+                                    <p:accordionPanel id ="apInformacionCatedra" >
+                                        <p:tab title="Contenidos minimos">
+                                            <h:panelGrid columns="2" cellpadding="2" >
+
+                                                <p:outputLabel value="Nombre de la Cátedra:  "/>
+                                                <h:outputText  value="  #{listaCatedraBean.selectedCatedra.nombre}"/>
+                                                <p:outputLabel value="Curso:"/>
+                                                <h:outputText  value="  #{listaCatedraBean.selectedCatedra.curso}"/>
+                                                <p:outputLabel value="Cuatrimestre:  "/>
+                                                <h:outputText  value="  #{listaCatedraBean.selectedCatedra.cuatrimetre}"/>
+
+
+                                            </h:panelGrid>
+
+                                            <p:dataTable id="cronogramaTable"
+                                                         value="#{listaCatedraBean.buscarHorarios()}"
+                                                         var="cronograma" >  
+
+
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Dia" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{cronograma.dia}"  />  
+                                                </p:column> 
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Hora Incicio" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{cronograma.hora_inicio}"  />  
+                                                </p:column> 
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Hora fin" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{cronograma.hora_fin}"  />  
+                                                </p:column> 
+
+
+                                            </p:dataTable> 
+                                        </p:tab>
+                                    </p:accordionPanel>  
+                                    <p:accordionPanel id ="apContenidos" >
+
+                                        <p:tab title="Contenidos minimos">
+                                            <p:outputPanel id="display2" style="width:600px;padding-left:10px;margin-top:10px">
+
+                                                <p:dataList value="#{listaCatedraBean.selectedCatedra.contenidos_minimos}"
+                                                            var="cod" 
+                                                            emptyMessage="No hay contenidos minimos">
+                                                    <h:outputText value="#{listaCatedraBean.selectedCatedra.contenidos_minimos}"/>
+                                                </p:dataList>
+
+
+
+                                            </p:outputPanel>
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                    <p:accordionPanel id ="apDocentes" >
+                                        <p:tab title="Docentes Asociados a la catedra">
+
+
+                                            <p:dataTable id="TableDocente"
+                                                         value="#{listaCatedraBean.lstDocentCatedra}"
+                                                         var="docente" >  
+
+
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Apellido y Nombre" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{docente.docente.apellido},#{docente.docente.nombre}"  />  
+                                                </p:column> 
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Cargo" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{docente.docente.cargo.descripcion}"  />  
+                                                </p:column> 
+                                                <p:column  >  
+                                                    <f:facet name="header" >  
+                                                        <h:outputText value="Dedicacion" />   
+                                                    </f:facet>   
+                                                    <h:outputText value="#{docente.docente.dedicacion.descripcion}"  />  
+                                                </p:column> 
+
+
+
+                                            </p:dataTable> 
+
+
+
+
+                                        </p:tab>
+                                    </p:accordionPanel>
+
+
+
+
+
+
+
+
+
+
+                                    <h:form >
+                                        <h:commandButton value="Download" action="#{fileDownloadView.downloadFile(listaCatedraBean.selectedCatedra.dias)}"/>
+
+
+                                    </h:form>
+
+
+                                </p:dialog>
+
+
+                            </h:form>
+
+                            <!-- /.row -->
+
+                            <hr></hr>
+
+
+                            <!-- Footer -->
+
+
+                        </div>
+                        <div class="tab-pane fade" id="service-two">
+                            <h4>Service Two</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae repudiandae fugiat illo cupiditate excepturi esse officiis consectetur, laudantium qui voluptatem. Ad necessitatibus velit, accusantium expedita debitis impedit rerum totam id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quibusdam recusandae illum, nesciunt, architecto, saepe facere, voluptas eum incidunt dolores magni itaque autem neque velit in. At quia quaerat asperiores.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae repudiandae fugiat illo cupiditate excepturi esse officiis consectetur, laudantium qui voluptatem. Ad necessitatibus velit, accusantium expedita debitis impedit rerum totam id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quibusdam recusandae illum, nesciunt, architecto, saepe facere, voluptas eum incidunt dolores magni itaque autem neque velit in. At quia quaerat asperiores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright  Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+        <!-- /.container -->
+
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../resources/js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

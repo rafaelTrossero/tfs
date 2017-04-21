@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import entidad.Carrera;
+import entidad.Comision;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class ComisionFacade extends AbstractFacade<Comision> implements ComisionFacadeLocal {
+
+    @PersistenceContext(unitName = "tfs-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public ComisionFacade() {
+        super(Comision.class);
+    }
+
+    @Override
+    public void activate(Comision c, Boolean bEstado) throws Exception {
+        Query q = em.createNamedQuery("Comision.ActualizarEstado");
+        q.setParameter("active", bEstado);
+        q.setParameter("id", c.getId());
+
+        q.executeUpdate();
+    }
+
+    @Override
+    public Boolean findByComisionName(Comision c, int op) throws Exception {
+
+        Query q = null;
+
+        if (op == 0) {
+            //guardar
+            q = em.createNamedQuery("Comision.FindByComisionName");
+
+        } else {
+            //modificar
+            q = em.createNamedQuery("Comision.findByNombreComisionID");
+            q.setParameter("id", c.getId());
+
+        }//fin if
+        q.setParameter("nombre", c.getComision());
+
+        try {
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+
+    }
+       @Override
+    public List<Comision> findAllActivo() {
+          try {
+            Query q = em.createNamedQuery("Comision.SelectAll");
+
+            q.setParameter("active", true);
+
+            return (List<Comision>) q.getResultList();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}

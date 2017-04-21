@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+
+        <!-- DIALOGO PROFESIONAL !-->
+        <p:dialog id="dProfesional" 
+                  widgetVar="dlgProfesional" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Profesional"/>
+            </f:facet>
+
+            <p:panel id="pProfesional" style="float:left;" >
+                <p:focus context="pProfesional"/> 
+
+                <h:inputHidden value="#{profesionalBean.profesional.id}"/>
+
+                <h:inputHidden value="#{listaProfesionalBean.iActionBtnSelect}"/>
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apProf" style="width: 600px;">
+                    <p:tab title="Información Personal">
+                        <h:panelGrid columns="2" cellpadding="3" >
+
+
+                            <h:outputText value="Nombre: "/>
+                            <p:inputText value="#{profesionalBean.profesional.nombre}"
+                                         label="Nombre"/>
+
+                            <h:outputText value="Apellido: "/>
+                            <p:inputText value="#{profesionalBean.profesional.apellido}"
+                                         label="Apellido"/>
+
+                            <h:outputText value="Dni: "/>
+                            <p:inputText value="#{profesionalBean.profesional.dni}"
+                                         label="dni"/>
+
+                            <h:outputText value="Domicilio: "/>
+                            <p:inputText value="#{profesionalBean.profesional.domicilio}"
+                                         label="Domicilio"/>
+
+                            <h:outputText value="Pais: "/>
+                            <p:selectOneMenu    id="somPais"  
+                                                converter="ConversorGenerico">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems  
+                                    value="#{listaPaisBean.lstSIPais}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Provincia: "/>
+                            <p:selectOneMenu id="somProvincia"
+                                             converter="ConversorGenerico">
+                                <f:selectItem itemLabel="Seleccionar..." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaProvinciaBean.lstSIProvincia}"/>
+                            </p:selectOneMenu>
+
+
+
+                            <h:outputText value="Localidad: "/>
+                            <p:selectOneMenu id="somLocalidad"
+                                             converter="ConversorGenerico"
+                                             value="#{profesionalBean.profesional.localidad}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaLocalidadBean.lstSILocalidad}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Email: "/>
+                            <p:inputText value="#{profesionalBean.profesional.email}"
+                                         label="Email"/>
+                        </h:panelGrid>    
+                    </p:tab>
+
+                    <p:tab title="Información Profesional">
+                        <h:panelGrid columns="2" cellpadding="3" >
+
+                            <h:outputText value="Profesion: "/>
+                            <p:selectOneMenu id="somProfesion"
+                                             converter="ConversorGenerico"                   
+                                             value="#{profesionalBean.profesional.profesion}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaProfesionBean.lstSIProfesion}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Especialidad: "/>
+                            <p:selectOneMenu id="somEspecialidad"
+                                             converter="ConversorGenerico"
+                                             value="#{profesionalBean.profesional.especialidad}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaEspecialidadBean.lstSIEspecialidad}"/>
+
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Matricula Profesional: "/>
+                            <p:inputText value="#{profesionalBean.profesional.mat_profesional}"
+                                         label="Matricula Profesional"/>
+
+                            <div style="clear: both;"/>
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+
+                    <div style="clear: both;"/>
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-circle-plus"
+                                 actionListener="#{profesionalBean.actionBtn}" 
+                                 update=":frmMain:dtProfesional, 
+                                 :frmMain:pProfesional, @this"
+                                 binding="#{profesionalBean.cbAction}"/>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="dlgProfesional.hide()"
+                                 update=":frmMain:pProfesional, 
+                                 :frmMain:dtProfesional"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbNuevo"
+                             value="Nuevo Profesional" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgProfesional.show();"
+                             actionListener="#{profesionalBean.setBtnSelect}"
+                             update=":frmMain:dProfesional"
+                             process="@this"/><br/><br/>
+
+        </div>
+
+        <p:dataTable id="dtProfesional"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaProfesionalBean.lstProfesional}"
+                     var="prof"
+                     >
+
+
+
+            <p:column>
+
+                <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil" 
+                                 update=":frmMain:dProfesional"
+                                 oncomplete="dlgProfesional.show();"
+                                 actionListener="#{profesionalBean.setBtnSelect}"
+
+                                 >
+                    <f:setPropertyActionListener value="#{prof}" target="#{profesionalBean.profesional}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-circle-triangle-n" 
+                                 update=":frmMain:dProfesional, @this"
+                                 oncomplete="dlgProfesional.show();"
+                                 actionListener="#{profesionalBean.setBtnSelect}"
+                                 >
+                    <f:setPropertyActionListener value="#{prof}" target="#{profesionalBean.profesional}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-triangle-s"
+                                 update=":frmMain:dProfesional, @this"
+                                 oncomplete="dlgProfesional.show();"
+                                 actionListener="#{profesionalBean.setBtnSelect}"
+                                 >
+
+                    <f:setPropertyActionListener value="#{prof}" target="#{profesionalBean.profesional}"/> 
+                </p:commandButton>
+            </p:column>
+
+
+            <p:column filterBy="#{prof.nombre}" sortBy="#{prof.nombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Nombre y Apellido"/>
+                </f:facet>               
+                <h:outputText value="#{prof.nombre},#{prof.apellido}"/>
+
+            </p:column>
+
+            <p:column filterBy="#{prof.mat_profesional}" sortBy="#{prof.mat_profesional}">
+                <f:facet name="header">
+                    <h:outputText value="Matricula Profesional"/>
+                </f:facet>               
+                <h:outputText value="#{prof.mat_profesional}"/>
+
+            </p:column>
+
+            <p:column filterBy="#{prof.profesion}" sortBy="#{prof.profesion}">
+                <f:facet name="header">
+                    <h:outputText value="Profesion"/>
+                </f:facet>               
+                <h:outputText value="#{prof.profesion.descripcion}"/>
+
+            </p:column>
+            <p:column filterBy="#{prof.especialidad}" sortBy="#{prof.especialidad}">
+                <f:facet name="header">
+                    <h:outputText value="Especialidad"/>
+                </f:facet>               
+                <h:outputText value="#{prof.especialidad.especialidad}"/>
+
+            </p:column>
+
+
+        </p:dataTable>
+
+
+
+
+    </ui:define>
+
+</ui:composition>

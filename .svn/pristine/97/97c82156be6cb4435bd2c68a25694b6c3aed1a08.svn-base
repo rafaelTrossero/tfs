@@ -1,0 +1,94 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.CarreraRNLocal;
+import entidad.Carrera;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author jmoreno
+ */
+@ManagedBean
+@SessionScoped
+public class ListaCarreraBean {
+
+    @EJB
+    private CarreraRNLocal carreraRNLocal;
+    private List<Carrera> lstCarrera;
+    private List<SelectItem> lstSICarrera;
+    
+    private int iActionBtnSelect;
+
+    /**
+     * Creates a new instance of ListaCarreraBean
+     */
+    public ListaCarreraBean() {
+        this.lstCarrera = new ArrayList<Carrera>();
+    }
+
+    @PostConstruct
+    private void init() {
+        this.limpiar();
+        this.cargar_carreras();
+        this.cargar_SI_carreras();
+    }
+
+    public List<SelectItem> getLstSICarrera() {
+        return lstSICarrera;
+    }
+
+    public void setLstSICarrera(List<SelectItem> lstSICarrera) {
+        this.lstSICarrera = lstSICarrera;
+    }
+
+    public List<Carrera> getLstCarrera() {
+        return lstCarrera;
+    }
+
+    public void setLstCarrera(List<Carrera> lstCarrera) {
+        this.lstCarrera = lstCarrera;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+
+    
+
+    public void limpiar() {
+        this.lstCarrera = new ArrayList<Carrera>();
+    }
+
+    public void cargar_carreras() {
+        try {
+            this.setLstCarrera(carreraRNLocal.findAll());
+        } catch (Exception ex) {
+            System.out.println("Error al cargar carreras -> Causa: "
+                    + ex.getMessage());
+        }
+    }
+
+    public void cargar_SI_carreras() {
+        this.setLstSICarrera(new ArrayList<SelectItem>());
+
+        for (Carrera d : this.getLstCarrera()) {
+            SelectItem si = new SelectItem(d, d.getCarrera());
+            this.getLstSICarrera().add(si);
+        }
+    }
+}

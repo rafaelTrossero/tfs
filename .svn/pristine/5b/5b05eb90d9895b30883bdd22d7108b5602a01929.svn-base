@@ -1,0 +1,85 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import entidad.Depto;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class DeptoFacade extends AbstractFacade<Depto> implements DeptoFacadeLocal {
+
+    @PersistenceContext(unitName = "tfs-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public DeptoFacade() {
+        super(Depto.class);
+    }
+
+    @Override
+    public void activate(Depto c, Boolean bEstado) {
+    Query q = em.createNamedQuery("Depto.ActualizarEstado");
+        q.setParameter("active", bEstado);
+        q.setParameter("id", c.getId());
+        
+        q.executeUpdate();    
+    }
+    
+     
+
+    @Override
+    public Boolean bFindByNombreDepto(Depto p, int op) throws Exception {
+        Query q = null;
+
+        if (op == 0) {
+            //guardar
+            q = em.createNamedQuery("Depto.findByNombreDepto");
+
+        } else {
+            //modificar
+            q = em.createNamedQuery("Depto.findByNombreDeptoID");
+            q.setParameter("id", p.getId());
+
+        }//fin if
+
+        q.setParameter("nombre", p.getDepartamento());
+
+        try {
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+
+    }
+
+    @Override
+    public List<Depto> findAllActivo() {
+          try {
+            Query q = em.createNamedQuery("Dpto.SelectAll");
+
+            q.setParameter("active", true);
+
+            return (List<Depto>) q.getResultList();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}

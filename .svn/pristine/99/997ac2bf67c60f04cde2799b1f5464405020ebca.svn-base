@@ -1,0 +1,30 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import entidad.Grupo;
+import entidad.Permiso;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author AFerSor
+ */
+@Local
+public interface GrupoRNLocal {
+
+    public void create(Grupo grupo) throws Exception;
+
+    public void edit(Grupo grupo) throws Exception;
+
+    public void remove(Grupo grupo) throws Exception;
+
+    public List<Grupo> findAll() throws Exception;
+
+    public Boolean bFindByGrupoPantallaPermitido(Long idGrupo, String pantalla) throws Exception;
+
+    public List<Permiso> findPermisosByGrupo(Long idGrupo) throws Exception;
+}

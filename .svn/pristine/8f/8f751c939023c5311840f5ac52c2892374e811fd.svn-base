@@ -1,0 +1,433 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 template="./Template/TfsTemplate.xhtml"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <p:dialog id="dOpeProy"
+                  modal="true"
+                  widgetVar="dlgOpeProy">
+
+
+
+            <td>
+                <div>
+                    <h:outputText value="Operacion"/>
+                </div>
+                <div>
+
+
+                    <p:dataTable id="dtOperacion"
+                                 value="#{listaOperacionBean.lstOperacion}"
+                                 var="ope"
+                                 rowKey="#{ope.id}"
+                                 selectionMode="single"
+                                 paginator="true"
+                                 rows="10"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{operacionBean.cargarOperacionSelect}"   
+                                update=":frmMain:otOperacion"
+                                oncomplete="dlgOpeProy.hide()" />
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Código"/>
+                            </f:facet>
+                            <h:outputText value="#{ope.id}"/>
+                        </p:column>
+
+                        <p:column filterBy="#{ope.operacion}">
+                            <f:facet name="header">
+                                <h:outputText value="Operacion"/>
+                            </f:facet>
+                            <h:outputText value="#{ope.operacion}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+
+
+
+
+            </td>
+        </p:dialog>
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+
+
+        <!-- DIALOGO PROYECTO Operacion 2 !-->
+        <p:dialog id="dModProy1" 
+                  widgetVar="dlgModProyecto1" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Cambiar titulo de Proyecto"/>
+            </f:facet>
+
+
+            <p:panel id="display1">
+                <p:accordionPanel id ="apAlu1" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{operacionBean.proyecto.titulo}" />
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                </p:accordionPanel>
+
+            </p:panel>    
+
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir1"
+                             value="Salir" 
+                             oncomplete="dlgModProyecto1.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction1"
+                             value="Guardar " 
+                             actionListener="#{presentacionBean.create()}" 
+                             />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dModProy" 
+                  widgetVar="dlgModTitulo" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Cambiar titulo de proyecto"/>
+            </f:facet>
+
+
+            <p:panel id="display">
+
+                <p:focus context="display"/> 
+
+                <h:inputHidden value="#{operacionBean.proyecto.id}"/>
+
+                <h:panelGrid columns="2" cellpadding="2" >
+                    <h:outputLabel value="Titulo:" style="text-align:center"/>
+                    <h:outputText value="#{operacionBean.proyecto.titulo}" />
+
+                    <h:outputLabel value="Operacion:" style="text-align:center"/>
+                    <h:outputText value="#{operacionBean.listaOperacionBean.selectedOpe.operacion}" />
+
+                    <h:outputLabel value="Nuevo titulo:" style="text-align:center"/>
+                    <p:inputText  value="#{operacionBean.nuevoTitulo}"/>
+
+
+                </h:panelGrid>
+
+
+            </p:panel>    
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgModTitulo.hide()"
+                             
+                             process="@this"/>
+
+            <p:commandButton id="btnAction"
+                             value="Guardar " 
+                             action="#{operacionBean.edit}"
+                             update=":frmMain:display, :frmMain:somProyecto, @this"
+                             />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+
+
+        <p:dialog id="dBajaDir" 
+                  widgetVar="dlgBajaDir" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="baja de director"/>
+            </f:facet>
+
+
+            <p:panel id="display2">
+                <p:accordionPanel id ="apBajaDir" style="width: 600px;">
+                    <p:tab title="realizar baja de director"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{operacionBean.proyecto.titulo}" />
+
+
+                        </h:panelGrid>
+                        <p:dataList value="#{operacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <p:selectOneMenu id="somDirector"
+                                         converter="ConversorGenerico"
+                                         value="#{operacionBean.proy_direc.docente}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocente}"/>
+
+                        </p:selectOneMenu>
+
+                    </p:tab>
+
+                </p:accordionPanel>
+
+            </p:panel>    
+
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir2"
+                             value="Salir" 
+                             oncomplete="dlgBajaDir.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction2"
+                             value="Guardar " 
+                             actionListener="#{operacionBean.alta_dir()}" 
+                             />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+
+
+
+
+
+        <p:dialog id="dBajaDir2" 
+                  widgetVar="dlgBajaDir2" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="baja de director true"/>
+            </f:facet>
+
+
+            <p:panel id="display3">
+                <p:accordionPanel id ="apBajaDir2" style="width: 600px;">
+                    <p:tab title="realizar baja de director"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{operacionBean.proyecto.titulo}" />
+
+
+                        </h:panelGrid>
+                        <p:dataList value="#{operacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+
+
+                    </p:tab>
+
+                </p:accordionPanel>
+
+            </p:panel>    
+
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir3"
+                             value="Salir" 
+                             oncomplete="dlgBajaDir2.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction3"
+                             value="Guardar " 
+                             actionListener="#{operacionBean.baja_dir()}" 
+                             />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+
+
+        <p:dialog id="dBajaAsesor" 
+                  widgetVar="dlgBajaAsesor" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="baja de asesor"/>
+            </f:facet>
+
+
+            <p:panel id="display4">
+                <p:accordionPanel id ="apBajaAsesor1" style="width: 600px;">
+                    <p:tab title="realizar baja de asesor"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{operacionBean.proyecto.titulo}" />
+                        </h:panelGrid>
+
+
+                        <p:selectOneMenu id="soAsesor"
+                                         converter="ConversorGenerico"
+                                         value="#{operacionBean.proy_ases}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaOperacionBean.lstSIasesor}"/>
+                           
+
+                        </p:selectOneMenu>
+
+                    </p:tab>
+
+                </p:accordionPanel>
+
+            </p:panel>    
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+
+            <div style="clear: both;"/>
+
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir5"
+                             value="Salir" 
+                             oncomplete="dlgBajaAsesor.hide()"
+
+                             process="@this"/>
+
+            <p:commandButton id="btnAction5"
+                             value="Guardar " 
+                             actionListener="#{operacionBean.baja_as}" 
+
+
+                             />
+
+            <p:commandButton id="btnAction6"
+                             value="Guardar " 
+                             actionListener="#{operacionBean.baja_asesor}" 
+
+                             />
+
+
+        </p:dialog>
+
+        <p:panel   header="Asentar operaciones de Proyectos" style="text-align:center;">
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto"
+                             converter="ConversorGenerico"
+                             value="#{operacionBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyecto}"/>
+
+            </p:selectOneMenu>
+
+
+
+            <h:outputText value="Operacion:   "/> 
+            <p:commandButton id="cbBuscarOpe" 
+                             title="Buscar"
+                             icon="ui-icon-search"
+                             onclick="dlgOpeProy.show()"
+                             action="#{listaOperacionBean.cargar_SI_Operaciones()}"
+                             process="@this"
+                             immediate="true"
+                             update="dtOperacion"
+
+                             />
+            <p:inputText id ="otOperacion" 
+                         value="#{listaOperacionBean.selectedOpe.operacion}" 
+                         readonly="true"
+                         />
+
+
+
+            <!--
+             <h:outputText value="Operacion  "/>
+            <p:selectOneMenu id="somOperacion"
+                             converter="ConversorGenerico"
+                             value="#/{operacionBean.selectedOpe}">
+                 
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#/{listaOperacionBean.lstSIOperacion}"/>
+
+            </p:selectOneMenu>
+            !-->
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+
+                <p:commandButton id="cbContinuar" 
+
+                                 value="Continuar"
+
+
+                                 update=":frmMain:display,display2,display3,display4 @this"
+
+                                 action="#{operacionBean.seleccionar_operacion}"
+
+
+                                 />
+
+
+            </div>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

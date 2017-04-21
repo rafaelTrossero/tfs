@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.CronogramaActividadFacadeLocal;
+import entidad.CronogramaActividad;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class CronogramaActividadRN implements CronogramaActividadRNLocal {
+
+    @EJB
+    private CronogramaActividadFacadeLocal cronograma_actFacadeLocal;
+    
+    @Override
+    public void create(CronogramaActividad c) throws Exception {
+        this.cronograma_actFacadeLocal.create(c);
+    }
+
+    @Override
+    public void remove(CronogramaActividad c) throws Exception {
+        this.cronograma_actFacadeLocal.remove(c);
+    }
+
+    @Override
+    public void edit(CronogramaActividad c) throws Exception {
+        this.cronograma_actFacadeLocal.edit(c);
+    }
+
+    @Override
+    public List<CronogramaActividad> findAll() throws Exception {
+        return (this.cronograma_actFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+}

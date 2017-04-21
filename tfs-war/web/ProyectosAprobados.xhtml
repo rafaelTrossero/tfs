@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:define name="content" >
+
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+         
+        <div style="float: left;">
+            <h:outputText value=" Proyectos " 
+                          styleClass="titulo"/>
+        </div>
+
+        
+        <div class="camposTexto">
+            <p:panel id="displayo">
+        
+      <h:outputText value="Proyectos aprobados entre las fechas: "/>
+      <p:calendar value="#{listaProyectosAprobadosBean.fecha1}" 
+                                    
+                           pattern="dd/MM/yyyy" >
+                         </p:calendar>
+      <p:calendar value="#{listaProyectosAprobadosBean.fecha2}" 
+                                    disabled="false" 
+                             pattern="dd/MM/yyyy" >
+                        </p:calendar>
+      
+       <p:commandButton id="ContinuarAprobados"
+                             icon="ui-icon-search" 
+                             actionListener="#{listaProyectosAprobadosBean.cargarProyectosAprobados()}"
+                             update="dtProyectoAprobados, displayo"
+                          
+                             />
+       </p:panel>
+</div>
+        <div style="clear: both;"/>
+
+
+        
+        <!-- PANTALLA PRINCIPAL !-->
+
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+            
+           
+             
+           
+
+        </div>
+
+        <p:dataTable id="dtProyectoAprobados"
+                     value="#{listaProyectosAprobadosBean.lstProyectosAprobados}"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     var="proy"
+                     >
+            <f:facet name="header">
+                Cantidad de registros: #{listaProyectosAprobadosBean.lstProyectosAprobados.size()}
+                </f:facet>
+
+
+  <p:column width="150"  headerText="Operaciones" > 
+                
+                <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil" 
+                                 update=":frmMain:dtProyectoAprobados"
+                                 
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+
+                                 >
+                    <f:setPropertyActionListener value="#/{prof}" target="#/{profesionalBean.profesional}"/> 
+                </p:commandButton>
+               
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-unlocked" 
+                                 update=":frmMain:dtProyectoAprobados, @this"
+                                 
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+                                 >
+                    <f:setPropertyActionListener value="#/{prof}" target="#/{profesionalBean.profesional}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-close"
+                                 update=":frmMain:dtProyectoAprobados, @this"
+                                 
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+                                 >
+
+                    <f:setPropertyActionListener value="#7{prof}" target="#/{profesionalBean.profesional}"/> 
+                </p:commandButton>
+
+
+            </p:column>
+
+
+            <p:column filterBy="#{proy.proyecto.titulo}" sortBy="#{proy.proyecto.titulo}" >
+                <f:facet name="header">
+                    <h:outputText value="Título"/>
+                </f:facet>               
+                <h:outputText value="#{proy.proyecto.titulo}"/>
+
+            </p:column>
+
+            <p:column filterBy="#{proy.fecha}" sortBy="#{proy.fecha}">
+                <f:facet name="header">
+                    <h:outputText value="Fecha de Aprobación" />
+                </f:facet>               
+                <h:outputText value="#{proy.fecha}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+
+            </p:column>
+
+            <p:column filterBy="#{proy.proyecto.estado}" sortBy="#{proy.proyecto.estado}">
+                <f:facet name="header">
+                    <h:outputText value="Estado"/>
+                </f:facet>               
+                <h:outputText value="#{proy.proyecto.estado.estado}"/>
+
+            </p:column>
+            <p:column >
+
+                <h:commandButton    
+                    actionListener="#{proyectoBean.generar('proyectos_aprobados.jasper', null, null, 99, null ,null, null, listaProyectosAprobadosBean.fecha1, listaProyectosAprobadosBean.fecha2)}"
+                                    onclick="this.form.target = '_blank'"
+                                    onblur="this.form.target = '_self'"
+
+                                    value="Ver PDF"
+                      />
+
+            </p:column> 
+           
+            
+            
+           
+            
+        </p:dataTable>
+
+
+
+
+    </ui:define>
+
+</ui:composition>

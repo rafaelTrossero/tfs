@@ -1,0 +1,254 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.UsuarioRNLocal;
+import entidad.Persona;
+import entidad.Usuario;
+import entidad.tipoUsuario;
+import java.io.IOException;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@ManagedBean(name = "loginBean")
+@RequestScoped
+public class LoginBean {
+
+    private String user;
+    private String password;
+
+    private Usuario usuarioValidado;
+
+    @ManagedProperty(value = "#{usuarioLogerBean}")
+    private UsuarioLogerBean usuarioLogerBean;
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+//       
+    @ManagedProperty("#{sessionNews}")
+    private SessionNews sessionNews;
+    private Persona persona;
+//    @ManagedProperty(value="#{sessionControlerBean}")
+//    private SessionControlerBean sessionControlerBean;
+//    
+    @EJB
+    private UsuarioRNLocal usuarioRNLocal;
+
+    public LoginBean() {
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Usuario getUsuarioValidado() {
+        return usuarioValidado;
+    }
+
+    public void setUsuarioValidado(Usuario usuarioValidado) {
+        this.usuarioValidado = usuarioValidado;
+    }
+
+    public UsuarioLogerBean getUsuarioLogerBean() {
+        return usuarioLogerBean;
+    }
+
+    public void setUsuarioLogerBean(UsuarioLogerBean usuarioLogerBean) {
+        this.usuarioLogerBean = usuarioLogerBean;
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public SessionNews getSessionNews() {
+        return sessionNews;
+    }
+
+    public void setSessionNews(SessionNews sessionNews) {
+        this.sessionNews = sessionNews;
+    }
+
+    public UsuarioRNLocal getUsuarioRNLocal() {
+        return usuarioRNLocal;
+    }
+
+    public void setUsuarioRNLocal(UsuarioRNLocal usuarioRNLocal) {
+        this.usuarioRNLocal = usuarioRNLocal;
+    }
+
+    public String login() {
+
+        try {
+//            Users usuAux = usersRNLocal.findByUsuarioContrasena(user, Encrypter.encriptar(password));
+            persona = new Persona();
+            usuarioValidado = usuarioRNLocal.findByUsuarioContrasena(user, password);
+
+           // this.getSessionNews().setNews(new News());
+            if (usuarioValidado != null) {
+                //que hace esto??
+                HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
+                usuarioLogerBean.setUsuario(usuarioValidado);
+                if (usuarioValidado.getTipousuario().equals(tipoUsuario.ALUMNO)) {
+                    usuarioLogerBean.setAdministracion(Boolean.FALSE);
+                    usuarioLogerBean.setTrabajosFinales(Boolean.FALSE);
+                    usuarioLogerBean.setSeguimientoTrabFinales(Boolean.FALSE);
+                    usuarioLogerBean.setMiProyecto(Boolean.TRUE);
+                    return "index.xhtml?faces-redirect=true";
+                }
+                if (usuarioValidado.getTipousuario().equals(tipoUsuario.ADMINISTRADOR)) {
+                    usuarioLogerBean.setAdministracion(Boolean.TRUE);
+                    usuarioLogerBean.setTrabajosFinales(Boolean.TRUE);
+                    usuarioLogerBean.setSeguimientoTrabFinales(Boolean.TRUE);
+                    usuarioLogerBean.setOperacionesProyecto(Boolean.TRUE);
+                    usuarioLogerBean.setMisProyectos(Boolean.FALSE);
+                    return "index.xhtml?faces-redirect=true";
+                }
+                if (usuarioValidado.getTipousuario().equals(tipoUsuario.DOCENTE)) {
+                    usuarioLogerBean.setAdministracion(Boolean.FALSE);
+                    usuarioLogerBean.setTrabajosFinales(Boolean.TRUE);
+                    usuarioLogerBean.setSeguimientoTrabFinales(Boolean.TRUE);
+                    usuarioLogerBean.setOperacionesProyecto(Boolean.TRUE);
+                     usuarioLogerBean.setMisProyectos(Boolean.TRUE);
+
+                    //  listaProyectoBean.cargarProyectosByDocenteTribunal(usuarioLogerBean.getUsuario().getId()); 
+                    return "index.xhtml?faces-redirect=true";
+                }
+                
+                 if (usuarioValidado.getTipousuario().equals(tipoUsuario.PROFESIONAL)) {
+                    usuarioLogerBean.setAdministracion(Boolean.FALSE);
+                    usuarioLogerBean.setTrabajosFinales(Boolean.FALSE);
+                    usuarioLogerBean.setSeguimientoTrabFinales(Boolean.FALSE);
+                    usuarioLogerBean.setOperacionesProyecto(Boolean.FALSE);
+                     usuarioLogerBean.setMisProyectos(Boolean.TRUE);
+
+                    //  listaProyectoBean.cargarProyectosByDocenteTribunal(usuarioLogerBean.getUsuario().getId()); 
+                    return "index.xhtml?faces-redirect=true";
+                }
+
+//                session.setAttribute("user_validated", userValidated);
+             /*   if (userValidated.getUserType().equals(UserType.STUDENT)
+                 || userValidated.getUserType().equals(UserType.TEACHER)) {
+                 usersLogerBean.setbUsers(Boolean.FALSE);
+                 usersLogerBean.setbCuiaUser(Boolean.FALSE);
+                 usersLogerBean.setbHasWorkExperience(Boolean.TRUE);
+                 usersLogerBean.setbHasResearchExperience(Boolean.TRUE);
+                 usersLogerBean.setbProject(Boolean.TRUE);
+                 usersLogerBean.setbExchangeProgramaCreateUpdate(Boolean.FALSE);
+                 if (userValidated.getUrlImage().equals("withoutphoto.png")) {
+                 usersLogerBean.setbHasImage(Boolean.FALSE);
+
+                 } else {
+                 usersLogerBean.setbHasImage(Boolean.TRUE);
+                 }
+                 System.out.println("tiene imagen" + usersLogerBean.getbHasImage());
+                 //Aqui se deberia seguir agregando los permisos que TEACHER
+                 //y STUDENT tienen en COMUN.
+                 return "Admin/index.xhtml?faces-redirect=true";
+                 }*/
+                /*
+                 if (userValidated.getUserType().equals(UserType.UNIVERSITY_ADMINISTRATOR)) {
+                 usersLogerBean.setbUsers(Boolean.TRUE);
+                 usersLogerBean.setbCuiaUser(Boolean.FALSE);
+                 usersLogerBean.setbHasWorkExperience(Boolean.FALSE);
+                 usersLogerBean.setbHasResearchExperience(Boolean.FALSE);
+                 usersLogerBean.setbExchangeProgramaCreateUpdate(Boolean.TRUE);
+                 if (userValidated.getUrlImage().equals("withoutphoto.png")) {
+                 usersLogerBean.setbHasImage(Boolean.FALSE);
+
+                 } else {
+                 usersLogerBean.setbHasImage(Boolean.TRUE);
+                 }
+
+                 //Aqui se deberia seguir agregando los permisos del ADMINISTRADOR.
+                 return "Admin/index.xhtml?faces-redirect=true";
+                 } else if (userValidated.getUserType().equals(UserType.CUIA)) {
+                 usersLogerBean.setbExchangeProgramaCreateUpdate(Boolean.TRUE);
+                 usersLogerBean.setbCuiaUser(Boolean.TRUE);
+                 usersLogerBean.setbUsers(Boolean.FALSE);
+                 usersLogerBean.setbHasWorkExperience(Boolean.FALSE);
+                 usersLogerBean.setbHasResearchExperience(Boolean.FALSE);
+                 usersLogerBean.setbExchangeProgramaCreateUpdate(Boolean.TRUE);
+                 if (userValidated.getUrlImage().equals("withoutphoto.png")) {
+                 usersLogerBean.setbHasImage(Boolean.FALSE);
+
+                 } else {
+                 usersLogerBean.setbHasImage(Boolean.TRUE);
+                 }
+                 return "Admin/index.xhtml?faces-redirect=true";
+                 }*/
+            } else {
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario o contraseña invalidos", null);
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage(null, fm);
+            }//fin else
+
+//            System.out.println("user: " + this.getUser() + " password: " + this.getPassword());
+//            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//            request.login(this.getUser(), this.getPassword());
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error en log in " + e.getMessage(), null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+            //      FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials, try again", ""));
+        }
+
+        return "";
+
+    }//fin login
+
+    public void logout() throws ServletException, IOException {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        request.getSession().invalidate();
+        request.logout();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+    } //fin logout
+
+    public String getLoggedUser() {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (request.getUserPrincipal() != null) {
+            return request.getUserPrincipal().getName();
+        }
+        return "";
+    }//fin getLoggedUser()
+}

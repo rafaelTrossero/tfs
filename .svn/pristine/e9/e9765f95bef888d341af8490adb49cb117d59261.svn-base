@@ -1,0 +1,204 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.AceptacionFacadeLocal;
+import DAO.ProyectoAsesorFacadeLocal;
+import DAO.ProyectoCodirectorFacadeLocal;
+import DAO.ProyectoDirectorFacadeLocal;
+import entidad.Aceptacion;
+import entidad.Calificacion;
+import entidad.Presentacion;
+import entidad.Profesional;
+import entidad.Proyecto;
+import entidad.ProyectoAsesor;
+import entidad.ProyectoCodirector;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class AceptacionRN implements AceptacionRNLocal {
+
+    @EJB
+    private AceptacionFacadeLocal aceptacionFacadeLocal;
+
+    @EJB
+    private ProyectoDirectorFacadeLocal proyectoDirectorDAOfacadeLocal;
+
+    @EJB
+    private ProyectoCodirectorFacadeLocal proyectoCodirectorDAOfacadeLocal;
+
+    @EJB
+    private ProyectoAsesorFacadeLocal proyectoAsesorDAOfacadeLocal;
+
+    private List<ProyectoAsesor> proyAsesor;
+    private ProyectoAsesor proyAsesorActivo;
+    private List<ProyectoCodirector> proyCodirector;
+    private ProyectoCodirector proyCodirectorActivo;
+
+    @Override
+    public void create(Aceptacion a) throws Exception {
+
+        this.validar(a, 1);
+        this.aceptacionFacadeLocal.create(a);
+    }
+
+    @Override
+    public void remove(Aceptacion a) throws Exception {
+        this.aceptacionFacadeLocal.remove(a);
+    }
+
+    @Override
+    public void edit(Aceptacion a) throws Exception {
+        this.aceptacionFacadeLocal.edit(a);
+    }
+
+    @Override
+    public List<Aceptacion> findAll() throws Exception {
+        return (this.aceptacionFacadeLocal.findAll());
+    }
+
+    @Override
+    public Aceptacion findByAceptacion(Proyecto pro, Presentacion pres, Calificacion cal) throws Exception {
+        return aceptacionFacadeLocal.findbyAceptacion(pro, pres, cal);
+    }
+
+    @Override
+    public Aceptacion findByProyAceptacion(Proyecto pro, Integer cal) throws Exception {
+        return aceptacionFacadeLocal.findByProyAceptacion(pro, cal);
+    }
+    @Override
+    public Aceptacion findByProyAceptacion1(Proyecto proyecto)  throws Exception {
+        
+            return aceptacionFacadeLocal.findByProyAceptacion1(proyecto);
+         }
+      @Override
+    public List<Aceptacion> findByAceptacion1(Proyecto pro) throws Exception {
+        return this.aceptacionFacadeLocal.findByAceptacion1(pro);
+    }
+   
+
+    private void validar(Aceptacion a, int op) throws Exception {
+    //verifica si el código es menor o igual a cero
+
+        if(a.getCalificacion().getId().equals(1L)){
+        //verifica si es una línea en blanco
+        if (a.getPresidente() == null) {
+            throw new Exception("El campo presidente no puede estar vacío");
+        }
+        if (a.getSuplente1() == null) {
+            throw new Exception("El campo suplente 1 no puede estar vacío");
+        }
+        if (a.getSuplente2() == null) {
+            throw new Exception("El campo suplente 2 no puede estar vacío");
+        }
+        if (a.getVocal1() == null) {
+            throw new Exception("El campo vocal 1 no puede estar vacío");
+        }
+        if (a.getVocal2() == null) {
+            throw new Exception("El campo vocal 2 no puede estar vacío");
+        }
+        }
+
+        if (a.getFecha() == null) {
+            throw new Exception("El campo fecha no puede estar vacío");
+        }
+
+        if (a.getCalificacion() == null) {
+            throw new Exception("El campo calificación no puede estar vacío");
+        }
+
+        //verificando docentes duplicados  
+        System.out.println(":::::::::::::::::" + a.getPresidente() + a.getVocal1() + a.getVocal2() + a.getSuplente1() + a.getSuplente2());
+
+        if (a.getVocal1().equals(a.getPresidente())) {
+            throw new Exception("El docente seleccionado en Vocal 1 ya esta siendo usado");
+        }
+
+        if (a.getVocal2().equals(a.getPresidente())
+                || a.getVocal2().equals(a.getVocal1())) {
+            throw new Exception("El docente seleccionado en Vocal 2 ya esta siendo usado");
+        }
+
+        if (a.getSuplente1().equals(a.getPresidente())
+                || a.getSuplente1().equals(a.getVocal1())
+                || a.getSuplente1().equals(a.getVocal2())) {
+            throw new Exception("El docente seleccionado en Suplente 1 ya esta siendo usado");
+        }
+
+        if (a.getSuplente2().equals(a.getPresidente())
+                || a.getSuplente2().equals(a.getSuplente1())
+                || a.getSuplente2().equals(a.getVocal1())
+                || a.getSuplente2().equals(a.getVocal2())) {
+            throw new Exception("El docente seleccionado en Suplente 2 ya esta siendo usado");
+        }
+
+        /*------------------------------------------------------------------------
+         Verifica que en el tribunal propuesto no se elija al director del proyecto
+         ---------------------------------------------------------------------------*/
+        System.out.println("-------------------------------------------" + proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId());
+        if (proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId().equals(a.getPresidente())
+                || proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId().equals(a.getVocal1())
+                || proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId().equals(a.getVocal2())
+                || proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId().equals(a.getSuplente1())
+                || proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getId().equals(a.getSuplente2())) {
+
+            throw new Exception("El docente " + proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getNombre() + ", "
+                    + proyectoDirectorDAOfacadeLocal.findProyDirectorActivo(a.getProyecto(), true).getDocente().getApellido()
+                    + " no puede ser seleccionado ya que es el director del proyecto");
+        }
+
+        proyAsesor = proyectoAsesorDAOfacadeLocal.findByProyAsesor(a.getProyecto(), true);
+        proyCodirector = proyectoCodirectorDAOfacadeLocal.findCodirectorActivo(a.getProyecto(), true);
+
+        //recorre el list de los asesores afectados en el proyecto
+        Iterator<ProyectoAsesor> as = proyAsesor.iterator();
+
+        while (as.hasNext()) {
+            proyAsesorActivo = as.next();
+            System.out.println("uuuuuuuuuuuuuuuuASESORuuuuuuuuuuuuuuuu" + proyAsesorActivo.getProfesional().getId());
+            if (proyAsesorActivo.getProfesional().getId().equals(a.getPresidente())
+                    || proyAsesorActivo.getProfesional().getId().equals(a.getVocal1())
+                    || proyAsesorActivo.getProfesional().getId().equals(a.getVocal2())
+                    || proyAsesorActivo.getProfesional().getId().equals(a.getSuplente1())
+                    || proyAsesorActivo.getProfesional().getId().equals(a.getSuplente2())) {
+
+                throw new Exception("El docente " + proyAsesorActivo.getProfesional().getApellido()+ ", "
+                    + proyAsesorActivo.getProfesional().getNombre()
+                    + " no puede ser seleccionado ya que es asesor del proyecto");
+            }
+
+        }
+
+        //recorre el list de los codirectores afectados en el proyecto
+        Iterator<ProyectoCodirector> cod = proyCodirector.iterator();
+
+        while (cod.hasNext()) {
+            proyCodirectorActivo = cod.next();
+            System.out.println("uuuuuuuuuuuuuuuuCODIRECTORuuuuuuuuuuuuuuuu" + proyCodirectorActivo.getProfesional().getId());
+            if (proyCodirectorActivo.getProfesional().getId().equals(a.getPresidente())
+                    || proyCodirectorActivo.getProfesional().getId().equals(a.getVocal1())
+                    || proyCodirectorActivo.getProfesional().getId().equals(a.getVocal2())
+                    || proyCodirectorActivo.getProfesional().getId().equals(a.getSuplente1())
+                    || proyCodirectorActivo.getProfesional().getId().equals(a.getSuplente2())) {
+
+                throw new Exception("El docente " + proyCodirectorActivo.getProfesional().getApellido()+ ", "
+                    + proyCodirectorActivo.getProfesional().getNombre()
+                    + " no puede ser seleccionado ya que es codirector del proyecto");
+            }
+        }
+    }//fin validar
+
+    
+}

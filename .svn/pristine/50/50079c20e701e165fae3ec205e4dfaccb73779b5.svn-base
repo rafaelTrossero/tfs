@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dNuevaPres" 
+                  widgetVar="dlgNuevaPres" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Nueva Presentacion De Proyecto"/>
+            </f:facet>
+
+
+            <p:panel id="display">
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{presentacionBean.proyecto.titulo}" />
+
+                            <h:outputLabel value="Carrera: "/>
+                            <h:outputText value="#{presentacionBean.proyecto.carrera.carrera}- Plan #{presentacionBean.proyecto.carrera.plan}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{presentacionBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{presentacionBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentacion: "/>
+                            <h:outputText value="#{presentacionBean.proyecto.fecha_ingreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{presentacionBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{presentacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Datos de nueva presentacion de proyecto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Nota de director: " />
+                            <p:selectBooleanCheckbox value="#{presentacionBean.notaDirector}" />
+
+                            <h:outputText value="Certificado: " />
+                            <p:selectBooleanCheckbox value="#{presentacionBean.certificadoRegular}" />
+                            <h:outputText value="Nota de aceptacion: " />
+                            <p:selectBooleanCheckbox value="#{presentacionBean.notaAceptacion}"/>
+
+
+
+                            <h:outputText value="Fecha de Presentacion: "/>
+                            <p:calendar value="#{presentacionBean.fechaNewPresentacion}"
+                                        pattern="dd/MM/yyyy"
+                                        />
+
+                        </h:panelGrid>
+                       
+                        <p:outputLabel value="Soporte digital del Proyecto"/>
+                        
+                    </p:tab>               
+
+                </p:accordionPanel>
+
+            </p:panel>  
+            
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+           
+            <p:growl id="message" showDetail="true"  />
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgNuevaPres.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction"
+                             value="Guardar " 
+                             actionListener="#{presentacionBean.create()}"
+                             
+                             update="message">
+                             <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                             </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+              <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+            <div style="clear: both;"/>
+            </div   >
+        </p:dialog>
+        <p:panel   header="Nueva presentacion de Proyectos" style="text-align:center;">
+
+            <!--<p:commandButton  value="buscar" 
+                              actionListener="#/{listaProyectoBean.cargar_proyectosByEstado(3)}"
+                              update="somProyecto"/>
+                 !-->
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto" 
+                             converter="ConversorGenerico"
+                             value="#{presentacionBean.proyecto}"  
+                             >
+                <f:selectItem itemLabel="Seleccionar.." itemValue="" />
+                <f:selectItems
+                    value="#{listaProyectoBean.lstSIProyectoByEstado}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="dlgNuevaPres.show()"
+                    update="display"
+                    actionListener="#{presentacionBean.crear()}"
+
+                    />
+
+
+
+            </div>
+        </p:panel>
+
+
+    </ui:define>
+
+</ui:composition>

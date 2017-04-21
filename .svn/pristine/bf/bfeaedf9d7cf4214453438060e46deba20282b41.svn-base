@@ -1,0 +1,93 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entidad;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+/**
+ *
+ * @author cris
+ */
+@Entity
+@NamedQueries({
+           
+           @NamedQuery(name="Horario_catedra.BuscarCatedra", query = "SELECT u FROM Horario_catedra u WHERE u.catedra =:catedra")
+
+})
+
+public class Horario_catedra implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne
+    @JoinColumn(name = "catedra_id", referencedColumnName = "id", nullable = false)
+    private Catedra catedra;
+
+    @OneToMany(mappedBy = "horario_catedra")
+    private List<Horario_semanal_catedra> lsthora_semanal_catedra;
+
+    public Catedra getCatedra() {
+        return catedra;
+    }
+
+    public void setCatedra(Catedra catedra) {
+        this.catedra = catedra;
+    }
+
+    public List<Horario_semanal_catedra> getLsthora_semanal_catedra() {
+        return lsthora_semanal_catedra;
+    }
+
+    public void setLsthora_semanal_catedra(List<Horario_semanal_catedra> lsthora_semanal_catedra) {
+        this.lsthora_semanal_catedra = lsthora_semanal_catedra;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Horario_catedra)) {
+            return false;
+        }
+        Horario_catedra other = (Horario_catedra) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidad.Horario_catedra[ id=" + id + " ]";
+    }
+
+}

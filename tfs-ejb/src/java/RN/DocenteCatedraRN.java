@@ -1,0 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.DocenteCatedraFacadeLocal;
+import entidad.Catedra;
+import entidad.Docente;
+import entidad.DocenteCatedra;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@Stateless
+public class DocenteCatedraRN implements DocenteCatedraRNLocal {
+
+    @EJB
+    private DocenteCatedraFacadeLocal Docente_CatedraFacadeLocal;
+
+    @Override
+    public void create(DocenteCatedra p) throws Exception {
+
+        this.Docente_CatedraFacadeLocal.create(p);
+    }
+
+    @Override
+    public void remove(DocenteCatedra p) throws Exception {
+        this.Docente_CatedraFacadeLocal.remove(p);
+    }
+
+    @Override
+    public void edit(DocenteCatedra p) throws Exception {
+        this.Docente_CatedraFacadeLocal.edit(p);
+    }
+
+    @Override
+    public List<DocenteCatedra> findAll() throws Exception {
+        return (this.Docente_CatedraFacadeLocal.findAll());
+    }
+
+    @Override
+    public DocenteCatedra findByDocente(DocenteCatedra doc) throws Exception {
+        return (this.Docente_CatedraFacadeLocal.findByDocente(doc));
+    }
+
+    @Override
+    public Catedra findByIdDocente(long idDoc) throws Exception {
+        return (this.Docente_CatedraFacadeLocal.findByIdDocente(idDoc));
+    }
+
+    @Override
+    public List<Docente> findDocentesbyCatedra(long idCatedra) throws Exception {
+        return (this.Docente_CatedraFacadeLocal.findDocentesbyCatedra(idCatedra));
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    @Override
+    public List<DocenteCatedra> findCatedra_docente(Catedra catedra) throws Exception {
+        return (this.Docente_CatedraFacadeLocal.findCatedraDocente(catedra));
+
+    }
+}

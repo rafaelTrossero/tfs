@@ -1,0 +1,495 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content=""></meta>
+    <meta name="author" content=""></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
+    <meta name="keywords" content="Inventor Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+          Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" ></meta>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+
+
+    <title>Departamento InformÃ¡tica</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../resources/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"></link>
+
+    <link href="../resources/css/style.css" rel="stylesheet" type="text/css" media="all" ></link>
+    <link href="../resources/css/styles.css" rel="stylesheet" type="text/css" media="all" ></link>
+
+    <!-- Custom Fonts -->
+    <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
+
+
+    <!-- js -->
+    <script src="../resources/js/jquery-1.11.1.min.js"></script>
+    <!-- //js -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'></link>
+    <link href='//fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'></link>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700italic,700,600italic,600,400italic,300italic,300' rel='stylesheet' type='text/css'></link>
+    <!--start-pricing-tablel-->
+    <script src="../resources/js/jquery.magnific-popup.js" type="text/javascript"></script>
+
+    <h:head>
+    </h:head>
+    <body>
+        <div class="banner1">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.xhtml">Departamento de Informatica <span>Facultad de Tecnología y Ciencias Aplicadas</span></a>
+                </div>
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
+                        <nav class="cl-effect-13" id="cl-effect-13">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.xhtml" class="active">Inicio</a></li>
+                                <li>
+                                    <a href="autoridades.xhtml">Autoridades</a>
+                                </li>
+
+                                <li>
+                                    <a href="comision.xhtml">Comisiones</a>
+                                </li> 
+                                <li>
+                                    <a href="reglamentacion.html">Reglamentación</a>
+                                </li>  
+                                <li>
+                                    <a href="plantel_docente.xhtml">Docentes</a>
+                                </li>
+                               
+
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Académico<b class="caret"></b></a>
+                                     <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="carreras.html">Carreras</a>
+                                                </li>
+                                                 <li>
+                                                    <a href="catedras.xhtml">Cátedras</a>
+                                                </li>
+                                                <li>
+                                                    <a href="proyectosInvestigacion.xhtml">Proyectos de Investigacion</a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://tecno.unca.edu.ar/index.php/alum/calendario-academico">Calendario Académico</a>
+                                                </li>
+                                                <li>
+                                                    <a href="examenes.xhtml">Exámenes</a>
+                                                </li>
+
+
+                                            </ul>
+                                </li>
+
+                                <li>
+                                    <a href="contact.html">Contacto</a>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Otras Paginas <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="http://www.unca.edu.ar/">UNCa</a>
+                                        </li>
+                                        <li>
+                                            <a href="http://www.tecno.unca.edu.ar/">FTyCA</a>
+                                        </li>
+                                        <li>
+                                            <a href="http://www.tecno.unca.edu.ar/moodle/">Aula virtual tecno</a>
+                                        </li>
+                                        <li>
+                                            <a href="http://170.210.139.197/tecno/">SIU Guaraní­</a>
+                                        </li>
+                                        <li>
+                                            <a href="http://www.confedi.org.ar/riisic">RIISIC | CONFEDI</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Page Content -->
+        <div class="testimonials">
+            <div class="container"> 
+
+                <!-- Page Heading/Breadcrumbs -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3><span>Catedras</span> Informática</h3>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- Intro Content -->
+
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+
+                        <p class="dolore">Los alumnos pueden consultar cada una de las cátedra  que dicta el departamento de Informatica  de la Facultad de Tecnologia y Ciencias Aplicadas de la UNCa. .... 
+                        </p>
+                        <br></br> 
+                    </div>
+                    <div class="col-lg-12">
+
+                        <ul id="myTab" class="nav nav-tabs nav-justified">
+                            <li class="active"><a href="#service-one" data-toggle="tab"><i class="fa fa-star"></i>  Ing. Informatica 2011</a>
+                            </li>
+
+
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade active in" id="service-one">
+
+                                <!-- /.row -->
+                                <h:form  id="form12">
+
+
+                                    <p:dialog modal="true" width="1100" height="1800" widgetVar="test"
+                                              id="dialog" styleClass="small-dialog">
+                                        <div class="pop_up">
+                                            <div class="payment-online-form-left">
+
+                                              
+                                                <div   class="well">
+                           
+                                                    <p style="text-align: center; font-size: 24px" ><b>Información de la Cátedra</b></p>
+                                                    
+                                                            <p style="text-align: center; font-size: 18px" >Nombre: #{listaCatedraBean.selectedCatedra.nombre}</p>
+                                                            <p style="text-align: center; font-size: 18px" >Curso:  #{listaCatedraBean.selectedCatedra.curso}</p>
+                                                            <p style="text-align: center; font-size: 18px" >Cuatrimestre: #{listaCatedraBean.selectedCatedra.cuatrimetre}</p>
+                                                        
+                                                        <div class="clearfix"> </div>
+                                                    
+                                            
+                                                     </div>
+                                                 <div style="clear: both;"/>
+                                                  
+
+
+                                                <div class="bs-docs-example">
+
+                                                    <table class="table table-striped" >
+
+                                                        <h4><span class="shipping"> </span>Horarios</h4>
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th><b>Dia</b><br></br></th>
+                                                                <th><b>Hora Inicio</b><br></br></th>
+                                                                <th><b>Hora Fin</b><br></br></th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ui:repeat value="#{listaCatedraBean.buscarHorarios()}" var="book" >
+                                                                <tr>
+                                                                    <td> #{book.dia}</td>
+                                                                    <td>#{book.hora_inicio}</td>
+                                                                    <td>#{book.hora_fin}</td>
+
+                                                                </tr>
+                                                            </ui:repeat>
+
+
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
+
+
+                                                <div class="bs-docs-example">
+                                                    <table class="table table-striped">
+                                                        <h4><span class="shipping"> </span>Profesores</h4>
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th><strong>Apellido y Nombre</strong></th>
+                                                                <th><b>Cargo</b><br></br></th>
+                                                                <th><b>Dedicacion</b><br></br></th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ui:repeat value="#{listaCatedraBean.lstDocentCatedra}" var="docen" >
+                                                                <tr>
+                                                                    <td> #{docen.docente.apellido},#{docente.docente.nombre}</td>
+                                                                    <td>#{docen.docente.cargo.descripcion}</td>
+                                                                    <td>#{docen.docente.dedicacion.descripcion}</td>
+
+                                                                </tr>
+                                                            </ui:repeat>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <!--//End-pricingplans-->
+                                                <!-- /start-copyright-->
+
+
+
+                                                <h4><span class="shipping"> </span>Contenidos Minimos</h4>
+                                                <div class="clear"> </div>
+
+                                                <div class="well">
+                                                    <h:outputText value="#{listaCatedraBean.selectedCatedra.contenidos_minimos}" id="apContenidos"/>
+                                                    <br></br>
+
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+                                        <h:form >
+                                            <ul class="payment-sendbtns">
+
+                                                <h:commandButton value="Download" action="#{fileDownloadView.downloadFile(listaCatedraBean.selectedCatedra.dias)}"/>
+                                            </ul>
+
+                                        </h:form>
+
+                                        <ul class="payment-sendbtns">
+                                            <h:commandButton id="btnSalir" action="test.hide()" value="Cancelar"/>
+
+                                        </ul>
+                                    </p:dialog>
+
+
+                                </h:form>
+
+                                <!-- /.row -->
+
+                                <hr></hr>
+
+                                <div class="pricing-grid3">
+                                    <div class="price-value">
+                                        <h4>Primer Año</h4>
+
+
+                                    </div>
+                                    <div class="price-bg">
+                                        <ul>
+
+                                            <p:tab title="Primer año" >
+                                                <h:dataTable styleClass="table"
+                                                             rows="50"
+                                                             value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Primero')}"
+                                                             var="primer" >
+
+
+                                                    <p:column    width="700" >
+
+
+                                                        <p:commandLink value="#{primer.nombre}" oncomplete="PF('test').show()"
+                                                                       update=":form12:dialog">
+                                                            <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                         value="#{primer}" />
+                                                        </p:commandLink>
+                                                    </p:column>
+
+
+                                                </h:dataTable> 
+                                            </p:tab>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="pricing-grid3">
+                                    <div class="price-value">
+                                        <h4>Segundo Año</h4>
+
+
+                                    </div>
+                                    <div class="price-bg">
+                                        <ul>
+
+                                            <h:dataTable styleClass="table"
+                                                         rows="50"
+                                                         value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Segundo')}"
+                                                         var="segundo" >
+
+
+                                                <p:column    width="700" >
+
+                                                    <p:commandLink value="#{segundo.nombre}" oncomplete="PF('test').show()"
+                                                                   update=":form12:dialog">
+                                                        <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                     value="#{segundo}" />
+                                                    </p:commandLink>
+                                                </p:column>
+
+
+                                            </h:dataTable> 
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="pricing-grid3">
+                                    <div class="price-value">
+                                        <h4>Tercer Año</h4>
+
+                                    </div>
+                                    <div class="price-bg">
+                                        <ul>
+                                            <h:dataTable styleClass="table"
+                                                         rows="50"
+                                                         value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Tercero')}"
+                                                         var="tercero" >
+
+
+                                                <p:column    width="700" >
+
+                                                    <p:commandLink value="#{tercero.nombre}" oncomplete="test.show()"
+                                                                   update=":form12:dialog">
+                                                        <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                     value="#{tercero}"/>
+                                                    </p:commandLink>
+                                                </p:column>
+
+
+                                            </h:dataTable>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="pricing-grid3">
+                                    <div class="price-value">
+                                        <h4>Cuarto Año</h4>
+
+
+                                    </div>
+                                    <div class="price-bg">
+                                        <ul>
+                                            <h:dataTable styleClass="table"
+                                                         rows="50"
+                                                         value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('cuarto')}"
+                                                         var="proycuarto" >
+
+
+                                                <p:column    width="700" >
+
+                                                    <p:commandLink value="#{proycuarto.nombre}" oncomplete="test.show()"
+                                                                   update=":form12:dialog">
+                                                        <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}"
+                                                                                     value="#{proycuarto}"  />
+                                                    </p:commandLink>
+                                                </p:column>
+
+
+
+                                            </h:dataTable> 
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                                <div class="pricing-grid3">
+                                    <div class="price-value">
+                                        <h4>Quinto Año</h4>
+
+
+                                    </div>
+                                    <div class="price-bg">
+                                        <ul>
+
+                                            <h:dataTable styleClass="table"
+                                                         rows="50"
+                                                         value="#{listaCatedraBean.catedraRNLocal.finCatedraCuro('Quinto')}"
+                                                         var="proys" >
+
+
+                                                <p:column    width="700" >
+
+                                                    <p:commandLink value="#{proys.nombre}" oncomplete="PF('test').show()"
+                                                                   update=":form12:dialog">
+                                                        <f:setPropertyActionListener target="#{listaCatedraBean.selectedCatedra}" 
+                                                                                     value="#{proys}" />
+                                                    </p:commandLink>
+                                                </p:column>
+
+
+                                            </h:dataTable> 
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <!-- Footer -->
+
+
+                            </div>
+                            <div class="tab-pane fade" id="service-two">
+                                <h4>Service Two</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae repudiandae fugiat illo cupiditate excepturi esse officiis consectetur, laudantium qui voluptatem. Ad necessitatibus velit, accusantium expedita debitis impedit rerum totam id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quibusdam recusandae illum, nesciunt, architecto, saepe facere, voluptas eum incidunt dolores magni itaque autem neque velit in. At quia quaerat asperiores.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae repudiandae fugiat illo cupiditate excepturi esse officiis consectetur, laudantium qui voluptatem. Ad necessitatibus velit, accusantium expedita debitis impedit rerum totam id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quibusdam recusandae illum, nesciunt, architecto, saepe facere, voluptas eum incidunt dolores magni itaque autem neque velit in. At quia quaerat asperiores.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright  Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+        <!-- /.container -->
+
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../resources/js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

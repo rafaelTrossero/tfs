@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>Image Upload</title>
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data"> 
+
+            <f:facet name="header">
+                <h:outputText value="Gestión de Noticias"/>
+            </f:facet>
+
+            <p:panel id="pNoticias" style="float:left;">
+                <p:focus context="pNoticias"/> 
+                <h:inputHidden value="#{noticiasBean.noticias.id}"/>
+
+                <h:inputHidden value="#{listaNoticiasBean.iActionBtnSelect}"/>
+
+
+                <div style="clear: both;"/>
+
+
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Cargar Noticias">
+
+
+                        <h:outputText value="Título: "/>
+                        <p:inputTextarea value="#{noticiasBean.noticias.titulo}"
+                                         label="Titulo" rows="3" cols="25"/>
+
+                        <h:outputText value="Contenido: "/>
+
+                        <p:editor id="editor" widgetVar="editorWidget"  value="#{noticiasBean.noticias.contenido}" width="600" />
+
+                        <h:outputLabel value="Fecha de carga: " ></h:outputLabel>  
+                        <p:calendar  
+                                     value="#{noticiasBean.noticias.fecha_agregado}">
+                                                 
+                        </p:calendar>  
+                        <h:outputLabel for="image" value="Select Image: *" />
+                        <p:fileUpload value="#{noticiasBean.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+
+                        <p:commandButton value="Submit" ajax="false"  
+                                         actionListener="#{noticiasBean.upload}"
+                                         update="tablaNoticias"/>
+
+
+                    </p:tab>
+
+
+                </p:accordionPanel>
+            </p:panel>          
+
+            <p:spacer height="20"></p:spacer>
+            <p:dataTable id="tablaNoticias" value="#{listaNoticiasBean.lstNoticias}" var="item" paginator="true" rows="5" 
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="3,5,10" widgetVar="50" style="width: 600px;" >           
+                <f:facet name="header">
+                    <h:outputText value="Noticias" />
+                </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Image Id" />
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Titulo" />
+                    </f:facet>
+                    <h:outputText value="#{item.titulo}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Image" />
+                    </f:facet>
+                    <h:outputLink value="DisplayImage?id=#{item.id}" target="_blank" >
+                        <h:graphicImage value="DisplayImage?id=#{item.id}" width="50" height="50"></h:graphicImage>
+                    </h:outputLink>
+
+                </p:column>
+            </p:dataTable>
+        </h:form> 
+    </h:body>
+</html>

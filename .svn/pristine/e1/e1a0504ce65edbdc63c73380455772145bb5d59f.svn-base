@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.ComisionFacadeLocal;
+import entidad.Comision;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class ComisionRN implements ComisionRNLocal {
+
+    @EJB
+    private ComisionFacadeLocal comisionFacadeLocal;
+    
+    @Override
+    public void create(Comision c) throws Exception {
+        this.comisionFacadeLocal.create(c);
+    }
+
+    @Override
+    public void remove(Comision c) throws Exception {
+        this.comisionFacadeLocal.remove(c);
+    }
+
+    @Override
+    public void edit(Comision c) throws Exception {
+        this.comisionFacadeLocal.edit(c);
+    }
+
+    @Override
+    public List<Comision> findAll() throws Exception {
+        return (this.comisionFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+}

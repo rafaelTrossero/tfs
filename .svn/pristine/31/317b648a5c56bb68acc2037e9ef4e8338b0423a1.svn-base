@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="./Template/TfsTemplate.xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROFESIONAL !-->
+
+        <p:dialog id="dDocente" 
+                  widgetVar="dlgDocente" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Docente"/>
+            </f:facet>
+            <p:panel id="pDocente" style="float:left;">
+                <p:focus context="pDocente"/> 
+
+                <h:inputHidden value="#{docenteBean.docente.id}"/>
+
+                <h:inputHidden value="#{listaDocenteBean.iActionBtnSelect}"/>
+
+
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Información personal">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{docenteBean.docente.nombre}"
+                                         label="Nombre"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+
+                            <h:outputText value="Apellido:"/>
+
+                            <p:inputText value="#{docenteBean.docente.apellido}"
+                                         label="Apellido"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+
+
+
+                            <p:outputLabel for="cuil" value="Cuil:" />
+                            <p:inputMask id="cuil" value="#{docenteBean.docente.cuil}" mask="99-99999999-9"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+
+                            <h:outputText value="Domicilio:"/>
+                            <p:inputText value="#{docenteBean.docente.domicilio}"
+                                         label="Domicilio"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+                            <h:outputText value="Pais: "/>
+                            <p:selectOneMenu    id="somPais"  
+                                                converter="ConversorGenerico"
+                                                valueChangeListener="#{listaProvinciaBean.recuperarProvincias}"                                                
+                                                disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems  
+                                    value="#{listaPaisBean.lstSIPais}"/>
+                                <p:ajax         update="somProvincia" 
+                                                event="change" 
+                                                />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Provincia: "/>
+                            <p:selectOneMenu id="somProvincia"
+                                             converter="ConversorGenerico"
+                                             valueChangeListener="#{listaDepartamentoBean.recuperarDepartamentos}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar..." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaProvinciaBean.lstSIProvincia}"/>
+                                <p:ajax         update="somDepartamento"
+                                                event="change" 
+                                                />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Departamento: "/>
+
+                            <p:selectOneMenu id="somDepartamento"
+                                             converter="ConversorGenerico"
+                                             valueChangeListener="#{listaLocalidadBean.recuperarLocalidades}"
+                                             disabled="#{docenteBean.getbCamposEditables()}"
+                                             >
+                                <f:selectItem itemLabel="Seleccione un Departamento..." itemValue="0"/>
+                                <f:selectItems value="#{listaDepartamentoBean.lstSIDepartamento}"/>
+
+                                <p:ajax         update="somLocalidad"
+                                                event="change"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Localidad:"/>
+                            <p:selectOneMenu id="somLocalidad"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente.localidad}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaLocalidadBean.lstSILocalidad}"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Email:"/>
+                            <p:inputText value="#{docenteBean.docente.email}"
+                                         label="Email"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+
+
+                    <p:tab title="Información Académica">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Cátedra"/>
+                            <p:selectOneMenu id="somCatedra"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente_catedra.catedra}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+
+                                <f:selectItems 
+                                    value="#{listaCatedraBean.lstSICatedraActiva}"/>
+
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Cargo:"/>
+                            <p:selectOneMenu id="somCargo"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente.cargo}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+
+                                <f:selectItems 
+                                    value="#{listaCargoBean.lstSICargos}"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Dedicación:"/>
+                            <p:selectOneMenu id="somDedicacion"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente.dedicacion}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+
+                                <f:selectItems 
+                                    value="#{listaDedicacionBean.lstSIDedicacion}"/>
+
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Comisión:"/>
+                            <p:selectOneMenu id="somCarrera"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente_comision.comision}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="NINGUNA" itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaComisionBean.lstSIComisionActiva}" />
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Departamento:"/>
+                            <p:selectOneMenu id="somDepto"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente.departamento}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+
+                                <f:selectItems 
+                                    value="#{listaDeptoBean.lstSIDepartamento}"/>
+
+                            </p:selectOneMenu>
+
+
+
+                            <div style="clear: both;"/>
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+                    <p:tab title="Información Profesional">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Profesión: "/>
+                            <p:selectOneMenu id="somProfesion"
+                                             converter="ConversorGenerico"                   
+                                             valueChangeListener="#{listaEspecialidadBean.recuperarEspecialidades}"
+                                             value="#{docenteBean.docente.profesion}"
+
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaProfesionBean.lstSIProfesion}"/>
+                                <p:ajax         update="somEspecialidad" 
+                                                event="change" 
+                                                />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Especialidad: "/>
+                            <p:selectOneMenu id="somEspecialidad"
+                                             converter="ConversorGenerico"
+                                             value="#{docenteBean.docente.especialidad}"
+                                             disabled="#{docenteBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaEspecialidadBean.lstSIEspecialidad}"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Matrícula Profesional: "/>
+                            <p:inputText value="#{docenteBean.docente.mat_profesional}"
+                                         label="Matricula"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+
+                            <div style="clear: both;"/>
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Registro de usuario">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+
+                            <h:outputText value="Contraseña"/>
+                            <p:inputText value="#{docenteBean.docente.password}"
+                                         label="Contraseña"
+                                         disabled="#{docenteBean.getbCamposEditables()}"/>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnActiones"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{docenteBean.actionBtn}" 
+                                 update=":frmMain:dtDocentes,:frmMain:pDocente , message @this"
+                                 binding="#{docenteBean.cbAction}"
+                                 >
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+
+
+
+
+
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgDocente.hide()"
+                                 update=":frmMain:pDocente, 
+                                 :frmMain:dtDocentes"
+                                 process="@this"/>
+            </div>
+
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Nuevo Docente" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgDocente.show();"
+                             actionListener="#{docenteBean.setBtnSelect}"
+                             update=":frmMain:dDocente"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <div>
+
+            <p:dataTable id="dtDocentes"
+                         paginator="true"
+                         rows="50"
+                         scrollable="true"
+                         value="#{listaDocenteBean.lstDocente}"
+                         var="item">
+                <p:column width="152"  headerText="Operaciones"  >
+                    <p:commandButton id="cbEdit"
+                                     title="Editar"
+                                     icon="ui-icon-pencil" 
+                                     update=":frmMain:dDocente"
+                                     oncomplete="dlgDocente.show();"
+                                     actionListener="#{docenteBean.setBtnSelect}"
+                                     disabled="#{not item.active }"> 
+                        <f:setPropertyActionListener value="#{item}" target="#{docenteBean.docente}"/>  
+
+                    </p:commandButton>
+
+
+                    <p:commandButton id="cbHabilitado"
+                                     title="Activar"
+                                     icon="ui-icon-unlocked" 
+                                     update=":frmMain:dDocente, @this"
+                                     oncomplete="dlgDocente.show();"
+                                     actionListener="#{docenteBean.setBtnSelect}"
+                                     disabled="#{ item.active }"
+                                     > 
+                        <f:setPropertyActionListener value="#{item}" target="#{docenteBean.docente}"/>  
+
+                    </p:commandButton>
+
+                    <p:commandButton id="cbDeshabilitado"
+                                     title="Desactivar"
+                                     icon="ui-icon-circle-close" 
+                                     update=":frmMain:dDocente, @this"
+                                     oncomplete="dlgDocente.show();"
+                                     actionListener="#{docenteBean.setBtnSelect}"
+                                     disabled="#{not item.active }">
+
+
+                        <f:setPropertyActionListener value="#{item}" target="#{docenteBean.docente}"/>  
+
+                    </p:commandButton>
+
+
+                </p:column>
+                <p:column  filterBy="#{item.nombre}" sortBy="#{item.nombre}" >
+                    <f:facet name="header">
+                        <h:outputText value="Apellido y Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellido}, #{item.nombre}"/>
+                </p:column>                
+
+                <p:column  filterBy="#{item.cuil}" sortBy="#{item.cuil}" >
+                    <f:facet name="header">
+                        <h:outputText value="Cuil"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuil}"/>
+                </p:column> 
+                <p:column  filterBy="#{item.cargo.descripcion}" sortBy="#{item.cargo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="Cargo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cargo.descripcion}"/>
+                </p:column> 
+
+
+                <p:column  filterBy="#{item.dedicacion.descripcion}" sortBy="#{item.dedicacion.descripcion}" >
+                    <f:facet name="header">
+                        <h:outputText value="Dedicación"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dedicacion.descripcion}"/>
+                </p:column> 
+
+            </p:dataTable>
+        </div>
+    </ui:define>
+
+</ui:composition>

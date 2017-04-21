@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <!-- DIALOGO PROFESIONAL !-->
+        <p:dialog id="dExamenes" 
+                  widgetVar="dlgExamenes" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Fechas de Examen"/>
+            </f:facet>
+            <p:panel id="pExamenes" style="float:left;">
+                <p:focus context="pExamenes"/> 
+                <h:inputHidden value="#{fechasExamenBean.fechasExamen.id}"/>
+
+                <h:inputHidden value="#{listaFechasExamenBean.iActionBtnSelect}"/>
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Cargar Fechas">
+
+                         <h:outputLabel value="Fecha de exámen: " ></h:outputLabel>  
+                            <p:calendar 
+                                value="#{fechasExamenBean.fechasExamen.fechaEx}"  />  
+
+                            <h:outputLabel value="Último dia para incribirse: " ></h:outputLabel>  
+                            <p:calendar 
+                                value="#{fechasExamenBean.fechasExamen.ultimoDia}" /> 
+
+
+                       
+                    </p:tab>
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{fechasExamenBean.actionBtn()}" 
+                                 update=":frmMain:dtExamenes, :frmMain:pExamenes, @this"
+                                 binding="#{fechasExamenBean.cbAction}">
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgExamenes.hide()"
+                                 update=":frmMain:pExamenes, 
+                                 :frmMain:dtExamenes"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Nuevas Fechas" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgExamenes.show();"
+                             actionListener="#{fechasExamenBean.setBtnSelect}"
+                             update=":frmMain:dtExamenes"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <p:dataTable id="dtExamenes"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaFechasExamenBean.lstFechasExamen}"
+                     var="com">
+            
+             <p:column width="152"  headerText="Operaciones"  >
+                    <p:commandButton id="cbEdit"
+                                     title="Editar"
+                                     icon="ui-icon-pencil" 
+                                     update=":frmMain:dExamenes"
+                                     oncomplete="dlgExamenes.show();"
+                                     actionListener="#{fechasExamenBean.setBtnSelect}">
+                                    
+                        <f:setPropertyActionListener value="#{com}" target="#{fechasExamenBean.fechasExamen}"/>  
+
+                    </p:commandButton>
+
+                     </p:column>
+           
+            <p:column  filterBy="#{com.fechaEx}" sortBy="#{com.fechaEx}" >
+                <f:facet name="header">
+                    <h:outputText value="Fecha de exámen"/>
+                </f:facet>
+                <h:outputText value="#{com.fechaEx}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                    
+            </p:column>    
+            
+            <p:column  filterBy="#{com.ultimoDia}" sortBy="#{com.ultimoDia}" >
+                <f:facet name="header">
+                    <h:outputText value="Último dia para inscribirse"/>
+                </f:facet>
+                <h:outputText value="#{com.ultimoDia}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />                
+                </h:outputText>
+            </p:column>      
+
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

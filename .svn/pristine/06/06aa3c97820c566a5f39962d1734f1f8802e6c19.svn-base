@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.Cronograma;
+import entidad.CronogramaActividad;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Trossero
+ */
+@Local
+public interface CronogramaActividadFacadeLocal {
+
+    void create(CronogramaActividad cronograma_act);
+
+    void edit(CronogramaActividad cronograma_act);
+
+    void remove(CronogramaActividad cronograma_act);
+
+    CronogramaActividad find(Object id);
+
+    List<CronogramaActividad> findAll();
+
+    List<CronogramaActividad> findRange(int[] range);
+
+    int count();
+     public List<CronogramaActividad> findByCronogramaActividad (Cronograma cro) throws Exception;
+    public CronogramaActividad findByCronograma (long longid) throws Exception;
+}

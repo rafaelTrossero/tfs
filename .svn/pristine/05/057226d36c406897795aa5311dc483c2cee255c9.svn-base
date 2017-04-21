@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import entidad.BorradorEvaluacion;
+import entidad.EvaluacionProyecto;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Trossero
+ */
+@Local
+public interface BorradorEvaluacionRNLocal {
+   
+    void create(BorradorEvaluacion br) throws Exception;
+
+    void remove(BorradorEvaluacion br) throws Exception;
+
+    void edit(BorradorEvaluacion br) throws Exception;
+
+    List<BorradorEvaluacion> findAll() throws Exception;
+
+   
+    
+    public List<BorradorEvaluacion> findByEvaluacionBorrador(Proyecto pro) throws Exception;
+    
+    public BorradorEvaluacion findByProyectoYcalif (Proyecto pro, Integer cal, Long borrador)  throws Exception;
+}

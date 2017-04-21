@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import RN.ProyectoRNbeanLocal;
+import entidad.Carrera;
+import entidad.Depto;
+import entidad.Docente;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@RequestScoped
+public class ProyectosDocenteBean {
+@ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    private Carrera carrera;
+    private Depto departamento;
+    private Docente docente;
+    
+     public ProyectosDocenteBean() {
+        carrera= new Carrera();
+        departamento= new Depto();
+        docente= new Docente();
+    }
+    
+      @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+
+    /**
+     * Creates a new instance of ProyectosCarreraBean
+     */
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+
+    public Depto getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Depto departamento) {
+        this.departamento = departamento;
+    }
+
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
+
+   
+  
+    
+    
+      public void crear() throws Exception {
+      System.out.println("la carrera seleccionada es " + docente);
+        listaProyectoBean.cargar_proyectos_director_docente(docente);
+        listaProyectoBean.cargar_proyectos_codirector_docente(docente.getId());
+        listaProyectoBean.cargar_proyectos_asesor_docente(docente.getId());
+    }
+    /**
+     * Creates a new instance of ProyectosDocenteBean
+     */
+   
+}

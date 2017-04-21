@@ -1,0 +1,406 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import entidad.Departamento;
+import entidad.Localidad;
+import entidad.Pais;
+import entidad.Provincia;
+import entidad.Usuario;
+import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author AFerSor
+ */
+@ManagedBean(name = "usuarioLogerBean")
+@SessionScoped
+public class UsuarioLogerBean implements Serializable {
+
+    private Usuario usuario;
+    private String url;
+    private Pais paisDefault;
+    private Provincia provinciaDefault;
+    private Departamento departamentoDefault;
+    private Localidad localidadDefault;
+    private Boolean renderedMenu;
+    //mostrar menu
+    private Boolean bAsignarTurno;
+    private Boolean bCompletarTurno;
+    private Boolean bDiagnostico;
+    private Boolean bPatologia;
+    private Boolean bValoracion;
+    private Boolean bPractica;
+    private Boolean bFeriado;
+    private Boolean bLicencia;
+    private Boolean bAgenda;
+    private Boolean bAreaProgramatica;
+    private Boolean bClasificaciones;
+    private Boolean bEstablecimiento;
+    private Boolean bInhabilitacion;
+    private Boolean bTipologia;
+    private Boolean bDependencia;
+    private Boolean bAreaCI;
+    private Boolean bEspecialidad;
+    private Boolean bServicio;
+    private Boolean bObraSocial;
+    private Boolean bPais;
+    private Boolean bProvincia;
+    private Boolean bDepartamento;
+    private Boolean bLocalidad;
+    private Boolean bBarrio;
+    private Boolean bProfesional;
+    private Boolean bPaciente;
+    private Boolean bUsuario;
+    private Boolean bGrupo;
+    private Boolean bImportarOS;
+    private Boolean bImportarA;
+    private Boolean bNotificacionI;
+    private Boolean bNotificacionS;
+    private Boolean bNotificacionC;
+    private Boolean bAuditoria;
+    private Boolean bInformeAnual;
+
+    public UsuarioLogerBean() {
+    }
+
+    public Boolean getbPais() {
+        return bPais;
+    }
+
+    public void setbPais(Boolean bPais) {
+        this.bPais = bPais;
+    }
+
+    public Boolean getbCompletarTurno() {
+        return bCompletarTurno;
+    }
+
+    public void setbCompletarTurno(Boolean bCompletarTurno) {
+        this.bCompletarTurno = bCompletarTurno;
+    }
+
+    public Boolean getbDiagnostico() {
+        return bDiagnostico;
+    }
+
+    public void setbDiagnostico(Boolean bDiagnostico) {
+        this.bDiagnostico = bDiagnostico;
+    }
+
+    public Boolean getbPatologia() {
+        return bPatologia;
+    }
+
+    public void setbPatologia(Boolean bPatologia) {
+        this.bPatologia = bPatologia;
+    }
+
+    public Boolean getbValoracion() {
+        return bValoracion;
+    }
+
+    public void setbValoracion(Boolean bValoracion) {
+        this.bValoracion = bValoracion;
+    }
+
+    public Boolean getbPractica() {
+        return bPractica;
+    }
+
+    public void setbPractica(Boolean bPractica) {
+        this.bPractica = bPractica;
+    }
+
+    public Boolean getbFeriado() {
+        return bFeriado;
+    }
+
+    public void setbFeriado(Boolean bFeriado) {
+        this.bFeriado = bFeriado;
+    }
+
+    public Boolean getbLicencia() {
+        return bLicencia;
+    }
+
+    public void setbLicencia(Boolean bLicencia) {
+        this.bLicencia = bLicencia;
+    }
+
+    public Boolean getbAgenda() {
+        return bAgenda;
+    }
+
+    public void setbAgenda(Boolean bAgenda) {
+        this.bAgenda = bAgenda;
+    }
+
+    public Boolean getbAreaProgramatica() {
+        return bAreaProgramatica;
+    }
+
+    public void setbAreaProgramatica(Boolean bAreaProgramatica) {
+        this.bAreaProgramatica = bAreaProgramatica;
+    }
+
+    public Boolean getbClasificaciones() {
+        return bClasificaciones;
+    }
+
+    public void setbClasificaciones(Boolean bClasificaciones) {
+        this.bClasificaciones = bClasificaciones;
+    }
+
+    public Boolean getbEstablecimiento() {
+        return bEstablecimiento;
+    }
+
+    public void setbEstablecimiento(Boolean bEstablecimiento) {
+        this.bEstablecimiento = bEstablecimiento;
+    }
+
+    public Boolean getbInhabilitacion() {
+        return bInhabilitacion;
+    }
+
+    public void setbInhabilitacion(Boolean bInhabilitacion) {
+        this.bInhabilitacion = bInhabilitacion;
+    }
+
+    public Boolean getbTipologia() {
+        return bTipologia;
+    }
+
+    public void setbTipologia(Boolean bTipologia) {
+        this.bTipologia = bTipologia;
+    }
+
+    public Boolean getbDependencia() {
+        return bDependencia;
+    }
+
+    public void setbDependencia(Boolean bDependencia) {
+        this.bDependencia = bDependencia;
+    }
+
+    public Boolean getbAreaCI() {
+        return bAreaCI;
+    }
+
+    public void setbAreaCI(Boolean bAreaCI) {
+        this.bAreaCI = bAreaCI;
+    }
+
+    public Boolean getbEspecialidad() {
+        return bEspecialidad;
+    }
+
+    public void setbEspecialidad(Boolean bEspecialidad) {
+        this.bEspecialidad = bEspecialidad;
+    }
+
+    public Boolean getbServicio() {
+        return bServicio;
+    }
+
+    public void setbServicio(Boolean bServicio) {
+        this.bServicio = bServicio;
+    }
+
+    public Boolean getbObraSocial() {
+        return bObraSocial;
+    }
+
+    public void setbObraSocial(Boolean bObraSocial) {
+        this.bObraSocial = bObraSocial;
+    }
+
+    public Boolean getbProvincia() {
+        return bProvincia;
+    }
+
+    public void setbProvincia(Boolean bProvincia) {
+        this.bProvincia = bProvincia;
+    }
+
+    public Boolean getbDepartamento() {
+        return bDepartamento;
+    }
+
+    public void setbDepartamento(Boolean bDepartamento) {
+        this.bDepartamento = bDepartamento;
+    }
+
+    public Boolean getbLocalidad() {
+        return bLocalidad;
+    }
+
+    public void setbLocalidad(Boolean bLocalidad) {
+        this.bLocalidad = bLocalidad;
+    }
+
+    public Boolean getbBarrio() {
+        return bBarrio;
+    }
+
+    public void setbBarrio(Boolean bBarrio) {
+        this.bBarrio = bBarrio;
+    }
+
+    public Boolean getbProfesional() {
+        return bProfesional;
+    }
+
+    public void setbProfesional(Boolean bProfesional) {
+        this.bProfesional = bProfesional;
+    }
+
+    public Boolean getbPaciente() {
+        return bPaciente;
+    }
+
+    public void setbPaciente(Boolean bPaciente) {
+        this.bPaciente = bPaciente;
+    }
+
+    public Boolean getbUsuario() {
+        return bUsuario;
+    }
+
+    public void setbUsuario(Boolean bUsuario) {
+        this.bUsuario = bUsuario;
+    }
+
+    public Boolean getbGrupo() {
+        return bGrupo;
+    }
+
+    public void setbGrupo(Boolean bGrupo) {
+        this.bGrupo = bGrupo;
+    }
+
+    public Boolean getbImportarOS() {
+        return bImportarOS;
+    }
+
+    public void setbImportarOS(Boolean bImportarOS) {
+        this.bImportarOS = bImportarOS;
+    }
+
+    public Boolean getbImportarA() {
+        return bImportarA;
+    }
+
+    public void setbImportarA(Boolean bImportarA) {
+        this.bImportarA = bImportarA;
+    }
+
+    public Boolean getbNotificacionI() {
+        return bNotificacionI;
+    }
+
+    public void setbNotificacionI(Boolean bNotificacionI) {
+        this.bNotificacionI = bNotificacionI;
+    }
+
+    public Boolean getbNotificacionS() {
+        return bNotificacionS;
+    }
+
+    public void setbNotificacionS(Boolean bNotificacionS) {
+        this.bNotificacionS = bNotificacionS;
+    }
+
+    public Boolean getbNotificacionC() {
+        return bNotificacionC;
+    }
+
+    public void setbNotificacionC(Boolean bNotificacionC) {
+        this.bNotificacionC = bNotificacionC;
+    }
+
+    public Boolean getbAuditoria() {
+        return bAuditoria;
+    }
+
+    public void setbAuditoria(Boolean bAuditoria) {
+        this.bAuditoria = bAuditoria;
+    }
+
+    public Boolean getbInformeAnual() {
+        return bInformeAnual;
+    }
+
+    public void setbInformeAnual(Boolean bInformeAnual) {
+        this.bInformeAnual = bInformeAnual;
+    }
+
+    public Boolean getbAsignarTurno() {
+        return bAsignarTurno;
+    }
+
+    public void setbAsignarTurno(Boolean bAsignarTurno) {
+        this.bAsignarTurno = bAsignarTurno;
+    }
+
+    public Boolean getRenderedMenu() {
+        return renderedMenu;
+    }
+
+    public void setRenderedMenu(Boolean renderedMenu) {
+        this.renderedMenu = renderedMenu;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Pais getPaisDefault() {
+        return paisDefault;
+    }
+
+    public void setPaisDefault(Pais paisDefault) {
+        this.paisDefault = paisDefault;
+    }
+
+    public Provincia getProvinciaDefault() {
+        return provinciaDefault;
+    }
+
+    public void setProvinciaDefault(Provincia provinciaDefault) {
+        this.provinciaDefault = provinciaDefault;
+    }
+
+    public Departamento getDepartamentoDefault() {
+        return departamentoDefault;
+    }
+
+    public void setDepartamentoDefault(Departamento departamentoDefault) {
+        this.departamentoDefault = departamentoDefault;
+    }
+
+    public Localidad getLocalidadDefault() {
+        return localidadDefault;
+    }
+
+    public void setLocalidadDefault(Localidad localidadDefault) {
+        this.localidadDefault = localidadDefault;
+    }
+}//fin usuarioLoggerBean

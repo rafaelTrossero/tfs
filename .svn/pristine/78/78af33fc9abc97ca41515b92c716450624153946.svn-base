@@ -1,0 +1,1074 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <style  type="text/css">                 
+                    .colored {
+                    background-color: #c1e2b3;
+                    color: white;
+            </style>
+
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(1)}"  >
+                <f:facet name="header">
+                    Listado de proyectos por estado
+                </f:facet>
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="En proceso de aceptación de Proyecto"  styleClass="colored">
+                    <h:outputText value="#{proys.titulo}"  />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(2)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="En proceso de asignación de Comisión Evaluadora" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(3)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Se requiere una nueva presentación del Proyecto" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(4)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="En proceso de evaluación de proyecto"  styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(5)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Desarrollando trabajo final" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(6)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Se debe modificar proyecto" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(7)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Proyecto rechazado" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(8)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="En proceso de revision de borradores" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(9)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Aceptado para defensa" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(10)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Se debe modificar el borrador" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(11)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Se requiere una nueva presentacion del borrador" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(13)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Desaprobado" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(14)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Dado de baja" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(15)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Aprobado" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+            </p:dataTable>
+            
+            <p:dataTable var="cronos" value="#{listaCronogramaBean.cronogramaActividadRNbeanLocal.findByFueraDeFecha()}">
+
+               
+                <p:column headerText="FUERA DE FECHAAAA">
+                    <h:outputText value="#{cronos.cronograma.proyecto.titulo}" />
+                </p:column>
+                
+                  <p:column headerText="FUERA DE FECHAAAA">
+                      <p:commandButton actionListener="#{listaCronogramaBean.cargar_Cronograma(cronos.cronograma.proyecto)}"
+                                       action="cronograma.xhtml?faces-redirect=true"
+                                       value="Ver Cronograma" 
+                                        icon="ui-icon-circle-plus" 
+                    />
+                </p:column>
+
+
+            </p:dataTable>
+            
+            <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(1, 20, 0)}">
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Proyectos atrasados en la aceptacion" styleClass="colored">
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+            <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(2, 15, 1)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la asignacion" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+            <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(3, 20, 3)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la nueva presentacion" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+             <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(4, 15, 1)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la Evaluacion de proyecto" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+             <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(6, 15, 3)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la presentacion de modificaciones de Proyecto" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+            <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(5, 15, 1)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en el desarrollo del trabajo final" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+            <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(8, 15, 1)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la evaluacion del borrador" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+             <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(11, 15, 3)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la nueva presentacion del borrador" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+             <p:dataTable var="proys" value="#{listaProyectoBean.buscarProyectosAtrasados(10, 15, 2)}" > 
+
+                <p:column style="width:16px" headerText="Info">
+                    <p:rowToggler />
+                </p:column>
+               <p:column headerText="Proyectos atrasados en la presentacion de modificaciones del borrador" styleClass="colored" >
+                    <h:outputText value="#{proys.titulo}" />
+                </p:column>
+                
+
+                     <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                        <f:facet name="header">
+                            Informacion del proyecto
+                        </f:facet>                  
+                        <h:outputLabel value="ID: "/>
+                        <h:outputText value="#{proys.id}" />
+
+                        <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Director" style="text-align:center"/>
+                        <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                    var="dir" 
+                                    emptyMessage="No existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+
+                        <h:outputLabel value="Estado: "/>
+                        <h:outputText value="#{proys.estado.estado}" />
+
+
+                        <h:outputLabel value="Fecha de presentación: "/>
+                        <h:outputText value="#{proys.fecha_ingreso}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        <div style="clear: both;"/>
+                    </p:panelGrid>
+                </p:rowExpansion>
+
+               
+            </p:dataTable>
+            
+            
+            
+           
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

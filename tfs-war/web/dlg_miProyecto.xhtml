@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+           
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+
+
+        <p:dialog id="dSeguimientoProyecto2" 
+                  widgetVar="dlgSeguimientoProyecto2" 
+                  modal="true"  
+                  closeOnEscape="true"
+                  responsive="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Seguimiento De Proyecto"/>
+            </f:facet>
+
+
+
+
+            <p:panel id="pSeguimiento2" >
+                 <p:accordionPanel id ="apAlu2" style="width: 600px;"> 
+                    <p:tab title="Información del proyectoo">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{listaMisProyectosBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{listaMisProyectosBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{listaMisProyectosBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentación: "/>
+                            <h:outputText value="#{listaMisProyectosBean.proyecto.fecha_ingreso}" >
+                              <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{listaMisProyectosBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{listaMisProyectosBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Codirector/es">
+
+                        <p:dataList value="#{listaMisProyectosBean.listaOperacionBean.lstProyCodirector}"
+                                    var="cod" 
+                                    emptyMessage="No existen codirectores">
+                            <h:outputText value="#{cod.profesional.apellido},#{cod.profesional.nombre},    Matricula:#{cod.profesional.mat_profesional},    Dni:#{cod.profesional.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Asesor/es">
+
+                        <p:dataList value="#{listaMisProyectosBean.listaOperacionBean.lstProyAsesor}"
+                                    var="ase" 
+                                    emptyMessage="No existen asesores">
+                            <h:outputText value="#{ase.profesional.apellido},#{ase.profesional.nombre},    Matricula:#{ase.profesional.mat_profesional},    Dni:#{ase.profesional.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+
+                    <p:tab title="Comision Evaluadora">
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                            <h:outputLabel value="Presidente: "/>
+                            <h:outputText value="#{listaMisProyectosBean.presidente.apellido}" />
+                            <h:outputLabel value="Vocal#1: "/>
+                            <h:outputText value="#{listaMisProyectosBean.vocal1.apellido}" />
+                            <h:outputLabel value="Vocal#2: "/>
+                            <h:outputText value="#{listaMisProyectosBean.vocal2.apellido}" />
+                            <h:outputLabel value="Suplente#1: "/>
+                            <h:outputText value="#{listaMisProyectosBean.suplente1.apellido}" />
+                            <h:outputLabel value="Suplente#2: "/>
+                            <h:outputText value="#{listaMisProyectosBean.suplente2.apellido}" />
+                        </h:panelGrid>
+                    </p:tab>
+                      <p:tab title="Aceptacion de Proyecto">
+
+                          <p:dataList value="#{listaMisProyectosBean.lstAceptacionProyecto}"
+                                    var="acep" 
+                                    emptyMessage="No existen aceptaciones">
+                               <h:outputLabel value="Fecha: "/>
+                            <h:outputText value="#{acep.presentacion.fecha}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            <h:outputLabel value="  - Calificacion: "/>
+                            <h:outputText value="#{acep.calificacion.calificacion}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                        </p:dataList>
+                    </p:tab>
+                    
+                     <p:tab title="Presentacion de Proyecto">
+
+                         <p:dataList value="#{listaMisProyectosBean.lstevaluacion}"
+                                    var="eva" 
+                                    emptyMessage="No existen presentaciones">
+                              <h:outputLabel value="Fecha: "/>
+                            <h:outputText value="#{eva.presentacion.fecha}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            <h:outputLabel value="  - Calificacion: "/>
+                            <h:outputText value="#{eva.calificacion.calificacion}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                        </p:dataList>
+                    </p:tab>
+                      <p:tab title="Borrador de Proyecto">
+
+                          <p:dataList value="#{listaMisProyectosBean.lstBorradorEvaluacion}"
+                                    var="brr" 
+                                    emptyMessage="No existen borradores del proyecto">
+                              <h:outputLabel value="Fecha: "/>
+                            <h:outputText value="#{brr.borrador.fecha}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            <h:outputLabel value="  - Calificacion: "/>
+                            <h:outputText value=" #{brr.calificacion.calificacion}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                        </p:dataList>
+                    </p:tab>
+
+                </p:accordionPanel>  
+
+
+
+
+            </p:panel>    
+
+            <p:growl id="messageSeg2" showDetail="true"  />
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalirSeg2"
+                             value="Salir" 
+                             oncomplete="PF('dlgSeguimientoProyecto2').hide()"
+
+                             process="@this"/>
+          
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+  
+
+  
+
+</ui:composition>

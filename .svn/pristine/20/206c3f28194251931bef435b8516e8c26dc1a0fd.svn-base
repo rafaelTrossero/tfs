@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dModProyBrr" 
+                  widgetVar="dlgModProyBrr" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Modificaciones de Borrador de Proyecto"/>
+            </f:facet>
+
+
+            <p:panel id="display">
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{borradorBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{borradorBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{borradorBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentacion: "/>
+                            <h:outputText value="#{borradorBean.proyecto.fecha_ingreso}" />
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{borradorBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{presentacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Datos de Modificación de Proyecto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Fecha  : "/>
+                            <p:calendar value="#{borradorBean.borrador.fecha}"
+                                        />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Soporte digital del Proyecto">
+                       
+                    </p:tab>
+
+
+                    <p:tab title="Requisitos de Presentacion de Modificacion de Proyecto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <p:outputLabel value="Nota del director:"/>
+                            <p:selectBooleanCheckbox value="#{borradorBean.notaDirector}" />
+                            
+                            <p:outputLabel value="Nota del Codirector:"/>
+                            <p:selectBooleanCheckbox value="#{borradorBean.notaCodirector}" />
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+
+
+
+
+            </p:panel>    
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgModProyecto.hide()"
+
+                             process="@this"/>
+            <p:commandButton id="btnAction"
+                             value="Guardar " 
+                             actionListener="#{borradorBean.create()}" 
+                             />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+        <p:panel   header="Gestion de Proyectos" style="text-align:center;">
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto"
+                             converter="ConversorGenerico"
+                             value="#{borradorBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyectoByEstado}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgModProyBrr').show()"
+                    update="display"
+                    actionListener="#{borradorBean.crear()}"
+                    />
+
+
+
+            </div>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

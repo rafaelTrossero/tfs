@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <div style="clear: both"/>
+
+        <p:dialog id="dDepartamento" 
+                  widgetVar="dlgDepartamento" 
+                  modal="true"
+                  draggable="false"
+                  closable="false" 
+                  resizable="false"
+                  showHeader="false">
+           
+            <f:facet name="header">
+                <h:outputText value="Gestión de Departamentos"/>
+            </f:facet>
+            
+            
+            <p:panel id="pDepartamento" style="float:left;">
+                <p:focus context="pDepartamento"/> 
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+                <h:inputHidden value="#{deptoBean.departamento.id}"/>
+
+                <h:inputHidden value="#{listaDeptoBean.iActionBtnSelect}"/>
+
+                <div style="clear: both;"/>
+                <h:panelGrid columns="2" cellpadding="2" >
+
+                    
+
+                    <h:outputText value="departamento:"/>
+                    <p:inputText value="#{deptoBean.departamento.departamento}"
+                                 label="Carrera"
+                                  disabled="#{deptoBean.getbCamposEditables()}"/>
+
+                    <h:outputText value="Director:"/>
+                    <p:selectOneMenu id="somDepartamento"
+                                     converter="ConversorGenerico"
+                                     value="#{deptoBean.departamento.director}"
+                                      disabled="#{deptoBean.getbCamposEditables()}">
+                        <f:selectItem itemLabel="Seleccione...." itemValue=""/>
+                        <f:selectItems value="#{listaDocenteBean.lstSIDocente}"/>
+                    </p:selectOneMenu>
+
+                
+
+                </h:panelGrid>
+                <div style="clear: both;"/>
+
+                
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+                
+               
+            
+                
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+                
+                 <p:commandButton id="btnAction"
+                                 value="" 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{deptoBean.actionBtn}" 
+                                 update=":frmMain:dtDepartamento,:frmMain:pDepartamento, message @this"
+                                 binding="#{deptoBean.cbAction}"
+                                 >
+                  <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                 
+                 <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgDepartamento.hide()"
+                                 update=":frmMain:pDepartamento, 
+                                 :frmMain:dtDepartamento"
+                                 process="@this"/>
+                 
+                
+            </div>
+            
+        </p:dialog>
+
+
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+            
+           <p:commandButton id="cbCreate"  rendered="#{usuarioLogerBean.isAdministracion()}"
+                             value="Nuevo Departamento" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgDepartamento.show();"
+                              actionListener="#{deptoBean.setBtnSelect}"
+                             update=":frmMain:dDepartamento"
+                             process="@this"/><br/><br/>
+        </div>
+        
+        
+
+        <p:dataTable id="dtDepartamento"
+                     value="#{listaDeptoBean.lstDepartamento}"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     var="item">
+            <p:column  width="152"  headerText="Operaciones">
+                 <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil"
+                                 update=":frmMain:dDepartamento"
+                                 oncomplete="dlgDepartamento.show();"
+                                 actionListener="#{deptoBean.setBtnSelect}"
+                                 disabled="#{not item.active }">
+                     
+                     <f:setPropertyActionListener value="#{item}" target="#{deptoBean.departamento}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-circle-triangle-n" 
+                                 update=":frmMain:dDepartamento, @this"
+                                 oncomplete="dlgDepartamento.show();"
+                                 actionListener="#{deptoBean.setBtnSelect}"
+                                 disabled="#{ item.active }">
+                    <f:setPropertyActionListener value="#{item}" target="#{deptoBean.departamento}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-triangle-s"
+                                 update=":frmMain:dDepartamento, @this"
+                                 oncomplete="dlgDepartamento.show();"
+                                 actionListener="#{deptoBean.setBtnSelect}"
+                                 disabled="#{not item.active }">
+
+                    <f:setPropertyActionListener value="#{item}" target="#{deptoBean.departamento}"/> 
+                </p:commandButton>
+
+            </p:column>
+
+
+            <p:column filterBy="#{item.departamento}" sortBy="#{item.departamento}" >
+                <f:facet name="header">
+                    <h:outputText value="Departamento"/>
+                </f:facet>  
+                <h:outputText value="#{item.departamento}"/>
+            </p:column>
+
+            
+
+            
+
+        </p:dataTable>
+    </ui:define>
+</ui:composition>

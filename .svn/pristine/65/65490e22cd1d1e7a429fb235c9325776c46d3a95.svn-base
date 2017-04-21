@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <!-- DIALOGO CARRERA !-->
+        <p:dialog id="dCarrera" 
+                  widgetVar="dlgCarrera" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Carreras"/>
+            </f:facet>
+            <p:panel id="pCarrera" style="float:left;">
+                <p:focus context="pCarrera"/> 
+
+                <h:inputHidden value="#{carreraBean.carrera.id}"/>
+
+                <h:inputHidden value="#{listaCarreraBean.iActionBtnSelect}"/>
+
+                <div style="clear: both;"/>
+
+                <p:accordionPanel id ="apCarrera" style="width: 600px;">
+                    <p:tab title="Información de Carrera">
+                        <h:panelGrid columns="2" cellpadding="3" >
+
+                            <h:outputText value="Carrera:"/>
+                            <p:inputText value="#{carreraBean.carrera.carrera}"
+                                         label="Carrera"/>
+
+                            <h:outputText value="Plan:"/>
+
+                            <p:inputText value="#{carreraBean.carrera.plan}"
+                                         label="Plan"/>
+
+                            <h:outputText value="Departamento:"/>
+                            <p:selectOneMenu id="somDepartamento"
+                                             converter="ConversorGenerico"
+
+                                             value="#{carreraBean.carrera.departamento}">
+                                <f:selectItems 
+                                    value="#{listaDeptoBean.lstSIDepartamento}"/>
+                            </p:selectOneMenu>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+                <div style="clear: both;"/>
+
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="fa fa-spinner"
+                                 actionListener="#{carreraBean.actionBtn}" 
+                                 update=":frmMain:dtCarrera, 
+                                 :frmMain:pCarrera, @this"
+                                 binding="#{carreraBean.cbAction}"/>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="dlgCarrera.hide()"
+                                 update=":frmMain:pCarrera, 
+                                 :frmMain:dtCarrera"
+                                 process="@this"/>
+
+            </div   >
+
+        </p:dialog>
+
+
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+            
+          
+                             
+            <p:commandButton id="cbNuevo"
+                             value="Nueva Carrera" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgCarrera.show();"
+                              actionListener="#{carreraBean.setBtnSelect}"
+                             update=":frmMain:dCarrera"
+                             process="@this"/><br/><br/>
+        </div>
+
+
+        <p:dataTable id="dtCarrera"
+                     value="#{listaCarreraBean.lstCarrera}"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     var="item">
+            <p:column  width="152"  headerText="Operaciones">
+                 <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 
+                                 icon="fa fa-recycle" 
+                                 update=":frmMain:dCarrera"
+                                 oncomplete="dlgCarrera.show();"
+                                 actionListener="#{carreraBean.setBtnSelect}">
+                    <f:setPropertyActionListener value="#{item}" target="#{carreraBean.carrera}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-circle-triangle-n" 
+                                 update=":frmMain:dCarrera, @this"
+                                 oncomplete="dlgCarrera.show();"
+                                 actionListener="#{carreraBean.setBtnSelect}"
+                                 >
+                    <f:setPropertyActionListener value="#{item}" target="#{carreraBean.carrera}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-triangle-s"
+                                 update=":frmMain:dCarrera, @this"
+                                 oncomplete="dlgCarrera.show();"
+                                 actionListener="#{carreraBean.setBtnSelect}"
+                                 >
+
+                    <f:setPropertyActionListener value="#{item}" target="#{carreraBean.carrera}"/> 
+                </p:commandButton>
+
+            </p:column>
+
+
+            <p:column filterBy="#{item.carrera}" sortBy="#{item.carrera}" >
+                <f:facet name="header">
+                    <h:outputText value="Carrera"/>
+                </f:facet>  
+                <h:outputText value="#{item.carrera}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.plan}" sortBy="#{item.plan}">
+                <f:facet name="header">
+                    <h:outputText value="Plan"/>
+                </f:facet>  
+                <h:outputText value="#{item.plan}"/>
+            </p:column>
+
+            <p:column filterBy="#{item.departamento}" sortBy="#{item.departamento}" >
+                <f:facet name="header">
+                    <h:outputText value="Departamento"/>
+                </f:facet>  
+                <h:outputText value="#{item.departamento.departamento}"/>
+            </p:column>
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

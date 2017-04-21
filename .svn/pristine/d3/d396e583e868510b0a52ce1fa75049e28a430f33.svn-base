@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <!-- DIALOGO CATEDRA !-->
+        <p:dialog id="dCatedra" 
+                  widgetVar="dlgCatedra" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Cátedras"/>
+            </f:facet>
+            <p:panel id="pCatedra" style="float:left;">
+                <p:focus context="pCatedra"/> 
+
+                <h:inputHidden value="#{catedraBean.catedra.id}"/>
+
+                <h:inputHidden value="#{listaCatedraBean.iActionBtnSelect}"/>
+
+                <div style="clear: both;"/>
+
+                <p:accordionPanel id ="apCatedra" style="width: 600px;">
+                    <p:tab title="Información de Cátedra">
+                        <h:panelGrid columns="2" cellpadding="3" >
+
+                            <h:outputText value="Catedra:"/>
+                            <p:inputText value="#{catedraBean.catedra.nombre}"
+                                         label="Catedra"
+                                         disabled="#{catedraBean.getbCamposEditables()}"/>
+
+                            <h:outputText value="Carrera:"/>
+
+                            <p:selectOneMenu id="somCarrera"
+                                             converter="ConversorGenerico"
+                                              
+                                             value="#{catedraBean.catedra.carrera}"
+                                             disabled="#{catedraBean.getbCamposEditables()}">
+                                 <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems  
+                                     
+                                    value="#{listaCarreraBean.lstSICarreraActiva}"/>
+                            </p:selectOneMenu>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+                <div style="clear: both;"/>
+
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+                
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{catedraBean.actionBtn}" 
+                                 update=":frmMain:dtCatedra, 
+                                 :frmMain:pCatedra, @this"
+                                 binding="#{catedraBean.cbAction}">
+                     <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgCatedra.hide()"
+                                 update=":frmMain:pCatedra, 
+                                 :frmMain:dtCatedra"
+                                 process="@this"/>
+
+            </div   >
+
+        </p:dialog>
+
+
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+            
+          
+                             
+            <p:commandButton id="cbNuevo"
+                             value="Nueva Cátedra" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgCatedra.show();"
+                              actionListener="#{catedraBean.setBtnSelect}"
+                             update=":frmMain:dCatedra"
+                             process="@this"/><br/><br/>
+        </div>
+
+
+        <p:dataTable id="dtCatedra"
+                     value="#{listaCatedraBean.lstCatedra}"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     var="item">
+            <p:column  width="152"  headerText="Operaciones">
+                 <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil"
+                                 update=":frmMain:dCatedra"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                 disabled="#{not item.active }">
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-unlocked" 
+                                 update=":frmMain:dCatedra, @this"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                 disabled="#{item.active }"
+                                 >
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-close" 
+                                 update=":frmMain:dCatedra, @this"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                  disabled="#{not item.active }"
+                                 >
+
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/> 
+                </p:commandButton>
+
+            </p:column>
+
+
+            <p:column filterBy="#{item.nombre}" sortBy="#{item.nombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Cátedra"/>
+                </f:facet>  
+                <h:outputText value="#{item.nombre}"/>
+            </p:column>
+
+
+            <p:column filterBy="#{item.carrera}" sortBy="#{item.carrera}" >
+                <f:facet name="header">
+                    <h:outputText value="Carrera"/>
+                </f:facet>  
+                <h:outputText value="#{item.carrera.carrera}"/>
+            </p:column>
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

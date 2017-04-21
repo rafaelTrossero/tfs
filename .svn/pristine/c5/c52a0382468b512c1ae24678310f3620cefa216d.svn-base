@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 template="./Template/TfsTemplate.xhtml"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+
+
+        <p:dialog id="dSeguimientoProyecto" 
+                  widgetVar="dlgSeguimientoProyecto" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Seguimiento De Proyecto"/>
+            </f:facet>
+
+
+
+
+            <p:panel id="pSeguimiento" >
+                <p:accordionPanel id ="apAlu" style="width: 750px;"> 
+                    <p:tab title="Información del proyectoo">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{operacionBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{operacionBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{operacionBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentación: "/>
+                            <h:outputText value="#{operacionBean.proyecto.fecha_ingreso}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{operacionBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{operacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Codirector/es">
+
+                        <p:dataList value="#{operacionBean.listaOperacionBean.lstProyCodirector}"
+                                    var="cod" 
+                                    emptyMessage="No existen codirectores">
+                            <h:outputText value="#{cod.profesional.apellido},#{cod.profesional.nombre},    Matricula:#{cod.profesional.mat_profesional},    Dni:#{cod.profesional.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Asesor/es">
+
+                        <p:dataList value="#{operacionBean.listaOperacionBean.lstProyAsesor}"
+                                    var="ase" 
+                                    emptyMessage="No existen asesores">
+                            <h:outputText value="#{ase.profesional.apellido},#{ase.profesional.nombre},    Matricula:#{ase.profesional.mat_profesional},    Dni:#{ase.profesional.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+
+                    <p:tab title="Comision Evaluadora">
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                            <h:outputLabel value="Presidente: "/>
+                            <h:outputText value="#{operacionBean.presidente.apellido}" />
+                            <h:outputLabel value="Vocal#1: "/>
+                            <h:outputText value="#{operacionBean.vocal1.apellido}" />
+                            <h:outputLabel value="Vocal#2: "/>
+                            <h:outputText value="#{operacionBean.vocal2.apellido}" />
+                            <h:outputLabel value="Suplente#1: "/>
+                            <h:outputText value="#{operacionBean.suplente1.apellido}" />
+                            <h:outputLabel value="Suplente#2: "/>
+                            <h:outputText value="#{operacionBean.suplente2.apellido}" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Aceptacion de Proyecto">
+
+                        <p:dataList value="#{operacionBean.lstAceptacionProyecto}"
+                                    var="acep" 
+                                    emptyMessage="No existen aceptaciones">
+                            <h:outputLabel value="Fecha: "/>
+                            <h:outputText value="#{acep.presentacion.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <h:outputLabel value="  - Calificacion: "/>
+                            <h:outputText value="#{acep.calificacion.calificacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:dataList>
+                    </p:tab>
+
+                    <p:tab  title="Cronograma de Actividades">
+                        <style  type="text/css">                 
+                            .colored {
+                                background-color: #FF0000;
+                                color: white;
+                            </style>
+                            <p:dataTable  id="dtCronograma"
+                                          paginator="false"
+                                          rows="50"  
+                                          rowStyleClass="#{listaCronogramaBean.CronogramaStyleClass(crono)}"
+                                          scrollable="false"
+                                          value="#{listaCronogramaBean.lstCronogramaActividad}"
+                                          var="crono" >
+
+                                <p:column  filterBy="#{crono.numero}" sortBy="#{crono.numero}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Numero"/>
+                                    </f:facet>
+                                    <h:outputText value="#{crono.numero}"/>
+                                </p:column>  
+                                <p:column  filterBy="#{crono.descripcion_act}" sortBy="#{crono.descripcion_act}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Descripción"/>
+                                    </f:facet>
+                                    <h:outputText value="#{crono.descripcion_act}"/>
+                                </p:column>
+                                <p:column  filterBy="#{crono.fecha_inicio}" sortBy="#{crono.fecha_inicio}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha inicio"/>
+                                    </f:facet>
+                                    <h:outputText value="#{crono.fecha_inicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column>    
+                                <p:column  filterBy="#{crono.fecha_fin}" sortBy="#{crono.fecha_fin}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha fin"/>
+                                    </f:facet>
+                                    <h:outputText value="#{crono.fecha_fin}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </p:column> 
+
+
+
+                            </p:dataTable>
+                        </p:tab>
+
+
+
+                        <p:tab title="Presentacion de Proyecto">
+
+                            <p:dataList value="#{operacionBean.lstevaluacion}"
+                                        var="eva" 
+                                        emptyMessage="No existen presentaciones">
+
+                                <h:outputLabel value="Fecha: "/>
+                                <h:outputText value="#{eva.presentacion.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <h:outputLabel value="  - Calificacion: "/>
+                                <h:outputText value="#{eva.calificacion.calificacion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:dataList>
+                        </p:tab>
+                        <p:tab title="Borrador de Proyecto">
+
+                            <p:dataList value="#{operacionBean.lstBorradorEvaluacion}"
+                                        var="brr" 
+                                        emptyMessage="No existen borradores del proyecto">
+
+                                <h:outputLabel value="Fecha: "/>
+                                <h:outputText value="#{brr.borrador.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <h:outputLabel value="  - Calificacion: "/>
+                                <h:outputText value=" #{brr.calificacion.calificacion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:dataList>
+                        </p:tab>
+
+                    </p:accordionPanel>  
+
+
+
+
+                </p:panel>    
+                <div  style="float: left; margin: 10px;
+                      width: 100%;
+                      text-align: center;">
+                    <p:growl id="messageSeg" showDetail="true"  />
+                    <div style="clear: both;"/>
+                    <p:commandButton id="btnSalirSeg"
+                                     value="Salir" 
+                                     oncomplete="dlgSeguimientoProyecto.hide()"
+
+                                     process="@this"/>
+
+
+                    <div style="clear: both;"/>
+
+                    <div>
+                        <p:messages autoUpdate="true"/>
+                    </div>
+
+
+                    <div style="clear: both;"/>
+
+                </div>
+            </p:dialog>
+
+
+            <p:panel   id = "pPrincipal" header="Seguimiento de Proyecto" style="text-align:center;">
+                <h:panelGrid columns="5" cellpadding="2" style="alignment-adjust: central">
+                        <h:outputText value="Proyecto:  "/>
+                        <p:selectOneMenu id="somProyecto"
+                                         converter="ConversorGenerico"
+                                         value="#{operacionBean.proyecto}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaProyectoBean.lstSIProyecto}"/>
+
+                        </p:selectOneMenu>
+
+                        <p:commandButton
+                            value="Continuar" 
+                            icon="ui-icon-circle-plus" 
+                            oncomplete="PF('dlgSeguimientoProyecto').show()"
+                            update=":frmMain:pSeguimiento, @this"
+                            actionListener="#{operacionBean.crear()}"
+                            />
+
+                    </h:panelGrid>
+
+
+
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>

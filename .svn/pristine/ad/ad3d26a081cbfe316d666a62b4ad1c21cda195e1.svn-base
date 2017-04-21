@@ -1,0 +1,309 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.PresentacionRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import RN.ProyectoRNbeanLocal;
+import entidad.Docente;
+import entidad.Estado;
+import entidad.Presentacion;
+import entidad.ProyectoAlumno;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.component.commandbutton.CommandButton;
+
+/**
+ *
+ * @author Trossero
+ */
+@ManagedBean
+@RequestScoped
+public class PresentacionBean {
+    
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+
+
+    private Presentacion presentacion;
+    private Proyecto proyecto;
+  
+
+    @EJB
+    private PresentacionRNLocal presentacionRNbeanLocal;
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+    
+    private Estado estado;
+    private boolean notaDirector;
+    private boolean notaAceptacion;
+    private boolean certificadoRegular;
+   
+    
+
+    private CommandButton cbAction;
+    
+      private List<ProyectoAlumno> lstProyAlumno;
+    private List<ProyectoDirector> lstProyDirector;
+  
+
+    @EJB
+    private ProyectoAlumnoRNLocal proy_alumnoRNbeanLocal;
+    @EJB
+    private ProyectoDirectorRNLocal proy_directorRNbeanLocal;
+   
+    
+    public PresentacionBean() {
+        this.presentacion = new Presentacion();
+    }
+
+    public Presentacion getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(Presentacion presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public boolean isNotaDirector() {
+        return notaDirector;
+    }
+
+    public void setNotaDirector(boolean notaDirector) {
+        this.notaDirector = notaDirector;
+    }
+
+    public boolean isNotaAceptacion() {
+        return notaAceptacion;
+    }
+
+    public void setNotaAceptacion(boolean notaAceptacion) {
+        this.notaAceptacion = notaAceptacion;
+    }
+
+    public boolean isCertificadoRegular() {
+        return certificadoRegular;
+    }
+
+    public void setCertificadoRegular(boolean certificadoRegular) {
+        this.certificadoRegular = certificadoRegular;
+    }
+
+   
+    public CommandButton getCbAction() {
+        return cbAction;
+    }
+
+    public void setCbAction(CommandButton cbAction) {
+        this.cbAction = cbAction;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public List<ProyectoAlumno> getLstProyAlumno() {
+        return lstProyAlumno;
+    }
+
+    public void setLstProyAlumno(List<ProyectoAlumno> lstProyAlumno) {
+        this.lstProyAlumno = lstProyAlumno;
+    }
+
+    public List<ProyectoDirector> getLstProyDirector() {
+        return lstProyDirector;
+    }
+
+    public void setLstProyDirector(List<ProyectoDirector> lstProyDirector) {
+        this.lstProyDirector = lstProyDirector;
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+    
+    
+    public void crear() throws Exception {
+
+        System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa");
+        this.setLstProyAlumno(proy_alumnoRNbeanLocal.findByProyAlumno(proyecto));
+        if (lstProyAlumno == null) {
+            System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+
+        } else {
+            System.out.println(" else llllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
+        }
+
+        System.out.println("ahora para el proyecto");
+        this.setLstProyDirector(proy_directorRNbeanLocal.findByProyDirector(proyecto));
+        if (lstProyDirector == null) {
+            System.out.println("h proyecto  no tiene nadallllllllllllllaaaaaaaaaaa" + lstProyDirector + proyecto.getId());
+
+        } else {
+            System.out.println(" si hay un proyecto" + lstProyDirector + proyecto.getId());
+        }
+    }
+    
+     public void create() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            
+            presentacion = new Presentacion();
+            presentacion.setProyecto(this.proyecto);
+            Long id_estado = presentacion.getProyecto().getEstado().getId();
+
+            System.out.println("holaaaaaaaaaaaaaaaa" + presentacion.getProyecto().getEstado().getId());
+            System.out.println("holaaaaaaaaaaaaaaaa" + this.notaDirector);
+             System.out.println("holeeeeeeeeeeeeeee" + this.certificadoRegular);
+              System.out.println("holiiiiiiiiiiiiiii" + this.notaAceptacion);
+            System.out.println("holuuuuuuuuuuuuuuuuuuuuuuu" + id_estado);
+          
+                  
+           
+             /* ----------------------------------------------------------
+             Para la Nueva presentacion de Proyectos
+             ----------------------------------------------------------------*/
+            
+            // si se cumplen con todos los requisitos el proyecto se da de alta con estado(en proceso de aceptacion de proyecto)
+            if (this.notaDirector == true && this.certificadoRegular == true && this.notaAceptacion == true) {
+                System.out.println("pasaasasasasasasassa" + notaDirector + notaAceptacion + certificadoRegular);
+                //consulta me devuelve el registro del estado igual a 1
+                estado = proyectoRNbeanLocal.findByEstado(1);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaa :(");
+                //Realiza el alta de la presentacion
+                presentacion.setProyecto(this.proyecto);
+                System.out.println("hasta aca nomaaa :(" + proyecto);
+                presentacion.setCertificados(this.certificadoRegular);
+                presentacion.setNota_aprobacion(this.notaAceptacion);
+                presentacion.setNota_director(this.notaDirector);
+
+                presentacionRNbeanLocal.create(presentacion);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + presentacion.getFecha());
+
+            }
+             // si NO se cumplen con todos los requisitos el proyecto se da de alta con estado(se requiere una nueva presentacion de proyecto)
+
+            if (presentacion.getProyecto().getEstado().getId().equals(3L) && this.notaDirector == false || this.certificadoRegular == false || this.notaAceptacion == false) {
+                System.out.println(" no loco no pasaasasasasasasassa" + notaDirector);
+                //consulta me devuelve el registro del estado igual a 3
+                estado = proyectoRNbeanLocal.findByEstado(3);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaa :(");
+                //Realiza el alta de la presentacion
+                presentacion.setProyecto(this.proyecto);
+                System.out.println("hasta aca nomaaa :(" + proyecto);
+                presentacion.setCertificados(this.certificadoRegular);
+                presentacion.setNota_aprobacion(this.notaAceptacion);
+                presentacion.setNota_director(this.notaDirector);
+
+                presentacionRNbeanLocal.create(presentacion);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta auuuuuuuuuuuuuuuuuuuuuuuuuu" + presentacion.getFecha());
+            }
+                      /* ----------------------------------------------------------
+             Para la presentacion de modificaciones de Proyectos
+             ----------------------------------------------------------------*/
+            
+            if (this.notaDirector == true && presentacion.getProyecto().getEstado().getId().equals(6L)) {
+
+                
+                this.certificadoRegular = true;
+                this.notaAceptacion = true;
+                //consulta me devuelve el registro del estado igual a 4
+                estado = proyectoRNbeanLocal.findByEstado(4);
+                
+                proyecto.setEstado(estado);
+               
+                //Realiza el alta de la presentacion
+                presentacion.setProyecto(this.proyecto);
+             
+                presentacion.setCertificados(this.certificadoRegular);
+                presentacion.setNota_aprobacion(this.notaAceptacion);
+                presentacion.setNota_director(this.notaDirector);
+
+                presentacionRNbeanLocal.create(presentacion);
+                
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + presentacion.getFecha());
+
+            }
+
+            if (this.notaDirector== false && presentacion.getProyecto().getEstado().getId().equals(6L)) {
+
+                System.out.println("pasaasasasasasasassa MODIFICACIONESSS!!" + notaDirector);
+                this.certificadoRegular = true;
+                this.notaAceptacion = true;
+                //consulta me devuelve el registro del estado igual a 4
+                estado = proyectoRNbeanLocal.findByEstado(6);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                System.out.println("hasta aca nomaaa :(");
+                //Realiza el alta de la presentacion
+                presentacion.setProyecto(this.proyecto);
+                System.out.println("hasta aca nomaaa :(" + proyecto);
+                presentacion.setCertificados(this.certificadoRegular);
+                presentacion.setNota_aprobacion(this.notaAceptacion);
+                presentacion.setNota_director(this.notaDirector);
+
+                presentacionRNbeanLocal.create(presentacion);
+                System.out.println("hasta aca nomaaooooooojojojoojojojo :(" + proyecto.getEstado().getEstado());
+                proyectoRNbeanLocal.edit(proyecto);
+                System.out.println("hasta acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + presentacion.getFecha());
+ 
+            }
+            
+          
+
+            //limpiar campos
+            this.limpiar();
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear bolooooos: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }// fin crear
+     
+     private void limpiar() {
+        this.presentacion = new Presentacion();
+    }
+}

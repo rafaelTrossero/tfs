@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.BorradorEvaluacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Trossero
+ */
+@Local
+public interface BorradorEvaluacionFacadeLocal {
+
+    void create(BorradorEvaluacion brr_evaluacion);
+
+    void edit(BorradorEvaluacion brr_evaluacion);
+
+    void remove(BorradorEvaluacion brr_evaluacion);
+
+    BorradorEvaluacion find(Object id);
+
+    List<BorradorEvaluacion> findAll();
+
+    List<BorradorEvaluacion> findRange(int[] range);
+    
+    public List<BorradorEvaluacion> findByEvaluacionBorrador(Proyecto pro) throws Exception;
+
+    int count();
+    
+    public BorradorEvaluacion findByProyectoYcalif (Proyecto pro, Integer cal, Long borrador)  throws Exception;
+    
+}

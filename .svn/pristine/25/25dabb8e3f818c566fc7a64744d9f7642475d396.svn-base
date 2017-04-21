@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.DefensaFinalFacadeLocal;
+import entidad.DefensaFinal;
+import entidad.Proyecto;
+import entidad.Tribunal;
+import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import recursos.cadenas;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class DefensaFinalRN implements DefensaFinalRNLocal {
+@EJB 
+     private DefensaFinalFacadeLocal defensa_FinalFacadeLocal;
+    @Override
+    public void create(DefensaFinal p) throws Exception {
+        validar(p,1);
+this.defensa_FinalFacadeLocal.create(p);    
+    }
+
+    @Override
+    public void remove(DefensaFinal p) throws Exception {
+this.defensa_FinalFacadeLocal.remove(p);
+    }
+
+    @Override
+    public void edit(DefensaFinal p) throws Exception {
+  this.defensa_FinalFacadeLocal.edit(p);
+    }
+
+    @Override
+    public List<DefensaFinal> findAll() throws Exception {
+  return(this.defensa_FinalFacadeLocal.findAll());
+    }
+    
+    @Override
+    public DefensaFinal findByDefensa (Proyecto pro, Tribunal trib) throws Exception {
+      return defensa_FinalFacadeLocal.findbyDefensa(pro, trib);
+    }
+    @Override
+    public List<DefensaFinal> findProyAprobados( Date fecha1, Date fecha2) throws Exception {
+        return defensa_FinalFacadeLocal.findProyAprobados(fecha1, fecha2);
+        
+    }
+
+     private void validar(DefensaFinal a, int op) throws Exception {
+    
+    
+    //verifica si es una línea en blanco
+    if (a.getPresidente()== null) {
+      throw new Exception("Comision evaluadora incompleta");
+    }
+    if (a.getVocal1() == null) {
+      throw new Exception("Comision evaluadora incompleta");
+    }
+    if (a.getVocal2() == null) {
+      throw new Exception("Comision evaluadora incompleta");
+    }
+    if (a.getFecha() == null) {
+      throw new Exception("El campo fecha no puede estar vacio");
+    }
+    
+
+
+  }//fin validar */
+    
+}

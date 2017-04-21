@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.CalificacionFacadeLocal;
+import entidad.Calificacion;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class CalificacionRN implements CalificacionRNLocal {
+
+    @EJB
+    private CalificacionFacadeLocal calificacionFacadeLocal;
+    
+    @Override
+    public void create(Calificacion c) throws Exception {
+        this.calificacionFacadeLocal.create(c);
+    }
+
+    @Override
+    public void remove(Calificacion c) throws Exception {
+        this.calificacionFacadeLocal.remove(c);
+    }
+
+    @Override
+    public void edit(Calificacion c) throws Exception {
+        this.calificacionFacadeLocal.edit(c);
+    }
+
+    @Override
+    public List<Calificacion> findAll() throws Exception {
+        return(this.calificacionFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+}

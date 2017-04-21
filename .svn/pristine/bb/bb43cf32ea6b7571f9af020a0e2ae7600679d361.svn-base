@@ -1,0 +1,127 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.AlumnoRNLocal;
+import entidad.Alumno;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@SessionScoped
+public class ListaAlumnoBean implements Serializable {
+ private int iActionBtnSelect;
+  @EJB
+    private AlumnoRNLocal alumnoRNbeanLocal;
+    
+    private List<Alumno> lstAlumno;
+    private List<SelectItem> lstSIAlumno;
+   private List<Alumno> selectedAlu; 
+   private Alumno alu;
+    
+
+    public ListaAlumnoBean() {
+        System.out.println("Constructor ListaAlumnoBean");
+        lstAlumno = new ArrayList<Alumno>();
+    }
+
+    public AlumnoRNLocal getAlumnoRNbeanLocal() {
+        return alumnoRNbeanLocal;
+    }
+
+    public void setAlumnoRNbeanLocal(AlumnoRNLocal alumnoRNbeanLocal) {
+        this.alumnoRNbeanLocal = alumnoRNbeanLocal;
+    }
+
+    public List<Alumno> getLstAlumno() {
+        return lstAlumno;
+    }
+
+    public void setLstAlumno(List<Alumno> lstAlumno) {
+        this.lstAlumno = lstAlumno;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+    public List<SelectItem> getLstSIAlumno() {
+        return lstSIAlumno;
+    }
+
+    public void setLstSIAlumno(List<SelectItem> lstSIAlumno) {
+        this.lstSIAlumno = lstSIAlumno;
+    }
+
+    public List<Alumno> getSelectedAlu() {
+        return selectedAlu;
+    }
+
+    public void setSelectedAlu(List<Alumno> selectedAlu) {
+        this.selectedAlu = selectedAlu;
+    }
+
+   
+
+    public Alumno getAlu() {
+        return alu;
+    }
+
+    public void setAlu(Alumno alu) {
+        this.alu = alu;
+    }
+
+    
+    
+    
+     @PostConstruct
+    void init() {
+        System.out.println("PostConstructor ListaProfesionalBean");
+        this.limpiar();
+        cargar_alumnos();
+        cargar_SI_alumnos();
+        
+       
+    }
+
+    private void cargar_alumnos() {
+       try {
+            this.setLstAlumno(this.alumnoRNbeanLocal.findAll());
+        } catch (Exception ex) {
+            System.out.println("Error al cargar alumnos " + ex.toString());
+        }
+    }
+    
+
+    private void cargar_SI_alumnos() {
+        this.setLstSIAlumno(new ArrayList<SelectItem>());
+
+        for (Alumno a : this.getLstAlumno()) {
+            SelectItem si = new SelectItem(a, a.getApellido()+","+ a.getNombre());
+            this.getLstSIAlumno().add(si);
+        }
+    }
+    
+ 
+    public void limpiar() {
+        lstAlumno = new ArrayList<Alumno>();
+    }
+    
+}

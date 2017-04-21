@@ -1,0 +1,248 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.NoticiasRNLocal;
+import entidad.Noticias;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@ManagedBean
+@SessionScoped
+public class ListaNoticiasBean {
+
+    /**
+     * Creates a new instance of ListaNoticiasBean
+     */
+    
+    @EJB
+    private NoticiasRNLocal noticiasRNlocal;
+    
+    private Noticias noticias;
+    
+    private List<Noticias> lstNoticias;
+    
+    private int iActionBtnSelect;
+    
+    public int num=0;
+    public int num2=1;
+    public int num3=2;
+    
+    private Boolean hayNoticias=true;
+    private Boolean inicio=false;
+    private Boolean grid1=true;
+    private Boolean grid2=true;
+    private Boolean grid3=true;
+    public ListaNoticiasBean() {
+        
+        this.noticias = new Noticias();
+        this.lstNoticias = new  ArrayList<Noticias>();
+    }
+    
+    @PostConstruct
+    void init() {
+        System.out.println("PostConstructor ListaNoticiasBean");
+        this.cargarLstNoticias();
+        
+
+        //System.out.println("Departamentos: " + this.getLstDepartamento());
+    }
+
+  
+    public NoticiasRNLocal getNoticiasRNlocal() {
+        return noticiasRNlocal;
+    }
+
+    public void setNoticiasRNlocal(NoticiasRNLocal noticiasRNlocal) {
+        this.noticiasRNlocal = noticiasRNlocal;
+    }
+
+    public Noticias getNoticias() {
+        
+      
+        return noticias;
+    }
+
+    public void setNoticias(Noticias noticias) {
+        
+        this.noticias = noticias;
+    }
+
+    public List<Noticias> getLstNoticias() {
+        return lstNoticias;
+    }
+
+    public void setLstNoticias(List<Noticias> lstNoticias) {
+        this.lstNoticias = lstNoticias;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = 0;
+    }
+
+    public int getNum2() {
+        return num2;
+    }
+
+    public void setNum2(int num2) {
+        this.num2 = 1;
+    }
+
+    public int getNum3() {
+        return num3;
+    }
+
+    public void setNum3(int num3) {
+        this.num3 = 2;
+    }
+
+    public Boolean getHayNoticias() {
+        return hayNoticias;
+    }
+
+    public void setHayNoticias(Boolean hayNoticias) {
+        this.hayNoticias = hayNoticias;
+    }
+
+    public Boolean getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Boolean inicio) {
+        this.inicio = inicio;
+    }
+
+    public Boolean getGrid1() {
+        return grid1;
+    }
+
+    public void setGrid1(Boolean grid1) {
+        this.grid1 = grid1;
+    }
+
+    public Boolean getGrid2() {
+        return grid2;
+    }
+
+    public void setGrid2(Boolean grid2) {
+        this.grid2 = grid2;
+    }
+
+    public Boolean getGrid3() {
+        return grid3;
+    }
+
+    public void setGrid3(Boolean grid3) {
+        this.grid3 = grid3;
+    }
+    
+    
+  
+    
+  public void cargarLstNoticias (){
+     
+      this.setLstNoticias(noticiasRNlocal.findUltimaNoticia());
+      
+       
+  }
+  
+  public String paginaSig (){
+      
+      if(!lstNoticias.isEmpty()){this.setInicio(Boolean.TRUE);}
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);
+     if(this.num+3<lstNoticias.size()){
+         
+      this.num = num +3;
+      System.out.println("-------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+      else {this.setHayNoticias(Boolean.FALSE);
+             this.setGrid1(false);   }
+     if(this.num2+3<lstNoticias.size()){
+      this.num2 = num2 +3;
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+     else {this.setHayNoticias(Boolean.FALSE);
+             this.setGrid2(false);   }
+     if(this.num3+3<lstNoticias.size()){
+      this.num3= num3 +3;
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+     else { System.out.println("entro al else 3" +num3);
+         this.setHayNoticias(Boolean.FALSE);
+             this.setGrid3(false);   }
+      
+      
+      return "index.xhtml";
+  }
+  
+   public String paginaAnt (){
+    
+     
+       
+        
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);
+      
+     if(this.num-3>=0){
+         
+      this.num = num -3;
+      this.setHayNoticias(Boolean.TRUE);
+       if(this.num == 0){this.setInicio(Boolean.FALSE);}
+      System.out.println("-------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+      else {System.out.println("entro al else ant 1" +num);
+         this.setHayNoticias(Boolean.TRUE);
+             this.setGrid1(true); 
+           
+     }
+     
+     if(this.num2-3>=0){
+         if(this.num+3 < lstNoticias.size()-1){
+      this.num2 = num2 -3;}
+      this.setHayNoticias(Boolean.TRUE);
+      this.setGrid2(true);  
+       if(this.num == 0){this.setInicio(Boolean.FALSE);}
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+     else
+     {
+         System.out.println("entro al else ant 2" +num2);
+         this.setHayNoticias(Boolean.TRUE);
+             this.setGrid2(true); 
+            
+     }
+     if(this.num3-3>=0){
+          if(this.num+3 < lstNoticias.size()-1){
+      this.num3= num3 -3;}
+      this.setHayNoticias(Boolean.TRUE);
+      this.setGrid3(true); 
+       if(this.num == 0){this.setInicio(Boolean.FALSE);}
+      System.out.println("------------tamaño noti" +lstNoticias.size() +", num= "+num+", num2= "+num2+", num3= "+num3);}
+     else
+     {
+         System.out.println("entro al else ant 3" +num3);
+         this.setHayNoticias(Boolean.TRUE);
+             this.setGrid3(true);
+             
+     }
+     
+       return "index.xhtml";
+  }
+}

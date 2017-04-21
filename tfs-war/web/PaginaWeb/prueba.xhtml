@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="../resources/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"></link>
+        <link href="../resources/css/style.css" rel="stylesheet" type="text/css" media="all" ></link>
+
+        <script src="../resources/js/jquery-1.12.0.min.js" type="text/javascript"></script>
+        <script src="../resources/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+        <script src="../resources/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        
+    </h:head>
+    <h:body>
+        
+       
+        	<div class="blog">
+		<div class="container">
+			<h3><span>Noticias</span> Recientes</h3>
+			<p class="dolore"> </p>
+			<div class="blog-grids">
+                            <div class="blog-grid" jsf:rendered="#{listaNoticiasBean.grid1}">
+                                    <td><div class="col-md-5 blog-grid-right">
+                                            <a href="single.html"><img src="../Imagenes/10.jpg" alt=" " class="img-responsive" /></a>
+						
+					</div></td>
+					<div class="col-md-7 blog-grid-left">
+                                            <td>  <h4><a href="single.html">#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).titulo}</a></h4></td>
+						 <td><p> <a href="single.html"></a> <span>#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).fecha_agregado}</span></p></td>
+						<div class="rem">
+                                                    <td>	<p>"#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).contenido}</p></td>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+                             <div class="blog-grid" jsf:rendered="#{listaNoticiasBean.grid2}">
+                            <div class="col-md-7 blog-grid-left">
+                                <h4><a href="single.html">#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num2).titulo}</a></h4>
+                                <p> <a href="single.html"></a> <span>#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num2).fecha_agregado}</span></p>
+                                <div class="rem">
+                                    <p>"#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num2).contenido}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5 blog-grid-right">
+                                <a href="single.html"><img src="../Imagenes/11.jpg" alt=" " class="img-responsive" /></a>
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+
+
+
+                        <div class="blog-grid" jsf:rendered="#{listaNoticiasBean.grid3}">
+                            <div class="col-md-5 blog-grid-right">
+                                <a href="single.html"><img src="../Imagenes/12.jpg" alt=" " class="img-responsive" /></a>
+
+                            </div>
+                            <div class="col-md-7 blog-grid-left">
+                                <h4><a href="single.html">#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num3).titulo}</a></h4>
+                                <p> <a href="single.html"></a> <span>#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num3).fecha_agregado}</span></p>
+                                <div class="rem">
+                                    <p>"#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).contenido}</p>
+                                </div>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                            </div>
+                      <h:form>
+			<nav>
+			  <ul class="pagination pasge">
+                             
+				
+                              <li>
+                                  <a href="#" aria-label="Previous" jsf:actionListener="#{listaNoticiasBean.paginaAnt()}" jsf:rendered="#{listaNoticiasBean.inicio}">
+                                    <span aria-hidden="true">&laquo; Anterior</span>
+                                </a>
+                            </li>
+                              <li>
+                                <a href="#" aria-label="Next" jsf:actionListener="#{listaNoticiasBean.paginaSig()}" jsf:rendered="#{listaNoticiasBean.hayNoticias}">
+                                    <span aria-hidden="true">&raquo; Siguiente</span>
+                                </a>
+                            </li>
+			  </ul> 
+			</nav>
+                          </h:form>
+		</div>
+	</div>
+          
+    </h:body>
+</html>
+
+

@@ -1,0 +1,130 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import entidad.CronogramaActividad;
+import entidad.Horario_catedra;
+import entidad.Horario_semanal_catedra;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author cris
+ */
+@ManagedBean
+@SessionScoped
+public class ListaHorarioBean {
+
+    private  Horario_semanal_catedra hora_semanal_carrera = new Horario_semanal_catedra();;
+    private List<Horario_semanal_catedra> listaHora_semanal_catedra;
+    private List<Horario_semanal_catedra> lis_hor_sem;
+    private Horario_catedra horario_catedra;
+    private  Horario_semanal_catedra h_s_c = new Horario_semanal_catedra();
+    int i = 1;
+    /**
+     * Creates a new instance of ListaHorarioBean
+     */
+    public ListaHorarioBean() {
+         hora_semanal_carrera.setNumero(i);
+        
+        horario_catedra = new Horario_catedra();
+        listaHora_semanal_catedra= new ArrayList<Horario_semanal_catedra>();
+        lis_hor_sem =  new  ArrayList<Horario_semanal_catedra>();
+    }
+
+    public Horario_semanal_catedra getHora_semanal_carrera() {
+        return hora_semanal_carrera;
+    }
+
+    public List<Horario_semanal_catedra> getLis_hor_sem() {
+        return lis_hor_sem;
+    }
+
+    public void setLis_hor_sem(List<Horario_semanal_catedra> lis_hor_sem) {
+        this.lis_hor_sem = lis_hor_sem;
+    }
+
+    public Horario_semanal_catedra getH_s_c() {
+        return h_s_c;
+    }
+
+    public void setH_s_c(Horario_semanal_catedra h_s_c) {
+        this.h_s_c = h_s_c;
+    }
+    
+
+    public Horario_catedra getHorario_catedra() {
+        return horario_catedra;
+    }
+
+    public void setHorario_catedra(Horario_catedra horario_catedra) {
+        this.horario_catedra = horario_catedra;
+    }
+    
+
+    public void setHora_semanal_carrera(Horario_semanal_catedra hora_semanal) {
+       lis_hor_sem.add(hora_semanal);
+       System.out.println("el contenido del array es :\t" + hora_semanal.getDia() + hora_semanal.getHora_fin() + hora_semanal.getHora_inicio() );
+              System.out.println("se repite:\t" + hora_semanal.getDia() + hora_semanal.getHora_fin() + hora_semanal.getHora_inicio() );
+
+       reinit();
+    }
+
+    public List<Horario_semanal_catedra> getListaHora_semanal_catedra() {
+        return listaHora_semanal_catedra;
+    }
+
+    public void setListaHora_semanal_catedra(List<Horario_semanal_catedra> listaHora_semanal_catedra) {
+        this.listaHora_semanal_catedra = listaHora_semanal_catedra;
+    }
+    
+    public String reinit() {
+        
+        System.out.println("antes de sumar" +(lis_hor_sem.size()+1));
+        i=i+1;
+        hora_semanal_carrera = new Horario_semanal_catedra();
+        hora_semanal_carrera.setNumero((lis_hor_sem.size()+1));
+         System.out.println("despues de sumar" +i);
+        return null;
+        
+        
+       
+        
+    }
+    
+     public void deleteAction(Horario_semanal_catedra actividad) {
+        
+     
+        
+        
+        Iterator<Horario_semanal_catedra> it = lis_hor_sem.iterator();
+            System.out.println("el archivo es " + lis_hor_sem);
+
+            while (it.hasNext()) {
+                h_s_c = it.next();
+                
+               if(h_s_c.getNumero()>actividad.getNumero()){
+                   h_s_c.setNumero(h_s_c.getNumero()-1);
+               }
+
+                //realiza el alta en la tabla relacional proy_alumno dependiendo de cuantos alumnos se han seleccionado
+               
+            }
+            
+       
+       System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii:____" +(actividad.getNumero()-1));
+       System.out.println("tamañoooooooooooooooooo11111111111111111" +lis_hor_sem.size());
+        lis_hor_sem.remove(actividad.getNumero()-1);
+        
+        reinit();
+    }
+    
+}

@@ -1,0 +1,129 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package entidad;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+
+/**
+ *
+ * @author Trossero
+ */
+@Entity
+@NamedQueries({
+           
+           @NamedQuery(name="Proy_tribunal.findTribunal", query = "SELECT u.tribunal FROM ProyectoTribunal u WHERE u.proyecto=:proyecto and u.active=:active"),
+           
+})
+public class ProyectoTribunal implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha_baja;
+    private String obsevacion_baja;
+    
+    @Column(name = "active", length = 100, nullable = false)
+    private Boolean active;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "proyecto_id", referencedColumnName = "id")
+    private Proyecto proyecto;
+    
+     @ManyToOne(optional = true)
+    @JoinColumn(name = "tribunal_id", referencedColumnName = "id")
+    private Tribunal tribunal;
+    
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getFecha_baja() {
+        return fecha_baja;
+    }
+
+    public void setFecha_baja(Date fecha_baja) {
+        this.fecha_baja = fecha_baja;
+    }
+
+    public String getObsevacion_baja() {
+        return obsevacion_baja;
+    }
+
+    public void setObsevacion_baja(String obsevacion_baja) {
+        this.obsevacion_baja = obsevacion_baja;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public Tribunal getTribunal() {
+        return tribunal;
+    }
+
+    public void setTribunal(Tribunal tribunal) {
+        this.tribunal = tribunal;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    
+    
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ProyectoTribunal)) {
+            return false;
+        }
+        ProyectoTribunal other = (ProyectoTribunal) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidad.Proy_tribunal[ id=" + id + " ]";
+    }
+    
+}

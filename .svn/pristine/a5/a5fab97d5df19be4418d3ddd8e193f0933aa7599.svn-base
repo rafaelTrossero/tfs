@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import DAO.DocenteComisionFacadeLocal;
+import entidad.Comision;
+import entidad.Docente;
+import entidad.DocenteComision;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class DocenteComisionRN implements DocenteComisionRNLocal {
+
+    @EJB
+    private DocenteComisionFacadeLocal Docente_ComisionFacadeLocal;
+    @Override
+    public void create(DocenteComision p) throws Exception {
+        this.Docente_ComisionFacadeLocal.create(p);
+    }
+
+    @Override
+    public void remove(DocenteComision p) throws Exception {
+  this.Docente_ComisionFacadeLocal.remove(p);
+    }
+
+    @Override
+    public void edit(DocenteComision p) throws Exception {
+this.Docente_ComisionFacadeLocal.edit(p)
+        ;    }
+
+    @Override
+    public List<DocenteComision> findAll() throws Exception {
+return(this.Docente_ComisionFacadeLocal.findAll());    
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+
+   
+    @Override
+    public DocenteComision findByDocente(DocenteComision doc) throws Exception {
+        return Docente_ComisionFacadeLocal.findByDocente(doc);
+    }
+
+    @Override
+    public Comision findByIdDocente(long idDoc) throws Exception {
+        return this.Docente_ComisionFacadeLocal.findByIdDocente(idDoc);
+    }
+
+    @Override
+    public List<Docente> findDocentesbyComision(long idComision) throws Exception {
+        return (this.Docente_ComisionFacadeLocal.findDocentesbyComision(idComision));
+    }
+
+    
+}

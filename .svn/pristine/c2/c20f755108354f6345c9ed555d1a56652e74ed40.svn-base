@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dAsigComision" 
+                  widgetVar="dlgAsigComision" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Asignacion Comision Evaluadora"/>
+               
+            </f:facet>
+
+
+            <p:panel id="display">
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputLabel value="Título:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{asignacionBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{asignacionBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentación: "/>
+                            <h:outputText value="#{asignacionBean.proyecto.fecha_ingreso}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{asignacionBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{asignacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+
+                    <p:tab title="Tribunal Propuesto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+
+                            <h:outputLabel value="Presidente:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.presidente.apellido},  #{asignacionBean.presidente.nombre}" />
+
+                            <h:outputLabel value="Vocal 1:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.vocal1.apellido},  #{asignacionBean.vocal1.nombre}" />
+
+                            <h:outputLabel value="Vocal 2:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.vocal2.apellido},  #{asignacionBean.vocal2.nombre}" />
+
+                            <h:outputLabel value="Suplente 1:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.suplente1.apellido},  #{asignacionBean.suplente1.nombre}" />
+
+                            <h:outputLabel value="Suplente 2:" style="text-align:center"/>
+                            <h:outputText value="#{asignacionBean.suplente2.apellido},  #{asignacionBean.suplente2.nombre}" />
+
+                        </h:panelGrid>
+
+                    </p:tab>
+
+                    <p:tab title="Fecha y Resolución">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputText value="Fecha  : "/>
+                            <p:calendar value="#{asignacionBean.tribunal.fecha}"/>
+                            
+                             <p:outputLabel for="resolucion" value="Resolucion (nnn/yyyy): " />
+                            <p:inputMask id="resolucion" value="#{asignacionBean.tribunal.resolucion}" mask="999/9999"/>
+                            
+                               <p:outputLabel  value="Soporte digital de la resolucion:  " style="font-style: normal"/>
+               
+                        <h:form id="formFile" enctype="multipart/form-data"   >
+
+                            <p:fileUpload    mode="advanced" update="messages" allowTypes="/(\.|\/)(pdf)$/" fileUploadListener="#{fileUploadBean.upload}"
+                                            sizeLimit="1000000" label="Seleccionar" uploadLabel="Cargar" cancelLabel="Cancelar">
+                            
+                            </p:fileUpload>
+                            <p:growl id="messages" showDetail="true"  />
+ 
+                            <div style="clear: both;"/>
+                            
+                        
+
+                        </h:form> 
+
+                        </h:panelGrid>
+
+                    </p:tab>
+                    <p:tab title="Asignación de Tribunal">
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Presidente:  "/>
+                            <p:selectOneMenu id="somPresidente"
+                                             converter="ConversorGenerico"
+                                             value="#{asignacionBean.presidente}"
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Vocal 1:  "/>
+                            <p:selectOneMenu id="somVocal1"
+                                             converter="ConversorGenerico"
+                                             value="#{asignacionBean.vocal1}"
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Vocal 2:  "/>
+                            <p:selectOneMenu id="somVocal2"
+                                             converter="ConversorGenerico"
+                                             value="#{asignacionBean.vocal2}"
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Suplente 1:  "/>
+                            <p:selectOneMenu id="somSuplente1"
+                                             converter="ConversorGenerico"
+                                             value="#{asignacionBean.suplente1}"
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Suplente 2:  "/>
+                            <p:selectOneMenu id="somSuplente2"
+                                             converter="ConversorGenerico"
+                                             value="#{asignacionBean.suplente2}"
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+                </p:accordionPanel>
+
+
+
+
+            </p:panel>    
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+            <p:growl id="message" showDetail="true"   />
+            <div style="clear: both;"/>
+
+            <p:commandButton id="btnAction"
+                             value="Guardar "
+                             icon="ui-icon-disk"
+                             actionListener="#{asignacionBean.create()}" 
+                             update=":frmMain: message, display">
+                             <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert"  />
+                             </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   >
+                <p:commandButton  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"  />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgAsigComision.hide()"
+                             icon="ui-icon-close"
+                             process="@this"/>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            </div>
+        </p:dialog>
+        <p:panel   header="Asignacion de Comision Evaluadora" style="text-align:center;">
+
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto"
+                             converter="ConversorGenerico"
+                             value="#{asignacionBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyectoByEstado}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgAsigComision').show()"
+                    update="display"
+                    actionListener="#{asignacionBean.crear()}"
+                    />
+
+
+
+
+            </div>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

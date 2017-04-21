@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="content" >
+
+
+        <!-- DIALOGO Autoridades !-->
+        <p:dialog id="dAutoridades" 
+                  widgetVar="dlgAutoridades" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestion de Autoridades"/>
+            </f:facet>
+
+            <p:panel id="pAutoridades" style="float:left;" >
+                <p:focus context="dAutoridades"/> 
+
+
+
+                <p:tab  closable="true" title="Alta de Autoridades" >
+                    <h:panelGrid  columns="2" cellpadding="5" >
+
+
+                        
+                        <h:outputText value="Director:  "/>
+                        <p:selectOneMenu id="somDirector"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.director}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+
+                         <h:outputText value="Profesor Titular:  "/>
+                        <p:selectOneMenu id="somProfTitular"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.profTitular}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+                         
+                          <h:outputText value="Profesor Suplente 1:  "/>
+                        <p:selectOneMenu id="somProfsuplentes1"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.profSuplente1}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+                          <h:outputText value="Profesor Suplente 2:  "/>
+                           <p:selectOneMenu id="somProfsuplentes2"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.profSuplente2}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+                          
+                        
+
+                           <h:outputText value="Auxiliar Docente Titular:  "/>
+                        <p:selectOneMenu id="somAux"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.auxDocenteTitular}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+                           
+                            <h:outputText value="Auxiliar Docente Suplente:  "/>
+                        <p:selectOneMenu id="somAuxSuplente"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.auxDocenteSuplente}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaDocenteBean.lstSIDocenteActivo}"/>
+
+                        </p:selectOneMenu>
+                       
+                             <h:outputText value="Estudiante Titular 1:  "/>
+                        <p:selectOneMenu id="somEst1"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.estudTitular1}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                              <h:outputText value="Estudiante Titular 2:  "/>
+                              <p:selectOneMenu id="somEst2"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.estudTitular2}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                             
+                              <h:outputText value="Estudiante Suplente 1:  "/>
+                        <p:selectOneMenu id="somEstsup1"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.estudSuplente1}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                              <h:outputText value="Estudiante Suplente 1:  "/>
+                              <p:selectOneMenu id="somEstsup2"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.estudSuplente2}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                              
+                              <h:outputText value="Egresado Titular:  "/>
+                        <p:selectOneMenu id="somEstegre1"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.egresadoTitular}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                               <h:outputText value="Egresado Suplente:  "/>
+                               <p:selectOneMenu id="somEstegre2"
+                                         converter="ConversorGenerico"
+                                         value="#{autoridadesDeptoInfBean.autoridades.egresadoSuplente}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                            <f:selectItems 
+                                value="#{listaAlumnoBean.lstSIAlumno}"/>
+
+                        </p:selectOneMenu>
+                              
+                    </h:panelGrid>    
+                </p:tab>
+
+
+                <div style="clear: both;"/>
+
+
+                 <div  style="float: left; margin: 1px;
+                  width: 100%;
+                  text-align: center;">
+
+
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{autoridadesDeptoInfBean.actionBtn}" 
+                                 update=":frmMain:dtAutoridades, 
+                                 :frmMain:pAutoridades, message, @this"
+                                 binding="#{autoridadesDeptoInfBean.cbAction}" >
+                                 
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                <p:commandButton id="btnCancelar"
+                                 value=" Cancelar " 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgAutoridades.hide()"
+                                 process="@this"
+                                 />
+
+
+
+            </div>
+                
+          
+
+            </p:panel>
+
+            </p:dialog>
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Cargar Autoridades" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgAutoridades.show();"
+                             actionListener="#{autoridadesDeptoInfBean.setBtnSelect}"
+                             update=":frmMain:dAutoridades"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <p:dataTable id="dtAutoridades"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaAutoridadesDeptoInfBean.lstAutoridades}"
+                     var="aut">
+            
+               <p:column  filterBy="#{aut.director.apellido}"  >
+                <f:facet name="header">
+                    <h:outputText value="Director"/>
+                </f:facet>
+                   <h:outputText value="#{aut.director.apellido}"/>
+            </p:column>                
+
+
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

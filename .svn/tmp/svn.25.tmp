@@ -1,0 +1,259 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <!-- DIALOGO PROFESIONAL !-->
+        <p:dialog id="dAlumno" 
+                  widgetVar="dlgAlumno" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Alumno"/>
+            </f:facet>
+            <p:panel id="pAlumno" style="float:left;">
+                <p:focus context="pAlumno"/> 
+                <h:inputHidden value="#{alumnoBean.alumno.id}"/>
+
+                <h:inputHidden value="#{listaAlumnoBean.iActionBtnSelect}"/>
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Información personal">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText value="#{alumnoBean.alumno.nombre}"
+                                         label="Nombre"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"
+                                         />
+
+                            <h:outputText value="Apellido"/>
+
+                            <p:inputText value="#{alumnoBean.alumno.apellido}"
+                                         label="Apellido"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"
+                                         />
+
+                            <h:outputText value="dni;"/>
+                            <p:inputText value="#{alumnoBean.alumno.dni}"
+                                         label="dni"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+
+                            <h:outputText value="Domicilio"/>
+                            <p:inputText value="#{alumnoBean.alumno.domicilio}"
+                                         label="Domicilio"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+
+                            <h:outputText value="Localidad:"/>
+                            <p:selectOneMenu id="somLocalidad"
+                                             converter="ConversorGenerico"
+                                             value="#{alumnoBean.alumno.localidad}"
+                                             disabled="#{alumnoBean.getbCamposEditables()}">
+
+                                <f:selectItems 
+                                    value="#{listaLocalidadBean.lstSILocalidad}"/>
+
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Email;"/>
+                            <p:inputText value="#{alumnoBean.alumno.email}"
+                                         label="Email"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Información Academica">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Carrera:"/>
+                            <p:selectOneMenu id="somCarrera"
+                                             converter="ConversorGenerico"
+                                             value="#{alumnoBean.alumnoCarrera.carrera}"
+                                             disabled="#{alumnoBean.getbCamposEditables()}">
+                                
+                                <f:selectItems 
+                                    value="#{listaCarreraBean.lstSICarrera}"/>
+
+                            </p:selectOneMenu>
+
+
+
+
+                            <h:outputText value="Matricula"/>
+                            <p:inputText value="#{alumnoBean.alumno.matricula}"
+                                         label="Matricula Profesional"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="registro de usuario">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            
+                            <h:outputText value="Nombre de Usuario"/>
+                            <p:inputText value="#{alumnoBean.alumno.username}"
+                                         label="nombre de usuario"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+
+
+
+
+                            <h:outputText value="Password"/>
+                            <p:password value="#{alumnoBean.alumno.password}"
+                                         label="Matricula Profesional"
+                                         disabled="#{alumnoBean.getbCamposEditables()}"/>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+
+                <p:commandButton id="btnActiones"
+                                 value=" " 
+                                 actionListener="#{alumnoBean.actionBtn}" 
+                                 update=":frmMain:dtAlumno, @this"
+                                 binding="#{alumnoBean.cbAction}"/>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="dlgAlumno.hide()"
+                                 update=":frmMain:pAlumno, 
+                                 :frmMain:dtAlumno"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Nuevo Alumno" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgAlumno.show();"
+                             actionListener="#{alumnoBean.setBtnSelect}"
+                             update=":frmMain:dAlumno"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <p:dataTable id="dtAlumno"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaAlumnoBean.lstAlumno}"
+                     var="alu">
+            <p:column>
+                <p:commandButton id="cbEdit"
+                                 title="Editar"
+                                 icon="ui-icon-pencil" 
+                                 update=":frmMain:dAlumno"
+                                 oncomplete="dlgAlumno.show();"
+                                 actionListener="#{alumnoBean.setBtnSelect}"
+                                 disabled="#{not alu.active }"
+                                 > 
+                    <f:setPropertyActionListener value="#{alu}" target="#{alumnoBean.alumno}"/>  
+
+                </p:commandButton>
+                <p:commandButton id="cbHabilitado"
+                                 title="Habilitar"
+                                 icon="ui-icon-circle-triangle-n" 
+                                 update=":frmMain:dAlumno, @this"
+                                 oncomplete="dlgAlumno.show();"
+                                 actionListener="#{alumnoBean.setBtnSelect}"
+                                 disabled="#{alu.active }"
+
+                    > 
+                    <f:setPropertyActionListener value="#{alu}" target="#{alumnoBean.alumno}"/>  
+
+                </p:commandButton>
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Deshabilitar"
+                                 icon="ui-icon-circle-triangle-s" 
+                                 update=":frmMain:dAlumno, @this"
+                                 oncomplete="dlgAlumno.show();"
+                                 actionListener="#{alumnoBean.setBtnSelect}"
+                                 disabled="#{not alu.active }"
+                                 >
+
+
+                    <f:setPropertyActionListener value="#{alu}" target="#{alumnoBean.alumno}"/>  
+
+                </p:commandButton>
+
+
+            </p:column>
+            <p:column  filterBy="#{alu.nombre}" sortBy="#{alu.nombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Nombre y Apellido"/>
+                </f:facet>
+                <h:outputText value="#{alu.nombre},#{alu.apellido}"/>
+            </p:column>                
+
+            <p:column  filterBy="#{alu.matricula}" sortBy="#{alu.matricula}" >
+                <f:facet name="header">
+                    <h:outputText value="Matricula"/>
+                </f:facet>
+                <h:outputText value="#{alu.matricula}"/>
+            </p:column> 
+            <p:column  filterBy="#{alu.dni}" sortBy="#{alu.dni}" >
+                <f:facet name="header">
+                    <h:outputText value="DNI"/>
+                </f:facet>
+                <h:outputText value="#{alu.dni}"/>
+            </p:column> 
+
+
+            <p:column  filterBy="#{alu.localidad.descripcion}" sortBy="#{alu.localidad.descripcion}" >
+                <f:facet name="header">
+                    <h:outputText value="Localidad"/>
+                </f:facet>
+                <h:outputText value="#{alu.localidad.descripcion}"/>
+            </p:column> 
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

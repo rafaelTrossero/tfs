@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 template="./Template/TfsTemplate.xhtml"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+        
+     
+        
+        <!-- DIALOGO ERROR sin Tribunal !-->
+        <p:dialog id="dSinTribunal" 
+                  widgetVar="dlgSinTribunal" 
+                  modal="true"
+                  style="background-color: tomato"
+                  closable="false" resizable="false"
+                  
+                  >
+            <f:facet name="header" >
+                <h:outputText value="Error no hay un tribunal"/>
+            </f:facet>
+
+            <p:panel id="displayAdv" style="background-color: indianred">
+                <h:panelGrid columns="2" cellpadding="2" >
+                    <h:outputLabel value="Advertencia:" style="text-align:center"/>
+                    <h:outputText value="No existe un tribunal para el proyecto, no podra realizar esta operacion" />
+
+                </h:panelGrid>
+
+
+            </p:panel>    
+
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalirAdv"
+                             value="Salir" 
+                             oncomplete="PF('dlgSinTribunal').hide();"
+
+                             process="@this"/>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+        </p:dialog>
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dEvaProy" 
+                  widgetVar="dlgEvaProy" 
+                   modal="true"
+                  height="600"
+                      width="1550"
+                      position="top"
+                      
+                      closeOnEscape="true"  >
+            <f:facet name="header">
+                <h:outputText value="Evaluación de Borradores de Proyectos"/>
+            </f:facet>
+
+
+            <p:panel id="display" >
+                <p:accordionPanel id ="apAlu" style="width: 1450px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{evaluacionBorradorBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentacion: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.proyecto.fecha_ingreso}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{evaluacionBorradorBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{evaluacionBorradorBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Comision Evaluadora">
+                        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                            <h:outputLabel value="Presidente: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.presidente.apellido}" />
+                            <p:selectBooleanCheckbox value="#{evaluacionBorradorBean.value1}" />
+
+                            <h:outputLabel value="Miembro#1: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.vocal1.apellido}" />
+                            <p:selectBooleanCheckbox value="#{evaluacionBorradorBean.value2}" />
+                            <h:outputLabel value="Miembro#2: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.vocal2.apellido}" />
+                            <p:selectBooleanCheckbox value="#{evaluacionBorradorBean.value3}" />
+
+                            <h:outputLabel value="Suplente#1: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.suplente1.apellido}" />
+                            <p:selectBooleanCheckbox value="#{evaluacionBorradorBean.value4}" />
+
+                            <h:outputLabel value="Suplente#2: "/>
+                            <h:outputText value="#{evaluacionBorradorBean.suplente2.apellido}" />
+                            <p:selectBooleanCheckbox value="#{evaluacionBorradorBean.value5}" />
+
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Evaluación del borrador">
+                         <p:panelGrid id="guia" style="margin-top:20px" >
+
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column colspan="7">2.3 Guía para la evaluación formal del informe de trabajo final</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column >Indicador</p:column>
+                                    <p:column >Condición</p:column>
+                                   
+                                </p:row>
+
+                            </f:facet>
+                            <!-- INDICADORES -->
+
+                            <p:row>
+                                <p:column style="font-weight: bold;">1) Ajuste del formato y contenido a lo establecido en la reglamentación vigente.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                        <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador.condicion, 0)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">2) Coherencia y descripcion del Resumen.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador2.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                        <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador2.condicion, 1)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">3) Abordaje del tema planteado en la Introducción.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador3.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador3.condicion, 2)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">4) Relación del marco teórico con la problemática planteada.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador4.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador4.condicion, 3)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">5) Metodología aplicada para lograr los objetivos planteados.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador5.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                        <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador5.condicion, 4)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">6) Grado de cumplimiento de los objetivos definidos en el proyecto.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador6.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador6.condicion, 5)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">7) Grado de cumplimiento del cronograma definido en el proyecto.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador7.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador7.condicion, 6)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">8) Análisis de resultados alcanzados.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador8.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador8.condicion, 7)}"/>   
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">9) Conclusiones obtenidas en funcion de los objetivos, metodología y resultados alcanzados.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador9.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador9.condicion, 8)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">10) Calidad del informe escrito presentado.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador10.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                        
+                                         <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador10.condicion, 9)}"/>  
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                             <p:row>
+                                <p:column style="font-weight: bold;">11) Calidad y pertinencia de las fuentes de informacion consultadas y anexos.</p:column>
+                                <p:column >
+                                    <p:selectOneButton value="#{listaIndicadores23Bean.indicador11.condicion}">
+                                        <f:selectItem itemLabel="Malo" itemValue="MALO" />
+                                        <f:selectItem itemLabel="Regular" itemValue="REGULAR" />
+                                        <f:selectItem itemLabel="Bueno" itemValue="BUENO" />
+                                        <f:selectItem itemLabel="Excelente" itemValue="EXCELENTE" />
+                                        
+                                          <p:ajax  update="somCalificacion" listener="#{listaIndicadores23Bean.control_indicadores23(listaIndicadores23Bean.indicador11.condicion, 10)}"/>                                          
+                                        
+                                    </p:selectOneButton>
+                                </p:column>
+                            </p:row>
+                            
+                            
+                            
+                            
+
+                        </p:panelGrid>
+
+                       
+                        <h:panelGrid  id="grid" columns="2" cellpadding="2" >
+                            
+                            <h:outputText value="Fecha  : "/>
+                            <p:calendar value="#{evaluacionBorradorBean.brr_evaluacion.fecha}"
+                                        /> 
+                            
+                            <h:outputText value="Resultado de Evaluación:  "/>
+                    
+                             <p:selectOneMenu id="somCalificacion"
+                                                 converter="ConversorGenerico"
+                                                value="#{evaluacionBorradorBean.brr_evaluacion.calificacion}"  >
+                                    <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                                    <f:selectItem itemDisabled="#{listaIndicadores23Bean.indAprobado}" itemLabel="Aprobado para la defensa" itemValue="#{listaCalificacioBean.lstCalificacion.get(0)}" />
+                                    
+                                    <f:selectItem itemDisabled="#{listaIndicadores23Bean.indObservado}" itemLabel="Observado" itemValue="#{listaCalificacioBean.lstCalificacion.get(2)}" />
+                                    <f:selectItem  itemDisabled="#{listaIndicadores23Bean.indRechazado}" itemLabel="Rechazado" itemValue="#{listaCalificacioBean.lstCalificacion.get(3)}" />
+                                    
+                                  
+
+                                              
+                                </p:selectOneMenu>
+
+                        </h:panelGrid>
+                    </p:tab>
+
+                </p:accordionPanel>
+
+
+
+
+            </p:panel>    
+
+            <div style="clear: both;"/>
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+                
+                <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 actionListener="#{evaluacionBorradorBean.create()}"
+                                 icon="ui-icon-disk"
+                                 update=":frmMain: message, display">
+                    <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="PF('dlgEvaProy').hide()"
+                                 icon="ui-icon-close"
+                                 process="@this"/>
+                
+                <div style="clear: both;"/>
+
+                <div>
+                    <p:messages autoUpdate="true"/>
+                </div>
+
+
+                <div style="clear: both;"/>
+
+            </div>
+        </p:dialog>
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="Imagenes/ajaxloadingbar.gif" />
+            </p:dialog>
+        <p:panel   header="Gestion de Proyectos" style="text-align:center;">
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto"
+                             converter="ConversorGenerico"
+                             value="#{evaluacionBorradorBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyectoByTribunal}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgEvaProy').show();"
+                    
+                    update=":frmMain:display"
+                    
+                    actionListener="#{evaluacionBorradorBean.crear()}"
+                    
+                    />
+
+            </div>
+        </p:panel>
+       
+    </ui:define>
+
+</ui:composition>

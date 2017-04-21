@@ -1,0 +1,281 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.AlumnoRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import entidad.Alumno;
+import entidad.Profesional;
+import entidad.ProyectoAlumno;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@SessionScoped
+public class ListaAlumnoBean implements Serializable {
+
+    private int iActionBtnSelect;
+    @EJB
+    private AlumnoRNLocal alumnoRNbeanLocal;
+    @EJB
+    private ProyectoAlumnoRNLocal proyectoAlumnoRNbeanLocal;
+
+    private List<Alumno> lstAlumno;
+    private List<Alumno> lstAlumnoFinal;
+    private List<SelectItem> lstSIAlumno;
+    private List<SelectItem> lstSIProyectoAlumno;
+    private List<Alumno> selectedAlu;
+    private List<ProyectoAlumno> lstProyectoAlumno;
+    private Alumno alu;
+    private Alumno alu1;
+    private ProyectoAlumno proAlu;
+
+    public ListaAlumnoBean() {
+        System.out.println("Constructor ListaAlumnoBean");
+        lstAlumno = new ArrayList<Alumno>();
+        lstAlumnoFinal = new ArrayList<Alumno>();
+        alu1 = new Alumno();
+        proAlu = new ProyectoAlumno();
+    }
+
+    public ProyectoAlumnoRNLocal getProyectoAlumnoRNbeanLocal() {
+        return proyectoAlumnoRNbeanLocal;
+    }
+
+    public List<SelectItem> getLstSIProyectoAlumno() {
+        return lstSIProyectoAlumno;
+    }
+
+    public void setLstSIProyectoAlumno(List<SelectItem> lstSIProyectoAlumno) {
+        this.lstSIProyectoAlumno = lstSIProyectoAlumno;
+    }
+
+    public Alumno getAlu1() {
+        return alu1;
+    }
+
+    public void setAlu1(Alumno alu1) {
+        this.alu1 = alu1;
+    }
+
+    public ProyectoAlumno getProAlu() {
+        return proAlu;
+    }
+
+    public void setProAlu(ProyectoAlumno proAlu) {
+        this.proAlu = proAlu;
+    }
+
+    public void setProyectoAlumnoRNbeanLocal(ProyectoAlumnoRNLocal proyectoAlumnoRNbeanLocal) {
+        this.proyectoAlumnoRNbeanLocal = proyectoAlumnoRNbeanLocal;
+    }
+
+    public List<ProyectoAlumno> getLstProyectoAlumno() {
+        return lstProyectoAlumno;
+    }
+
+    public void setLstProyectoAlumno(List<ProyectoAlumno> lstProyectoAlumno) {
+        this.lstProyectoAlumno = lstProyectoAlumno;
+    }
+
+    public List<Alumno> getLstAlumnoFinal() {
+        return lstAlumnoFinal;
+    }
+
+    public void setLstAlumnoFinal(List<Alumno> lstAlumnoFinal) {
+        this.lstAlumnoFinal = lstAlumnoFinal;
+    }
+
+    public AlumnoRNLocal getAlumnoRNbeanLocal() {
+        return alumnoRNbeanLocal;
+    }
+
+    public void setAlumnoRNbeanLocal(AlumnoRNLocal alumnoRNbeanLocal) {
+        this.alumnoRNbeanLocal = alumnoRNbeanLocal;
+    }
+
+    public List<Alumno> getLstAlumno() {
+        return lstAlumno;
+    }
+
+    public void setLstAlumno(List<Alumno> lstAlumno) {
+        this.lstAlumno = lstAlumno;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+    public List<SelectItem> getLstSIAlumno() {
+        return lstSIAlumno;
+    }
+
+    public void setLstSIAlumno(List<SelectItem> lstSIAlumno) {
+        this.lstSIAlumno = lstSIAlumno;
+    }
+
+    public List<Alumno> getSelectedAlu() {
+        return selectedAlu;
+    }
+
+    public void setSelectedAlu(List<Alumno> selectedAlu) {
+        this.selectedAlu = selectedAlu;
+    }
+
+    public Alumno getAlu() {
+        return alu;
+    }
+
+    public void setAlu(Alumno alu) {
+        this.alu = alu;
+    }
+
+    @PostConstruct
+    void init() {
+        System.out.println("PostConstructor ListaProfesionalBean");
+        this.limpiar();
+        cargar_alumnos();
+        cargar_SI_alumnos();
+       // cargar_proyectos_alumnos();
+      //  intercambiar();
+     //  cargar_SI_proyecto_alumno();
+
+    }
+
+    private void cargar_alumnos() {
+        try {
+            this.setLstAlumno(this.alumnoRNbeanLocal.findAll());
+        } catch (Exception ex) {
+            System.out.println("Error al cargar alumnos " + ex.toString());
+        }
+    }
+
+    private void cargar_SI_alumnos() {
+        this.setLstSIAlumno(new ArrayList<SelectItem>());
+
+        for (Alumno a : this.getLstAlumno()) {
+            SelectItem si = new SelectItem(a, a.getApellido() + "," + a.getNombre());
+            this.getLstSIAlumno().add(si);
+        }
+    }
+
+    public void limpiar() {
+        lstAlumno = new ArrayList<Alumno>();
+    }
+
+    public void cargar_proyectos_alumnos() {
+        try {
+            this.setLstProyectoAlumno(this.proyectoAlumnoRNbeanLocal.findAll());
+            System.out.println("los proyectos que tienen alumnos son" + lstProyectoAlumno);       
+            intercambiar();
+        } catch (Exception ex) {
+            System.out.println("Error al cargar los alumnos que pertenecen a un proyecto" + ex.toString());
+        }
+
+    }
+
+    public void intercambiar() {
+        if (!lstProyectoAlumno.isEmpty()) {
+            System.out.println("entra por el if");
+
+            for (Alumno alumnos : this.getLstAlumno()) {
+                int i = 3;
+                Iterator<ProyectoAlumno> p = lstProyectoAlumno.iterator();
+
+                while (p.hasNext()) {
+                    proAlu = p.next();
+                    System.out.println("tripa");
+
+                    if (!alumnos.getId().equals(proAlu.getAlumno().getId())) {
+                        System.out.println("no son iguales");
+                        i = 1;
+
+                    } else {
+
+                        System.out.println("son iguales");
+                        i = 0;
+                        break;
+
+                    }
+
+                }
+                if (i == 1) {
+                    lstAlumnoFinal.add(alumnos);
+                }
+
+            }
+            System.out.println("el listado final es" + lstAlumnoFinal);
+
+        } else {
+            System.out.println("entra por el else");
+            lstAlumnoFinal = lstAlumno;
+
+        }
+
+        /*
+         if (lstProyectoAlumno != null) {
+         int i = 0;
+         Iterator<Alumno> a = lstAlumno.iterator();
+         Iterator<ProyectoAlumno> p = lstProyectoAlumno.iterator();
+         while (a.hasNext()) {
+         if (i == 1) {
+
+         lstAlumnoFinal.add(alu1);
+
+         }
+
+         alu1 = a.next();
+         while (p.hasNext()) {
+         proAlu = p.next();
+         System.out.println("tripa");
+
+         if (alu1.getId().equals(proAlu.getAlumno().getId())) {
+         System.out.println("son iguales");
+         i = 0;
+         break;
+
+         } else {
+         System.out.println("no son iguales");
+         i = 1;
+
+         }
+
+         }
+
+         }
+         System.out.println("los finales son" + lstAlumnoFinal);
+
+         } else {
+         lstAlumnoFinal = lstAlumno;
+         }  */
+    }
+
+    public void cargar_SI_proyecto_alumno() {
+        this.setLstSIProyectoAlumno(new ArrayList<SelectItem>());
+
+        for (Alumno b : this.getLstAlumnoFinal()) {
+            SelectItem vi = new SelectItem(b, b.getApellido() + "," + b.getNombre());
+            this.getLstSIProyectoAlumno().add(vi);
+        }
+
+    }
+
+}

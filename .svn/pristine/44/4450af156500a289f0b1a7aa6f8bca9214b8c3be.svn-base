@@ -1,0 +1,106 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.CarreraRNLocal;
+import RN.ComisionRNLocal;
+import entidad.Carrera;
+import entidad.Comision;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@SessionScoped
+public class ListaComisionBean implements Serializable {
+
+    @EJB
+    private ComisionRNLocal comisionRNbeanLocal;
+    private List<Comision> lstComision;
+    private List<SelectItem> lstSIComision;
+    private int iActionBtnSelect;
+
+    public ListaComisionBean() {
+        this.lstComision = new ArrayList<Comision>();
+    }
+
+    @PostConstruct
+    private void init() {
+        this.limpiar();
+        this.cargar_comision();
+        this.cargar_SI_comisiones();
+    }
+
+    public List<Comision> getLstComision() {
+        return lstComision;
+    }
+
+    public void setLstComision(List<Comision> lstComision) {
+        this.lstComision = lstComision;
+    }
+
+    public List<SelectItem> getLstSIComision() {
+        return lstSIComision;
+    }
+
+    public void setLstSIComision(List<SelectItem> lstSIComision) {
+        this.lstSIComision = lstSIComision;
+    }
+
+    public ComisionRNLocal getComisionRNbeanLocal() {
+        return comisionRNbeanLocal;
+    }
+
+    public void setComisionRNbeanLocal(ComisionRNLocal comisionRNbeanLocal) {
+        this.comisionRNbeanLocal = comisionRNbeanLocal;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+    
+    
+
+    public void limpiar() {
+
+        this.lstComision = new ArrayList<Comision>();
+    }
+
+    public void cargar_comision() {
+        try {
+
+            this.setLstComision(comisionRNbeanLocal.findAll());
+        } catch (Exception ex) {
+            System.out.println("Error al cargar comision -> Causa: "
+                    + ex.getMessage());
+        }
+    }
+
+    private void cargar_SI_comisiones() {
+
+        this.setLstSIComision(new ArrayList<SelectItem>());
+
+        for (Comision d : this.getLstComision()) {
+            SelectItem si = new SelectItem(d, d.getComision());
+            this.getLstSIComision().add(si);
+        }
+    }
+
+}

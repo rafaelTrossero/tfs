@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.NoticiasRNLocal;
+import entidad.Noticias;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@ManagedBean
+@SessionScoped
+public class ListaNoticiasBean {
+
+    /**
+     * Creates a new instance of ListaNoticiasBean
+     */
+    
+    @EJB
+    private NoticiasRNLocal noticiasRNlocal;
+    
+    
+    
+    public ListaNoticiasBean() {
+    }
+
+    public NoticiasRNLocal getNoticiasRNlocal() {
+        return noticiasRNlocal;
+    }
+
+    public void setNoticiasRNlocal(NoticiasRNLocal noticiasRNlocal) {
+        this.noticiasRNlocal = noticiasRNlocal;
+    }
+    
+  public Noticias ultimaNoticia (){
+      
+      return(noticiasRNlocal.findUltimaNoticia());
+  }
+    
+}

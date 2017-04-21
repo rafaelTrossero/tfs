@@ -1,0 +1,142 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.AlumnoFacadeLocal;
+import DAO.DocenteFacadeLocal;
+import entidad.Docente;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import recursos.cadenas;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class DocenteRN implements DocenteRNLocal {
+
+    @EJB
+    private DocenteFacadeLocal docenteFacadeLocal;
+
+    @Override
+    public void create(Docente p) throws Exception {
+        this.convertir_strings(p);
+        this.validar(p, 0);
+        this.docenteFacadeLocal.create(p);
+
+    }
+
+    @Override
+    public void remove(Docente p) throws Exception {
+        this.docenteFacadeLocal.remove(p);
+    }
+
+    @Override
+    public void edit(Docente p) throws Exception {
+        this.convertir_strings(p);
+        this.validar(p, 1);
+        this.docenteFacadeLocal.edit(p);
+    }
+
+    @Override
+    public List<Docente> findAll() throws Exception {
+        return (this.docenteFacadeLocal.findAll());
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    @Override
+    public Docente findByDocente(String dni) throws Exception {
+        return docenteFacadeLocal.findByDocente(dni);
+    }
+
+    @Override
+    public void activate(Docente doc, Boolean bEstado) throws Exception {
+        docenteFacadeLocal.activate(doc, bEstado);
+    }
+
+    @Override
+    public List<Docente> findByDocenteTribunal(long pre, long voc1, long voc2, long sup1, long sup2) throws Exception {
+        return docenteFacadeLocal.findByDocenteTribunal(pre, voc1, voc2, sup1, sup2);
+
+    }
+
+    @Override
+    public Docente findById(Long id) throws Exception {
+        return docenteFacadeLocal.findById(id);
+    }
+
+    private void validar(Docente p, int op) throws Exception {
+        //verifica si el código es menor o igual a cero
+
+        //verifica si es una línea en blanco
+        if (p.getNombre().trim().length() == 0) {
+            throw new Exception("El nombre del docente no puede estar vacio");
+        }
+        if (!cadenas.es_letras(p.getNombre())) {
+            throw new Exception("El nombre del docente deben ser caracteres alfabéticos");
+        }
+        if (p.getApellido().trim().length() == 0) {
+            throw new Exception("El apellido del docente no puede estar vacio");
+        }
+        if (p.getCuil().trim().length() == 0) {
+            throw new Exception("El Cuil del docente no puede estar vacio");
+        }
+//Valida si contine letras
+        if (!cadenas.es_letras(p.getApellido())) {
+            throw new Exception("El apellido del docente deben ser caracteres alfabéticos");
+        }
+
+        if (p.getDomicilio().trim().length() == 0) {
+            throw new Exception("Debe ingresar el domicilio");
+        }
+        if (!cadenas.es_letras(p.getDomicilio())) {
+            throw new Exception("El del domicilio deben ser alfabeticos");
+        }
+        if (p.getEmail().trim().length() == 0) {
+            throw new Exception("Debe ingresar la direccion de mail");
+        }
+        if (!cadenas.es_email(p.getEmail())) {
+            throw new Exception("Los caracteres ingresados en el mail no son validos");
+        }
+        if (p.getUsername().trim().length() == 0) {
+            throw new Exception("Debe ingresar un nombre de usuario");
+        }
+        if (p.getPassword().trim().length() == 0) {
+            throw new Exception("Debe ingresar password");
+        }
+
+        //verificando duplicados  
+       // if (docenteFacadeLocal.bFindByDniDocente(p, op)) {
+         //   throw new Exception("Ya existe un docente con ese numero de dni");
+       // }
+        if (docenteFacadeLocal.bFindByDniDocente(p, op)) {
+            throw new Exception("Ya existe un docente con ese numero de cuil");
+        }
+        /*if (paisDAOFacadeLocal.bFindByCodigoPais(p, op)) {
+         throw new Exception("Ya existe un país con ese código");
+         }//fin if
+         if (paisDAOFacadeLocal.bFindByNombrePais(p, op)) {
+         throw new Exception("Ya existe un país con ese nombre");
+         }//fin if
+         */
+    }//fin validar
+
+    private void convertir_strings(Docente p) {
+        p.setNombre(cadenas.convertir(p.getNombre()));
+        p.setApellido(cadenas.convertir(p.getApellido()));
+        p.setDomicilio(cadenas.convertir(p.getDomicilio()));
+
+    }
+
+    @Override
+    public List<Docente> findAllActivo() throws Exception {
+        return docenteFacadeLocal.findAllActivo();
+    }
+    
+}

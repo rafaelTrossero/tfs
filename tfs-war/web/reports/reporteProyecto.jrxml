@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="482" leftMargin="85" rightMargin="28" topMargin="70" bottomMargin="56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idProyecto" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\RafaTrossero\\Documents\\NetBeansProjects\\tfs\\tfs-war\\web\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="escudo1" class="java.lang.String"/>
+	<parameter name="escudo2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     proyecto.TITULO AS proyecto_TITULO,
+     estado.ESTADO AS estado_ESTADO
+FROM
+     proyecto
+INNER JOIN estado ON (proyecto.estado_id = estado.id)
+WHERE
+     proyecto.id = $P{idProyecto}]]>
+	</queryString>
+	<field name="proyecto_titulo" class="java.lang.String"/>
+	<field name="estado_estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="176" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" x="0" y="120" width="482" height="36"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{proyecto_titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="156" width="482" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="46" width="225" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Facultad de Tecnología y Ciencias Aplicadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="66" width="345" height="29"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Proyecto Trabajo Final]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="11" width="265" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional de Catamarca]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="90" height="84"/>
+				<imageExpression><![CDATA[$P{escudo1}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="404" y="0" width="78" height="74"/>
+				<imageExpression><![CDATA[$P{escudo2}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="482" height="53"/>
+				<subreportParameter name="idProyecto">
+					<subreportParameterExpression><![CDATA[$P{idProyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "alumnoProyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="53">
+			<subreport>
+				<reportElement x="0" y="0" width="482" height="53"/>
+				<subreportParameter name="idProyecto">
+					<subreportParameterExpression><![CDATA[$P{idProyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "directorProyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="53">
+			<subreport>
+				<reportElement x="0" y="0" width="482" height="53"/>
+				<subreportParameter name="idProyecto">
+					<subreportParameterExpression><![CDATA[$P{idProyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "codirectorProyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="53">
+			<subreport>
+				<reportElement x="0" y="0" width="482" height="53"/>
+				<subreportParameter name="idProyecto">
+					<subreportParameterExpression><![CDATA[$P{idProyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "asesorProyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="32" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

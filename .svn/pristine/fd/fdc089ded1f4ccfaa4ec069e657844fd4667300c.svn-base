@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <div style="clear: both"/>
+        
+        <p:dialog id="dProfesion" 
+                  widgetVar="dlgEspecialidad" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Especialidades"/>
+            </f:facet>
+            <p:panel id="pEspecialidad" style="float:left;">
+                <p:focus context="pEspecialidad"/> 
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+                <h:panelGrid columns="2" cellpadding="2" >
+                
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#{especialidadBean.especialidad.id}}"
+                                 label="ID"/>
+                
+                    <h:outputText value="Profesion:"/>
+                    <p:selectOneMenu id="somProfesion"
+                                     converter="ConversorGenerico"
+                                     value="#{deptoBean.departamento.director}">
+                        <f:selectItem itemLabel="Seleccione...." itemValue=""/>
+                        <f:selectItems value="#{listaEspecialidadBean.lstSIEspecialidad}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Especialidad:"/>
+                    <p:inputText value="#{especialidadBean.especialidad.especialidad}"
+                                 label="Especialidad"/>
+                
+                                   
+                </h:panelGrid>
+                <div style="clear: both;"/>
+
+
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+                <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 actionListener="#{profesionBean.create()}" 
+                                 update=":frmMain:dtProfesion, :frmMain:pProfesion, @this"/>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 oncomplete="dlgProfesion.hide()"
+                                 update=":frmMain:dtProfesion, :frmMain:pProfesion"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+            <p:commandButton id="cbNuevo"
+                             value="Nueva Profesion" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="lgProfesion.show();"
+
+                             process="@this"/><br/><br/>
+        </div>
+      
+        <div>
+
+            <p:dataTable id="dtProfesion"
+                         paginator="true"
+                         rows="50"
+                         scrollable="true"
+                         value="#{listaProfesionBean.lstProfesion}"
+                         var="var">
+                <p:column headerText="Profesion">
+                    <h:outputText value="#{var.descripcion}"/>
+                </p:column>
+            </p:dataTable>
+        </div>
+    </ui:define>
+</ui:composition>

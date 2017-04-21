@@ -1,0 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import entidad.Aceptacion;
+import entidad.Calificacion;
+import entidad.Presentacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author Trossero
+ */
+@Local
+public interface AceptacionRNLocal {
+    
+    void create(Aceptacion a) throws Exception;
+
+    void remove(Aceptacion a) throws Exception;
+
+    void edit(Aceptacion a) throws Exception;
+
+    List<Aceptacion> findAll() throws Exception;
+    public Aceptacion findByAceptacion(Proyecto pro, Presentacion pres, Calificacion cal)  throws Exception;
+    public Aceptacion findByProyAceptacion(Proyecto pro, Integer cal)  throws Exception;
+
+}

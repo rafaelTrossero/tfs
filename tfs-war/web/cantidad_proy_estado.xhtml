@@ -1,0 +1,721 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <style  type="text/css">                 
+                .colored {
+                    background-color: #c1e2b3;
+                    color: white;
+                </style>
+
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(1)}"  >
+                    <f:facet name="header">
+                        Listado de proyectos por estado
+                    </f:facet>
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="En proceso de aceptación de Proyecto: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(1).size()}"  styleClass="colored">
+                            <h:outputText value="#{proys.titulo}"  />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton   
+                     actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,1, 'En Proceso de Aceptacion de Proyecto', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                     
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(2)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="En proceso de asignación de Comisión Evaluadora: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(2).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton   
+                     actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,2,'En Proceso de Asignacion de Comision Evaluadora: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                  
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(3)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Se requiere una nueva presentación del Proyecto: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(3).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,3, 'Se requiere una nueva presentación del Proyecto: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                  
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(4)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="En proceso de evaluación de proyecto: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(4).size()}"  styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton   actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,4, 'En proceso de evaluacion de Proyecto: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(5)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Desarrollando trabajo final: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(5).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton     actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,5, 'Desarrollando Trabajo Final: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(6)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Se debe modificar proyecto: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(6).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton     actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,6, 'Se debe modificar Proyecto: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(7)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Proyecto rechazado: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(7).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton     actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,7, 'Proyecto Rechazado: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(8)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="En proceso de revision de borradores: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(8).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton  actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,8, 'En Proceso de Revision de Borradores: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  /> 
+                   
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(9)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Aceptado para defensa: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(9).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton  actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,9, 'Aceptado Para Defensa: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  />
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(10)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Se debe modificar el borrador: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(10).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton  
+                    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2,10, 'Se debe modificar Borrador: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  />
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(11)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Se requiere una nueva presentacion del borrador: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(11).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2, 11, 'Se requiere una nueva presentación de Borrador: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  />
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(13)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Desaprobado: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(13).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2, 13, 'Desaprobado: ', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  />
+                    
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(14)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Dado de baja: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(14).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton    
+                                    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2, 14 ,'Dado de baja: ', null)}"
+                                    onclick="this.form.target = '_blank'"
+                                    onblur="this.form.target = '_self'"
+
+                                    value="Ver PDF"  />
+                <p:dataTable var="proys" value="#{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(15)}">
+
+                    <p:column style="width:16px" headerText="Info">
+                            <p:rowToggler />
+                        </p:column>
+                        <p:column headerText="Aprobado: #{listaProyectoBean.proyectoRNbeanLocal.findProyByEstado(15).size()}" styleClass="colored">
+                            <h:outputText value="#{proys.titulo}" />
+                        </p:column>
+
+
+
+
+                        <p:rowExpansion>
+                            <p:panelGrid  columns="2" columnClasses="label,value" style="width:1500px">
+                                <f:facet name="header">
+                                    Informacion del proyecto
+                                </f:facet>                  
+                                <h:outputLabel value="ID: "/>
+                                <h:outputText value="#{proys.id}" />
+
+                                <h:outputLabel value="Alumno/s" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoAlumnoRNLocal.findByProyAlumno(proys)}"
+                                            var="alu" 
+                                            emptyMessage="No existen alumnos">
+                                    <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Director" style="text-align:center"/>
+                                <p:dataList value="#{listaProyectoBean.proyectoDirectorRNlocal.findByProyDirector(proys)}"
+                                            var="dir" 
+                                            emptyMessage="No existen directores">
+                                    <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                                </p:dataList>
+
+                                <h:outputLabel value="Estado: "/>
+                                <h:outputText value="#{proys.estado.estado}" />
+
+
+                                <h:outputLabel value="Fecha de presentación: "/>
+                                <h:outputText value="#{proys.fecha_ingreso}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                                <div style="clear: both;"/>
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+                <h:commandButton    
+                    actionListener="#{proyectoBean.generar('estados_de_proyecto.jasper', null, null, 2, 15 ,'Aprobado', null, null, null)}"
+                    onclick="this.form.target = '_blank'"
+                    onblur="this.form.target = '_self'"
+                    value="Ver PDF"  />
+
+
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+

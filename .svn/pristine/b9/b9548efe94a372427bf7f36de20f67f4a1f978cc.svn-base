@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="proyecto_id" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     proyecto.`ID` AS proyecto_ID,
+     proyectoalumno.`alumno_id` AS proyectoalumno_alumno_id,
+     proyectoalumno.`proyecto_id` AS proyectoalumno_proyecto_id,
+     persona.`ID` AS persona_ID,
+     persona.`APELLIDO` AS persona_APELLIDO,
+     persona.`DNI` AS persona_DNI,
+     persona.`NOMBRE` AS persona_NOMBRE
+FROM
+     `proyecto` proyecto INNER JOIN `proyectoalumno` proyectoalumno ON proyecto.`ID` = proyectoalumno.`proyecto_id`
+     INNER JOIN `persona` persona ON proyectoalumno.`alumno_id` = persona.`ID`
+WHERE
+     proyecto.ID = $P{proyecto_id}]]>
+	</queryString>
+	<field name="proyecto_ID" class="java.lang.Long"/>
+	<field name="proyectoalumno_alumno_id" class="java.lang.Long"/>
+	<field name="proyectoalumno_proyecto_id" class="java.lang.Long"/>
+	<field name="persona_ID" class="java.lang.Long"/>
+	<field name="persona_APELLIDO" class="java.lang.String"/>
+	<field name="persona_DNI" class="java.lang.Integer"/>
+	<field name="persona_NOMBRE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="249" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona_NOMBRE}+", "+$F{persona_APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

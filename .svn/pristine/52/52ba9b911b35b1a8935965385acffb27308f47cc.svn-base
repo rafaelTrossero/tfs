@@ -1,0 +1,522 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.CarreraRNLocal;
+import RN.PresentacionRNLocal;
+import RN.ProyectoAlumnoRNLocal;
+import RN.ProyectoAsesorRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import RN.ProyectoRNbeanLocal;
+import RN.ProyectoCodirectorRNLocal;
+import entidad.Alumno;
+import entidad.Asesor;
+import entidad.Carrera;
+import entidad.Codirector;
+import entidad.Director;
+import entidad.Estado;
+import entidad.Presentacion;
+import entidad.Profesional;
+import entidad.ProyectoAlumno;
+import entidad.ProyectoAsesor;
+import entidad.ProyectoCodirector;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.inject.Named;
+import org.primefaces.component.commandbutton.CommandButton;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@RequestScoped
+public class ProyectoBean {
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    private Proyecto proyecto;
+    private Proyecto pro;
+    private Alumno alumno;
+    private Director director;
+    private Director dir;
+    private Codirector codirector;
+    private Asesor asesor;
+    private Profesional profesional;
+    private Profesional profesionales;
+    private Presentacion presentacion;
+    private Estado estado;
+    private ProyectoAlumno proy_alu;
+    private ProyectoAsesor proy_ases;
+    private ProyectoCodirector proy_codir;
+    private List<Alumno> selectedAlu;
+    private List<Profesional> selectedAses;
+    private List<Profesional> selectedCodir;
+    private ProyectoDirector proy_direc;
+    private CommandButton cbAction;
+    private boolean certificado;
+    private boolean notadeDirector;
+
+    private boolean notadeAceptacion;
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+    @EJB
+    private ProyectoAlumnoRNLocal proy_alumnoRNbeanLocal;
+    @EJB
+    private ProyectoDirectorRNLocal proy_directorRNbeanLocal;
+    @EJB
+    private ProyectoAsesorRNLocal proy_asesorRNbeanLocal;
+    @EJB
+    private ProyectoCodirectorRNLocal proy_codirecRNbeanLocal;
+    @EJB
+    private PresentacionRNLocal presentacionRNbeanLocal;
+
+   // private String[] requisitos={"0"}; 
+    private String notaDirector;
+    private String notaAceptacion;
+    private String certificadoRegular;// 0= Nota del director
+    // 1= Nota de aceptacion
+    // 2= Certificado de alumno regular       
+
+    public ProyectoBean() {
+        this.proyecto = new Proyecto();
+        this.estado = new Estado();
+        this.proy_alu = new ProyectoAlumno();
+        this.proy_direc = new ProyectoDirector();
+        this.proy_ases = new ProyectoAsesor();
+        this.proy_codir = new ProyectoCodirector();
+
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public List<Alumno> getSelectedAlu() {
+        return selectedAlu;
+    }
+
+    public List<Profesional> getSelectedCodir() {
+        return selectedCodir;
+    }
+
+    public void setSelectedCodir(List<Profesional> selectedCodir) {
+        this.selectedCodir = selectedCodir;
+    }
+
+    public void setSelectedAlu(List<Alumno> selectedAlu) {
+        this.selectedAlu = selectedAlu;
+    }
+
+    public ProyectoRNbeanLocal getProyectoRNbeanLocal() {
+        return proyectoRNbeanLocal;
+    }
+
+    public List<Profesional> getSelectedAses() {
+        return selectedAses;
+    }
+
+    public void setSelectedAses(List<Profesional> selectedAses) {
+        this.selectedAses = selectedAses;
+    }
+
+    public void setProyectoRNbeanLocal(ProyectoRNbeanLocal proyectoRNbeanLocal) {
+        this.proyectoRNbeanLocal = proyectoRNbeanLocal;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public ProyectoDirector getProy_direc() {
+        return proy_direc;
+    }
+
+    public void setProy_direc(ProyectoDirector proy_direc) {
+        this.proy_direc = proy_direc;
+    }
+
+    public CommandButton getCbAction() {
+        return cbAction;
+    }
+
+    public void setCbAction(CommandButton cbAction) {
+        this.cbAction = cbAction;
+    }
+
+    public String getNotaDirector() {
+        return notaDirector;
+    }
+
+    public void setNotaDirector(String notaDirector) {
+        this.notaDirector = notaDirector;
+    }
+
+    public String getNotaAceptacion() {
+        return notaAceptacion;
+    }
+
+    public void setNotaAceptacion(String notaAceptacion) {
+        this.notaAceptacion = notaAceptacion;
+    }
+
+    public String getCertificadoRegular() {
+        return certificadoRegular;
+    }
+
+    public void setCertificadoRegular(String certificadoRegular) {
+        this.certificadoRegular = certificadoRegular;
+    }
+
+    public boolean isCertificado() {
+        return certificado;
+    }
+
+    public void setCertificado(boolean certificado) {
+        this.certificado = certificado;
+    }
+
+    public boolean isNotadeDirector() {
+        return notadeDirector;
+    }
+
+    public void setNotadeDirector(boolean notadeDirector) {
+        this.notadeDirector = notadeDirector;
+    }
+
+    public boolean isNotadeAceptacion() {
+        return notadeAceptacion;
+    }
+
+    public void setNotadeAceptacion(boolean notadeAceptacion) {
+        this.notadeAceptacion = notadeAceptacion;
+    }
+
+    public void actionBtn() {
+
+        switch (this.getListaProyectoBean().getiActionBtnSelect()) {
+            case 0:
+                create();
+                //limíar campos
+                //this.limpiar();
+                break;
+            case 1:
+                this.edit();
+                break;
+            case 2:
+                //deshabilita el campo
+                this.activate(Boolean.FALSE);
+                break;
+            case 3:
+                //habilita el campo
+                this.activate(Boolean.TRUE);
+                break;
+
+        }//fin switch
+    }//fin actionBtn
+
+    public void mostrar() {
+
+        //    mostrar1(requisitos);
+    }
+
+    public void mostrar1(String[] requisitos) {
+
+        if (requisitos[0].equals("1") && requisitos[1].equals("1") && requisitos[2].equals("1")) {
+            System.out.println("pasaasasasasasasassa");
+        }
+    }
+
+    public void setBtnSelect(ActionEvent e) {
+        CommandButton btnSelect = (CommandButton) e.getSource();
+        System.out.println("boton select: " + btnSelect.getId());
+
+    //0 crea
+        //1: edit
+        //2 delete
+        //activo el boton
+        this.getCbAction().setDisabled(false);
+
+        if (btnSelect.getId().equals("cbNuevo")) {
+            this.getCbAction().setValue("Guardar");
+            this.getListaProyectoBean().setiActionBtnSelect(0);
+
+            //campos requeridos
+            //this.setbCamposRequeridos(true);
+        } else if (btnSelect.getId().equals("cbEditar")) {
+            this.getCbAction().setValue("Modificar");
+            this.getListaProyectoBean().setiActionBtnSelect(1);
+
+            System.out.println("valor del boton: " + listaProyectoBean.getiActionBtnSelect());
+
+            //campos requeridos
+            // this.setbCamposRequeridos(true);
+        } else if (btnSelect.getId().equals("cbDeshabilitado")) {
+            this.getListaProyectoBean().setiActionBtnSelect(2);
+
+            //this.setbCamposEditables(true);
+            this.getCbAction().setValue("Desactivar");
+
+        } else if (btnSelect.getId().equals("cbHabilitado")) {
+            this.getListaProyectoBean().setiActionBtnSelect(3);
+
+            //this.setbCamposEditables(true);
+            this.getCbAction().setValue("Reactivar");
+
+        }
+
+        //fin else
+    }//fin setBtnSelect
+
+    public void create() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+
+            System.out.println("si pasa x aca chango");
+            System.out.println("si pasa x aca chango");
+            System.out.println("si pasa x aca chango");
+            System.out.println("si pasa x aca chango");
+            proyecto.setActive(Boolean.TRUE);
+            //selectedAlu = new ArrayList<Alumno>();
+            pro = new Proyecto();
+            alumno = new Alumno();
+            profesional = new Profesional();
+            profesionales = new Profesional();
+            presentacion = new Presentacion();
+
+            if (selectedAlu.isEmpty()) {
+                throw new Exception("Se debe seleccionar al menos un Alumno");
+            }
+            if (selectedAses.isEmpty()) {
+                throw new Exception("Se debe seleccionar al menos un asesor");
+            }
+            if (selectedCodir.isEmpty()) {
+                throw new Exception("Se debe seleccionar al menos un codirector");
+            }
+
+            proy_codirecRNbeanLocal.validar(proy_direc.getDocente(), selectedAses, selectedCodir);
+            // si se cumplen con todos los requisitos el proyecto se da de alta con estado(en proceso de aceptacion de proyecto)
+            if (this.notadeDirector == true && this.certificado == true && this.notadeAceptacion == true) {
+                System.out.println("pasaasasasasasasassa por este" + notadeDirector + notadeAceptacion + certificado);
+                //consulta me devuelve el registro del estado igual a 1
+                estado = proyectoRNbeanLocal.findByEstado(1);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                //Realiza el alta del proyecto
+                proyectoRNbeanLocal.create(proyecto);
+                presentacion.setProyecto(proyecto);
+                presentacion.setCertificados(this.certificado);
+                presentacion.setNota_aprobacion(this.notadeAceptacion);
+                presentacion.setNota_director(this.notadeDirector);
+                presentacion.setFecha(this.proyecto.getFecha_ingreso());
+                presentacionRNbeanLocal.create(presentacion);
+
+            }
+            // si NO se cumplen con todos los requisitos el proyecto se da de alta con estado(se requiere una nueva presentacion de proyecto)
+
+            if (this.notadeDirector == false || this.certificado == false || this.notadeAceptacion == false) {
+                System.out.println("pasa por el otro lado por el no" + notadeDirector + notadeAceptacion + certificado);
+                //consulta me devuelve el registro del estado igual a 3
+                estado = proyectoRNbeanLocal.findByEstado(3);
+                System.out.println("El estado esw:" + estado.getEstado());
+                proyecto.setEstado(estado);
+                //Realiza el alta del proyecto
+                proyectoRNbeanLocal.create(proyecto);
+                presentacion.setProyecto(proyecto);
+                presentacion.setCertificados(this.certificado);
+                presentacion.setNota_aprobacion(this.notadeAceptacion);
+                presentacion.setNota_director(this.notadeDirector);
+                presentacion.setFecha(this.proyecto.getFecha_ingreso());
+                presentacionRNbeanLocal.create(presentacion);
+            }
+
+            //Consulta me devuelve el codigo del proyecto
+            pro = proyectoRNbeanLocal.findProyectoName(proyecto);
+
+            proy_alu.setProyecto(pro);
+            System.out.println("el archivo es " + selectedAses);
+
+            //recorre el list de los alumnos afectados en el proyecto
+            Iterator<Alumno> it = selectedAlu.iterator();
+            System.out.println("el archivo es " + selectedAlu);
+
+            while (it.hasNext()) {
+                alumno = it.next();
+                System.out.println("hola" + alumno.getNombre());
+                proy_alu.setAlumno(alumno);
+
+                //realiza el alta en la tabla relacional proy_alumno dependiendo de cuantos alumnos se han seleccionado
+                proy_alumnoRNbeanLocal.create(proy_alu);
+            }
+            //para el alta del registro proy_director************
+            proy_direc.setActive(Boolean.TRUE);
+            proy_direc.setProyecto(pro);
+            System.out.println("codigos respectivos" + proy_direc.getProyecto().getId() + proy_direc.getDocente().getApellido());
+            proy_directorRNbeanLocal.create(proy_direc);
+
+            //para el alta de registro proy_asesor **************
+            proy_ases.setActive(Boolean.TRUE);
+            proy_ases.setProyecto(pro);
+            //recorre el list de los ascesores afectados en el proyecto
+            Iterator<Profesional> as = selectedAses.iterator();
+            System.out.println("el archivo es " + selectedAses);
+            //System.out.println("el codigo del proyecto es " + proy_ases.getProyecto().getTitulo());
+
+            while (as.hasNext()) {
+                profesional = as.next();
+                System.out.println("hola" + profesional.getApellido());
+                proy_ases.setProfesional(profesional);
+                //realiza el alta en la tabla relacional proy_asesor dependiendo de cuantos asesores se han seleccionado
+                proy_asesorRNbeanLocal.create(proy_ases);
+
+            }
+            //para el alta de registro proy_codirector **************
+            proy_codir.setActive(Boolean.TRUE);
+            proy_codir.setProyecto(pro);
+            //recorre el list de los codirectores afectados en el proyecto
+            Iterator<Profesional> cod = selectedCodir.iterator();
+            System.out.println("el archivo es " + selectedCodir);
+
+            while (cod.hasNext()) {
+                profesionales = cod.next();
+                System.out.println("hola" + profesionales.getApellido());
+                proy_codir.setProfesional(profesionales);
+                //realiza el alta en la tabla relacional proy_asesor dependiendo de cuantos asesores se han seleccionado
+                proy_codirecRNbeanLocal.create(proy_codir);
+
+            }
+
+            if (notadeDirector == true && certificado == true) {
+                System.out.println("el contenido de los booleanos es.......:: nota de director " + notadeDirector + certificado);
+
+            }
+            if (notadeDirector == false && certificado == false) {
+                System.out.println("los resultados son otros " + notadeDirector + certificado);
+            }
+
+            sMensaje = "El Proyecto fue guardado exitosamente";
+            severity = FacesMessage.SEVERITY_INFO;
+            this.getCbAction().setDisabled(true);
+            //agregar a la lista
+            this.getListaProyectoBean().getLstProyecto().add(proyecto);
+
+            //limpiar campos
+            this.limpiar();
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }// fin crear
+
+    public void edit() {
+        System.out.println("Entro al edit");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            //get la fila seleccionada   
+            proyecto.setActive(Boolean.TRUE);
+
+            proyectoRNbeanLocal.edit(this.getProyecto());
+
+            sMensaje = "Datos actualizados correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+            //elimino y agrego el organismo modificado a la lista
+            int iPos = this.getListaProyectoBean().getLstProyecto().indexOf(this.getProyecto());
+            this.getListaProyectoBean().getLstProyecto().remove(iPos);
+            this.getListaProyectoBean().getLstProyecto().add(iPos, this.getProyecto());
+
+            //this.getCbAction().setValue("Update");
+            this.getCbAction().setDisabled(true);
+
+            //  this.setbCamposRequeridos(false);
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Actualizacion error: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin edit
+
+    public void activate(Boolean bEstado) {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+
+        try {
+
+            proyectoRNbeanLocal.activate(this.getProyecto(), bEstado);
+
+            //elimino el organismo de la lista
+            int iPos = this.getListaProyectoBean().getLstProyecto().indexOf(this.getProyecto());
+            this.setProyecto(this.getListaProyectoBean().getLstProyecto().get(iPos));
+            this.getProyecto().setActive(bEstado);
+            this.getListaProyectoBean().getLstProyecto().remove(iPos);
+            this.getListaProyectoBean().getLstProyecto().add(iPos, this.getProyecto());
+
+            if (!bEstado) {
+                sMensaje = "Proyecto deshabilitada correctamente";
+            } else {
+                sMensaje = "Proyecto habilitada correctamente";
+            }
+            severity = FacesMessage.SEVERITY_INFO;
+
+            this.getCbAction().setDisabled(true);
+
+            //limíar campos
+            this.clear();
+            // this.setbCamposRequeridos(false);
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Ocurrio un error duracte la operacion: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin recuperar
+
+    private void limpiar() {
+        this.proyecto = new Proyecto();
+    }
+
+    private void clear() {
+        this.setProyecto(new Proyecto());
+
+    }//fin limpiar
+}

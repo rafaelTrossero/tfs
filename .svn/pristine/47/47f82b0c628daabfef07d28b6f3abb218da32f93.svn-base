@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dNuevaPres" 
+                  widgetVar="dlgAcepProyecto" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Aceptacion De Proyecto"/>
+            </f:facet>
+
+
+            <p:panel id="display">
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+                    <p:tab title="Información del proyecto"> 
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputLabel value="Titulo:" style="text-align:center"/>
+                            <h:outputText value="#{aceptacionBean.proyecto.titulo}" />
+
+
+                            <h:outputLabel value="ID: "/>
+                            <h:outputText value="#{aceptacionBean.proyecto.id}" />
+
+
+                            <h:outputLabel value="Estado: "/>
+                            <h:outputText value="#{aceptacionBean.proyecto.estado.estado}" />
+
+
+                            <h:outputLabel value="Fecha de presentacion: "/>
+                            <h:outputText value="#{aceptacionBean.proyecto.fecha_ingreso}" />
+                            <div style="clear: both;"/>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Alumno/s">
+
+                        <p:dataList value="#{aceptacionBean.lstProyAlumno}"
+                                    var="alu" 
+                                    emptyMessage="No existen alumnos">
+                            <h:outputText value="#{alu.alumno.apellido},#{alu.alumno.nombre},    Matricula:#{alu.alumno.matricula},    Dni:#{alu.alumno.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Director">
+
+                        <p:dataList value="#{aceptacionBean.lstProyDirector}"
+                                    var="dir" 
+                                    emptyMessage="No hay existen directores">
+                            <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>
+                        </p:dataList>
+                    </p:tab>
+                    <p:tab title="Aceptacion del proyecto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputText value="Resultado de Evaluacion:  "/>
+                            <p:selectOneMenu id="somCalificacion"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.aceptacion.calificacion}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaCalificacioBean.lstSICalificacion}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Fecha  : "/>
+                            <p:calendar value="#{aceptacionBean.aceptacion.fecha}"
+                                         />
+                            <h:outputText value="Observacion: "/>
+                            <p:inputText value="#{aceptacionBean.aceptacion_observacion.observacion}"
+                                        label="Observacion"  size="60"/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Tribunal Propuesto">
+                        <h:panelGrid columns="2" cellpadding="2" >
+                            <h:outputText value="Presidente:  "/>
+                            <p:selectOneMenu id="somPresidente"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.presidente}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Vocal 1:  "/>
+                            <p:selectOneMenu id="somVocal1"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.vocal1}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Vocal 2:  "/>
+                            <p:selectOneMenu id="somVocal2"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.vocal2}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Suplente 1:  "/>
+                            <p:selectOneMenu id="somSuplente1"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.suplente1}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                             <h:outputText value="Suplente 2:  "/>
+                            <p:selectOneMenu id="somSuplente2"
+                                             converter="ConversorGenerico"
+                                             value="#{aceptacionBean.suplente2}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+                           
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+
+
+
+
+            </p:panel>    
+
+            <div style="clear: both;"/>
+            <p:commandButton id="btnSalir"
+                             value="Salir" 
+                             oncomplete="dlgAcepProyecto.hide()"
+
+                             process="@this"/>
+             <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 actionListener="#{aceptacionBean.create()}" 
+                                />
+
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+        </p:dialog>
+        <p:panel   header="Gestion de Proyectos" style="text-align:center;">
+            <h:outputText value="Proyecto:  "/>
+            <p:selectOneMenu id="somProyecto"
+                             converter="ConversorGenerico"
+                             value="#{aceptacionBean.proyecto}">
+                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                <f:selectItems 
+                    value="#{listaProyectoBean.lstSIProyecto}"/>
+
+            </p:selectOneMenu>
+
+            <div class="camposTexto"
+                 style="float: left; margin: 10px;
+                 width: 100%;
+                 text-align: center;">
+                <p:commandButton
+                    value="Continuar" 
+                    icon="ui-icon-circle-plus" 
+                    oncomplete="PF('dlgAcepProyecto').show()"
+                    update="display"
+                    actionListener="#{aceptacionBean.crear()}"
+                    />
+
+
+
+            </div>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idProyecto" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     proyecto.`ID` AS proyecto_ID,
+     persona_A.`ID` AS persona_A_ID,
+     persona_A.`APELLIDO` AS persona_A_APELLIDO,
+     persona_A.`NOMBRE` AS persona_A_NOMBRE,
+     proyectoasesor.`ID` AS proyectoasesor_ID,
+     proyectoasesor.`profesional_id` AS proyectoasesor_profesional_id,
+     proyectoasesor.`proyecto_id` AS proyectoasesor_proyecto_id
+FROM
+     `proyecto` proyecto INNER JOIN `proyectoasesor` proyectoasesor ON proyecto.`ID` = proyectoasesor.`proyecto_id`
+     INNER JOIN `persona` persona_A ON proyectoasesor.`profesional_id` = persona_A.`ID`
+WHERE
+     proyecto.ID = $P{idProyecto} AND proyectoasesor.ACTIVE=1]]>
+	</queryString>
+	<field name="proyecto_ID" class="java.lang.Long"/>
+	<field name="persona_A_ID" class="java.lang.Long"/>
+	<field name="persona_A_APELLIDO" class="java.lang.String"/>
+	<field name="persona_A_NOMBRE" class="java.lang.String"/>
+	<field name="proyectoasesor_ID" class="java.lang.Long"/>
+	<field name="proyectoasesor_profesional_id" class="java.lang.Long"/>
+	<field name="proyectoasesor_proyecto_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Asesor:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="213" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_A_NOMBRE}+", "+$F{persona_A_APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

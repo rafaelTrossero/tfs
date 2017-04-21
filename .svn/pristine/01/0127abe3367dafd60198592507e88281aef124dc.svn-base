@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.CronogramaActividad;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+/**
+ *
+ * @author Trossero
+ */
+@Stateless
+public class CronogramaActividadFacade extends AbstractFacade<CronogramaActividad> implements CronogramaActividadFacadeLocal {
+    @PersistenceContext(unitName = "tfs-ejbPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public CronogramaActividadFacade() {
+        super(CronogramaActividad.class);
+    }
+    
+}

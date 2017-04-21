@@ -1,0 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package RN;
+
+import entidad.Especialidad;
+import entidad.Persona;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author cristian
+ */
+@Local
+public interface EspecialidadRNLocal {
+     void create(Especialidad p) throws Exception;
+
+    void remove(Especialidad p) throws Exception;
+
+    void edit(Especialidad p) throws Exception;
+
+    List<Especialidad> findAll() throws Exception;
+    
+    List<Especialidad> findByProfesion(Long idProfesion) throws Exception;
+}

@@ -1,0 +1,123 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package reportes.bean;
+
+import entidad.Proyecto;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import reportes.AbstractReportBean;
+ 
+@ManagedBean(name = "reportsBean")
+@SessionScoped
+ 
+public class ReportsBean extends AbstractReportBean {
+ 
+    private final String COMPILE_FILE_NAME = "report1";
+ 
+    @Override
+    protected String getCompileFileName() {
+        return COMPILE_FILE_NAME;
+    }
+ 
+    @Override
+    protected Map<String, Object> getReportParameters() {
+        Map<String, Object> reportParameters = new HashMap<String, Object>();
+ 
+        reportParameters.put("rtitle", "Hello JasperReports");
+ 
+        return reportParameters;
+    }
+ 
+    public String execute(Long idProy) {
+        try {
+            super.prepareReport(idProy);
+        } catch (Exception e) {
+            // make your own exception handling
+            e.printStackTrace();
+        }
+ 
+        return null;
+    }
+    
+     public void obtenerReporte(Long idProy) throws SQLException, JRException {
+      
+       
+       
+        Connection conect;
+        conect = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfs-ftyca", "ftycatfsadm", "123456");
+
+        JasperReport rn = null;
+        Map parametro = new HashMap();
+        parametro.put("idProyecto",idProy );             
+       
+        rn = (JasperReport) JRLoader.loadObjectFromFile("C:\\Users\\Cristian PC\\Documents\\NetBeansProjects\\tfs\\dist\\gfdeploy\\tfs\\tfs-war_war\\reporteProyecto.jasper");
+        
+        JasperPrint jp = JasperFillManager.fillReport(rn, parametro, conect);
+        JasperViewer jv = new JasperViewer(jp,false);
+        jv.setVisible(true);
+
+    }
+     
+     public void imprimeRelatorio2(Long idProy) throws SQLException {
+     
+         imprimeRelatorio(idProy);
+     }
+     
+     
+    
+    public void imprimeRelatorio(Long idProy) throws SQLException {
+        try{
+            String pathFile = "C:\\Users\\Cristian PC\\Documents\\NetBeansProjects\\tfs\\dist\\gfdeploy\\tfs\\tfs-war_war\\reporteProyecto.jasper";
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            
+            InputStream file = getClass().getClassLoader().getResourceAsStream(pathFile);
+            
+            Connection conect;
+            conect = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfs-ftyca", "ftycatfsadm", "123456");
+            
+            JasperReport rn = null;
+        Map parametro = new HashMap();
+        parametro.put("idProyecto",idProy );
+        
+            JasperReport pathReport = JasperCompileManager.compileReport(file);
+            JasperPrint preencher = JasperFillManager.fillReport(pathReport,parametro,conect);
+            JasperExportManager.exportReportToPdfStream(preencher,null);
+            JasperViewer.viewReport(preencher, false);
+          
+            context.renderResponse();
+            context.responseComplete();
+        } catch (JRException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
+
+    }
+     
+     
+    
+}

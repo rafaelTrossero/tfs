@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+/**
+ *
+ * @author Trossero
+ */
+@ManagedBean
+@SessionScoped
+public class ListaObjetivosBean {
+
+    private List <String> objetivosProy;
+    
+    public ListaObjetivosBean() {
+         this.objetivosProy = new ArrayList<String>();
+    }
+
+    public List<String> getObjetivosProy() {
+        return objetivosProy;
+    }
+
+    public void setObjetivosProy(List<String> objetivosProy) {
+        this.objetivosProy = objetivosProy;
+    }
+    
+     public void agregar_objetivos(){
+        objetivosProy.add(new String());
+        System.out.println("hizo el add pero no paso nada parece");
+        
+        System.out.println("si lo hace da esto" +objetivosProy);
+    }
+     
+}

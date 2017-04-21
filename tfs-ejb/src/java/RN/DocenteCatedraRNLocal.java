@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import entidad.Catedra;
+import entidad.Docente;
+import entidad.DocenteCatedra;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@Local
+public interface DocenteCatedraRNLocal {
+      void create(DocenteCatedra p) throws Exception;
+
+    void remove(DocenteCatedra p) throws Exception;
+
+    void edit(DocenteCatedra p) throws Exception;
+
+    List<DocenteCatedra> findAll() throws Exception;
+    
+    
+    public DocenteCatedra findByDocente(DocenteCatedra doc) throws Exception;
+    
+    public Catedra findByIdDocente (long idDoc) throws Exception;
+    
+    public List<Docente> findDocentesbyCatedra (long idCatedra) throws Exception;
+    
+    public List<DocenteCatedra> findCatedra_docente (Catedra catedra) throws Exception;
+}

@@ -1,0 +1,78 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import DAO.EstadoFacadeLocal;
+import static com.sun.faces.facelets.util.Path.context;
+import entidad.Estado;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@SessionScoped
+public class ListaSeguimientoBean {
+    @EJB
+private EstadoFacadeLocal estadoFacadeLocal;
+    private List<Estado> est= new ArrayList<Estado>();
+  
+    /**
+     * Creates a new instance of ListaSeguimientoBean
+     */
+    public ListaSeguimientoBean() {
+      
+        
+    }
+
+    public List<Estado> getEst() {
+        return est;
+    }
+
+    public void setEst(List<Estado> est) {
+        this.est = est;
+    }
+ private String path = "C:\\Users\\Cristian PC\\Documents\\NetBeansProjects\\tfs\\dist\\gfdeploy\\tfs\\tfs-war_war\\Web Pages\\reporteSeguimiento.jasper";
+    
+  public void setear() throws JRException{
+  
+  this.setEst(this.estadoFacadeLocal.findAll());
+  
+    
+    FacesContext context = FacesContext.getCurrentInstance();
+            String reportPath = context.getExternalContext().getRealPath(path);
+
+            HashMap parametro = new HashMap();
+            
+            parametro.put("titulo","masias");
+           
+            
+            
+           
+            JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(this.getEst());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parametro, beanCollectionDataSource);
+            JasperExportManager.exportReportToPdfFile(jasperPrint, context.getExternalContext().getRealPath("/Web Pages/reporteSeguimiento.jasper"));
+
+    
+  }
+    
+}

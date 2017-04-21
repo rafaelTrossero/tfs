@@ -1,0 +1,540 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import entidad.Alumno;
+import entidad.Barrio;
+import entidad.Carrera;
+import entidad.Comision;
+import entidad.Departamento;
+import entidad.Depto;
+import entidad.Docente;
+import entidad.Localidad;
+import entidad.Operacion;
+import entidad.Pais;
+import entidad.Profesional;
+import entidad.Provincia;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+
+/**
+ *
+ * @author jmoreno
+ */
+@ManagedBean
+@RequestScoped
+public class navegarBean {
+
+    @ManagedProperty("#{listaDeptoBean}")
+    private ListaDeptoBean listaDeptoBean;
+
+    @ManagedProperty("#{listaPaisBean}")
+    private ListaPaisBean listaPaisBean;
+    @ManagedProperty("#{listaProvinciaBean}")
+    private ListaProvinciaBean listaProvinciaBean;
+    @ManagedProperty("#{listaDepartamentoBean}")
+    private ListaDepartamentoBean listaDepartamentoBean;
+    @ManagedProperty("#{listaLocalidadBean}")
+    private ListaLocalidadBean listaLocalidadBean;
+    @ManagedProperty("#{listaBarrioBean}")
+    private ListaBarrioBean listaBarrioBean;
+
+    @ManagedProperty("#{listaCarreraBean}")
+    private ListaCarreraBean listaCarreraBean;
+    @ManagedProperty("#{listaAlumnoBean}")
+    private ListaAlumnoBean listaAlumnoBean;
+    @ManagedProperty("#{listaDocenteBean}")
+    private ListaDocenteBean listaDocenteBean;
+    @ManagedProperty("#{listaProfesionalBean}")
+    private ListaProfesionalBean listaProfesionalBean;
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    @ManagedProperty("#{listaOperacionBean}")
+    private ListaOperacionBean listaOperacionBean;
+    @ManagedProperty("#{listaCargoBean}")
+    private ListaCargoBean listaCargoBean;
+    @ManagedProperty("#{listaDedicacionBean}")
+    private ListaDedicacionBean listaDedicacionBean;
+    @ManagedProperty("#{listaProfesionBean}")
+    private ListaProfesionBean listaProfesionBean;
+    @ManagedProperty("#{listaEspecialidadBean}")
+    private ListaEspecialidadBean listaEspecialidadBean;
+    @ManagedProperty("#{listaComisionBean}")
+    private ListaComisionBean listaComisionBean;
+
+    @ManagedProperty("#{usuarioLogerBean}")
+    private UsuarioLogerBean usuarioLogerBean;
+
+    /**
+     * Creates a new instance of navegarBean
+     */
+    public navegarBean() {
+    }
+
+    public ListaDeptoBean getListaDeptoBean() {
+        return listaDeptoBean;
+    }
+
+    public void setListaDeptoBean(ListaDeptoBean listaDeptoBean) {
+        this.listaDeptoBean = listaDeptoBean;
+    }
+
+    public ListaPaisBean getListaPaisBean() {
+        return listaPaisBean;
+    }
+
+    public void setListaPaisBean(ListaPaisBean listaPaisBean) {
+        this.listaPaisBean = listaPaisBean;
+    }
+
+    public ListaProvinciaBean getListaProvinciaBean() {
+        return listaProvinciaBean;
+    }
+
+    public void setListaProvinciaBean(ListaProvinciaBean listaProvinciaBean) {
+        this.listaProvinciaBean = listaProvinciaBean;
+    }
+
+    public ListaDepartamentoBean getListaDepartamentoBean() {
+        return listaDepartamentoBean;
+    }
+
+    public void setListaDepartamentoBean(ListaDepartamentoBean listaDepartamentoBean) {
+        this.listaDepartamentoBean = listaDepartamentoBean;
+    }
+
+    public ListaLocalidadBean getListaLocalidadBean() {
+        return listaLocalidadBean;
+    }
+
+    public void setListaLocalidadBean(ListaLocalidadBean listaLocalidadBean) {
+        this.listaLocalidadBean = listaLocalidadBean;
+    }
+
+    public ListaBarrioBean getListaBarrioBean() {
+        return listaBarrioBean;
+    }
+
+    public void setListaBarrioBean(ListaBarrioBean listaBarrioBean) {
+        this.listaBarrioBean = listaBarrioBean;
+    }
+
+    public ListaCarreraBean getListaCarreraBean() {
+        return listaCarreraBean;
+    }
+
+    public void setListaCarreraBean(ListaCarreraBean listaCarreraBean) {
+        this.listaCarreraBean = listaCarreraBean;
+    }
+
+    public ListaDocenteBean getListaDocenteBean() {
+        return listaDocenteBean;
+    }
+
+    public void setListaDocenteBean(ListaDocenteBean listaDocenteBean) {
+        this.listaDocenteBean = listaDocenteBean;
+    }
+
+    public ListaProfesionalBean getListaProfesionalBean() {
+        return listaProfesionalBean;
+    }
+
+    public void setListaProfesionalBean(ListaProfesionalBean listaProfesionalBean) {
+        this.listaProfesionalBean = listaProfesionalBean;
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public ListaOperacionBean getListaOperacionBean() {
+        return listaOperacionBean;
+    }
+
+    public void setListaOperacionBean(ListaOperacionBean listaOperacionBean) {
+        this.listaOperacionBean = listaOperacionBean;
+    }
+
+    public ListaCargoBean getListaCargoBean() {
+        return listaCargoBean;
+    }
+
+    public void setListaCargoBean(ListaCargoBean listaCargoBean) {
+        this.listaCargoBean = listaCargoBean;
+    }
+
+    public ListaDedicacionBean getListaDedicacionBean() {
+        return listaDedicacionBean;
+    }
+
+    public void setListaDedicacionBean(ListaDedicacionBean listaDedicacionBean) {
+        this.listaDedicacionBean = listaDedicacionBean;
+    }
+
+    public ListaProfesionBean getListaProfesionBean() {
+        return listaProfesionBean;
+    }
+
+    public void setListaProfesionBean(ListaProfesionBean listaProfesionBean) {
+        this.listaProfesionBean = listaProfesionBean;
+    }
+
+    public ListaEspecialidadBean getListaEspecialidadBean() {
+        return listaEspecialidadBean;
+    }
+
+    public void setListaEspecialidadBean(ListaEspecialidadBean listaEspecialidadBean) {
+        this.listaEspecialidadBean = listaEspecialidadBean;
+    }
+
+    public ListaComisionBean getListaComisionBean() {
+        return listaComisionBean;
+    }
+
+    public void setListaComisionBean(ListaComisionBean listaComisionBean) {
+        this.listaComisionBean = listaComisionBean;
+    }
+
+    public UsuarioLogerBean getUsuarioLogerBean() {
+        return usuarioLogerBean;
+    }
+
+    public void setUsuarioLogerBean(UsuarioLogerBean usuarioLogerBean) {
+        this.usuarioLogerBean = usuarioLogerBean;
+    }
+
+    public ListaAlumnoBean getListaAlumnoBean() {
+        return listaAlumnoBean;
+    }
+
+    public void setListaAlumnoBean(ListaAlumnoBean listaAlumnoBean) {
+        this.listaAlumnoBean = listaAlumnoBean;
+    }
+
+    public String entrarFormCarrera() {
+        this.getListaCarreraBean().setLstCarrera(new ArrayList<Carrera>());
+        this.getListaCarreraBean().setLstSICarrera(null);
+        this.getListaCarreraBean().cargar_carreras();
+        this.getListaCarreraBean().cargar_SI_carreras();
+
+        this.getListaDeptoBean().setLstDepartamento(new ArrayList<Depto>());
+        this.getListaDeptoBean().setLstSIDepartamento(null);
+        this.getListaDeptoBean().cargar_departamentos();
+        this.getListaDeptoBean().cargar_SI_departamentos();
+
+        this.getListaDeptoBean().setLstDepartamentoActivo(new ArrayList<Depto>());
+        this.getListaDeptoBean().setLstSIDepartamentoActivo(null);
+        this.getListaDeptoBean().cargar_departamentos_activos();
+        this.getListaDeptoBean().cargar_SI_departamentos_activos();
+
+        return "carrera.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormDocente() {
+        this.getListaLocalidadBean().cargarLocalidades();
+        this.getListaLocalidadBean().cargarSILocalidades();
+        this.getListaEspecialidadBean().cargar_especialidades();
+        this.getListaEspecialidadBean().cargar_SI_especialidades();
+        this.getListaProfesionBean().cargar_profesiones();
+        this.getListaProfesionBean().cargar_SI_profesiones();
+        this.getListaDedicacionBean().cargar_dedicaciones();
+        this.getListaDedicacionBean().cargar_SI_dedicaciones();
+        this.getListaComisionBean().setLstComision(new ArrayList<Comision>());
+        this.getListaComisionBean().setLstSIComision(null);
+        this.getListaComisionBean().cargar_comision();
+        this.getListaComisionBean().cargar_SI_comisiones();
+
+        return "docente.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormPais() {
+        this.getListaPaisBean().setLstPais(new ArrayList<Pais>());
+        this.getListaPaisBean().setLstSIPais(null);
+
+        return "pais.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormProvincia() {
+        this.getListaPaisBean().setLstPais(new ArrayList<Pais>());
+        this.getListaPaisBean().setLstSIPais(null);
+        this.getListaPaisBean().cargarPais();
+        this.getListaPaisBean().cargarSIPais();
+        this.getListaProvinciaBean().setLstProvincia(new ArrayList<Provincia>());
+        this.getListaProvinciaBean().setLstSIProvincia(null);
+
+        return "provincia.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormDepartamento() {
+        this.getListaPaisBean().setLstPais(new ArrayList<Pais>());
+        this.getListaPaisBean().setLstSIPais(null);
+        this.getListaPaisBean().cargarPais();
+        this.getListaPaisBean().cargarSIPais();
+        this.getListaProvinciaBean().setLstProvincia(new ArrayList<Provincia>());
+        this.getListaProvinciaBean().setLstSIProvincia(null);
+        this.getListaProvinciaBean().cargarProvincias();
+        this.getListaProvinciaBean().cargarSIProvincias();
+        this.getListaDepartamentoBean().setLstDepartamento(new ArrayList<Departamento>());
+        this.getListaDepartamentoBean().setLstSIDepartamento(null);
+
+        return "departamento.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormLocalidad() {
+        this.getListaPaisBean().setLstPais(new ArrayList<Pais>());
+        this.getListaPaisBean().setLstSIPais(null);
+        this.getListaPaisBean().cargarPais();
+        this.getListaPaisBean().cargarSIPais();
+        this.getListaProvinciaBean().setLstProvincia(new ArrayList<Provincia>());
+        this.getListaProvinciaBean().setLstSIProvincia(null);
+        this.getListaProvinciaBean().cargarProvincias();
+        this.getListaProvinciaBean().cargarSIProvincias();
+        this.getListaDepartamentoBean().setLstDepartamento(new ArrayList<Departamento>());
+        this.getListaDepartamentoBean().setLstSIDepartamento(null);
+        this.getListaDepartamentoBean().cargarDepartamentos();
+        this.getListaDepartamentoBean().cargarSIDepartamentos();
+        this.getListaLocalidadBean().setLstLocalidad(new ArrayList<Localidad>());
+        this.getListaLocalidadBean().setLstSILocalidad(null);
+
+        return "localidad.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormBarrio() {
+        this.getListaPaisBean().setLstPais(new ArrayList<Pais>());
+        this.getListaPaisBean().setLstSIPais(null);
+        this.getListaPaisBean().cargarPais();
+        this.getListaPaisBean().cargarSIPais();
+        this.getListaProvinciaBean().setLstProvincia(new ArrayList<Provincia>());
+        this.getListaProvinciaBean().setLstSIProvincia(null);
+        this.getListaProvinciaBean().cargarProvincias();
+        this.getListaProvinciaBean().cargarSIProvincias();
+        this.getListaDepartamentoBean().setLstDepartamento(new ArrayList<Departamento>());
+        this.getListaDepartamentoBean().setLstSIDepartamento(null);
+        this.getListaDepartamentoBean().cargarDepartamentos();
+        this.getListaDepartamentoBean().cargarSIDepartamentos();
+        this.getListaLocalidadBean().setLstLocalidad(new ArrayList<Localidad>());
+        this.getListaLocalidadBean().setLstSILocalidad(null);
+        this.getListaLocalidadBean().cargarLocalidades();
+        this.getListaLocalidadBean().cargarSILocalidades();
+        this.getListaBarrioBean().setLstBarrio(new ArrayList<Barrio>());
+        this.getListaBarrioBean().setLstSIBarrio(null);
+
+        return "barrio.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormAlumnos() {
+        this.getListaCarreraBean().setLstCarrera(new ArrayList<Carrera>());
+        this.getListaCarreraBean().setLstSICarrera(null);
+        this.getListaCarreraBean().cargar_carreras();
+        this.getListaCarreraBean().cargar_SI_carreras();
+        this.getListaBarrioBean().cargarBarrios();
+        this.getListaLocalidadBean().cargarLocalidades();
+        this.getListaLocalidadBean().cargarSILocalidades();
+
+        return "Alumno.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormProyectos() {
+
+        this.getListaProyectoBean().setLstProyecto(new ArrayList<Proyecto>());
+
+        this.getListaProyectoBean().cargar_proyectos();
+
+        this.getListaAlumnoBean().setLstAlumnoFinal(new ArrayList<Alumno>());
+        this.getListaAlumnoBean().setLstSIProyectoAlumno(null);
+        this.getListaAlumnoBean().cargar_proyectos_alumnos();
+        this.getListaAlumnoBean().cargar_SI_proyecto_alumno();
+        
+        this.getListaCarreraBean().setLstCarrera(new ArrayList<Carrera>());
+        this.getListaCarreraBean().setLstSICarrera(null);
+        this.getListaCarreraBean().cargar_carreras();
+        this.getListaCarreraBean().cargar_SI_carreras();
+
+        this.getListaDocenteBean().setLstDocente(new ArrayList<Docente>());
+        this.getListaDocenteBean().setLstSIDocente(null);
+        this.getListaDocenteBean().cargar_Docentes();
+        this.getListaDocenteBean().cargar_SI_docentes();
+
+        this.getListaProfesionalBean().setLstProfesional(new ArrayList<Profesional>());
+        this.getListaProfesionalBean().setLstSIProfesional(null);
+        this.getListaProfesionalBean().cargar_profesionales();
+        this.getListaProfesionalBean().cargar_SI_profesionales();
+
+        this.getListaProfesionalBean().setLstProfesionalActivo(new ArrayList<Profesional>());
+        this.getListaProfesionalBean().setLstSIProfesionalActivo(null);
+        this.getListaProfesionalBean().cargar_profesionales_activos();
+        this.getListaProfesionalBean().cargar_SI_profesionales_activos();
+
+        return "proyecto.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormPresentacion() {
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(3, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "nueva_presentacion.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormNuevaPresentacionBorrador() {
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(11, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "nueva_presentacion_borrador.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormAceptacion() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        System.out.println(":::::::::::::DOOOOOOOOOOOOOO::::::::::::::   "+this.usuarioLogerBean.isbUsuario() +"---" + this.usuarioLogerBean.isAdministracion());
+        //if(!this.usuarioLogerBean.isAdministracion().equals(true)){
+        this.getListaProyectoBean().cargar_proyectosByEstado(1, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+        
+        
+       
+        System.out.println("::::::::::::::::::::::::hizo TODOOOOOOOOOOOOOO");
+
+        return "aceptacion_proyecto.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormEvaluacion() {
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+
+        this.getListaProyectoBean().setLstProyectoByTribunal(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByTribunal(null);
+
+        this.getListaProyectoBean().cargarProyectosByDocenteTribunal(this.usuarioLogerBean.getUsuario().getId(), 4L);
+
+        // this.getListaProyectoBean().cargar_proyectosByEstado(4);
+        this.getListaProyectoBean().cargar_SI_proyectosbyDocenteTribunal();
+
+        return "evaluacion_proyecto.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormAsiganacionComisionEvaluadora() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        
+        this.getListaProyectoBean().cargar_proyectosByEstado(2, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+        
+   
+        return "asignacion_comision_evaluadora.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormBorradoresProyecto() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(5, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "borradores_proyecto.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormEvaluacionBorradoresProyecto() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+
+        this.getListaProyectoBean().setLstProyectoByTribunal(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByTribunal(null);
+
+        this.getListaProyectoBean().cargarProyectosByDocenteTribunal(this.usuarioLogerBean.getUsuario().getId(), 8L);
+
+        // this.getListaProyectoBean().cargar_proyectosByEstado(4);
+        this.getListaProyectoBean().cargar_SI_proyectosbyDocenteTribunal();
+        //   this.getListaProyectoBean().cargar_proyectosByEstado(8);
+        // this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "evaluacion_borradores.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormDefensaFinal() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(9, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "defensa_trabajo_final.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormPresentacionModificacionesProyecto() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(6, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "modificaciones_proyecto.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormPresentacionModificacionesBorrador() {
+
+        this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyectoByEstado(null);
+        this.getListaProyectoBean().cargar_proyectosByEstado(10, this.usuarioLogerBean.getUsuario().getId());
+        this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+
+        return "modificaciones_borrador.xhtml?faces-redirect=true";
+
+    }
+
+    public String entrarFormProfesional() {
+
+        this.getListaPaisBean().cargarPais();
+        this.getListaPaisBean().cargarSIPais();
+        this.getListaProvinciaBean().cargarProvincias();
+        this.getListaProvinciaBean().cargarSIProvincias();
+        this.getListaLocalidadBean().cargarLocalidades();
+        this.getListaLocalidadBean().cargarSILocalidades();
+
+        return "Profesional.xhtml?faces-redirect=true";
+    }
+
+    public String entrarFormAsentarOperacionProyecto() {
+
+        System.out.println("asdasdasd");
+
+        this.getListaOperacionBean().setLstOperacion(new ArrayList<Operacion>());
+        this.getListaOperacionBean().setLstSIOperacion(null);
+        this.getListaOperacionBean().cargar_Operaciones();
+        this.getListaOperacionBean().cargar_SI_Operaciones();
+
+        this.getListaProyectoBean().setLstProyecto(new ArrayList<Proyecto>());
+        //  this.getListaProyectoBean().setLstProyectoByEstado(new ArrayList<Proyecto>());
+        this.getListaProyectoBean().setLstSIProyecto(null);
+
+        this.getListaProyectoBean().cargar_proyectos();
+        this.getListaProyectoBean().cargar_SI_proyectos();
+        // this.getListaProyectoBean().cargar_SI_proyectosbyEstado();
+        // this.getListaProyectoBean().cargar_proyectosByEstado(3);
+
+        System.out.println("hizo TODOOOOOOOOOOOOOO");
+
+        return "operaciones_proyecto.xhtml?faces-redirect=true";
+    }
+}

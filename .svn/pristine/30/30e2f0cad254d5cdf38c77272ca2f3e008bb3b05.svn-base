@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+     <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="./../resources/css/style.css" rel="stylesheet" type="text/css" />
+
+
+      
+
+    </h:head>
+
+    <ui:define name="content">
+        <!-- DIALOGO CATEDRA !-->
+        <p:dialog id="dCatedra" 
+                  widgetVar="dlgCatedra" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Cátedras"/>
+            </f:facet>
+            <p:panel id="pCatedra" style="float:left;">
+                <p:focus context="pCatedra"/> 
+
+                <h:inputHidden value="#{catedraBean.catedra.id}"/>
+
+                <h:inputHidden value="#{listaCatedraBean.iActionBtnSelect}"/>
+
+                <div style="clear: both;"/>
+
+                <p:accordionPanel id ="apCatedra" style="width: 600px;">
+                    <p:tab title="Información de Cátedra">
+                        <h:panelGrid columns="2" cellpadding="3" >
+
+                            <h:outputText value="Cátedra:"/>
+                            <p:inputText value="#{catedraBean.catedra.nombre}"
+                                         label="Catedra"
+                                         disabled="#{catedraBean.getbCamposEditables()}"/>
+
+                            <h:outputText value="Carrera:"/>
+
+                            <p:selectOneMenu id="somCarrera"
+                                             converter="ConversorGenerico"
+
+                                             value="#{catedraBean.catedra.carrera}"
+                                             disabled="#{catedraBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems  
+
+                                    value="#{listaCarreraBean.lstSICarreraActiva}"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="Período:"/>
+                            <p:selectOneMenu id="somCuatrimestre"
+                                             converter="ConversorGenerico"
+
+                                             value="#{catedraBean.catedra.cuatrimetre}"
+                                             disabled="#{catedraBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItem itemLabel="Anual" itemValue="Anual"/>
+                                <f:selectItem itemLabel="Primer Cuatrimestre" itemValue="Primer Cuatrimestre"/>
+                                <f:selectItem itemLabel="Segundo cuatrimestre" itemValue="Segundo Cuatrimestre"/>
+
+                            </p:selectOneMenu>
+                            <h:outputText value="Curso:"/>
+                            <p:selectOneMenu id="somCurso"
+                                             converter="ConversorGenerico"
+
+                                             value="#{catedraBean.catedra.curso}"
+                                             disabled="#{catedraBean.getbCamposEditables()}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItem itemLabel="Primero" itemValue="Primero"/>
+                                <f:selectItem itemLabel="Segundo" itemValue="Segundo"/>
+                                <f:selectItem itemLabel="Tercero" itemValue="Tercero"/>
+                                <f:selectItem itemLabel="Cuarto" itemValue="Cuarto"/>
+                                <f:selectItem itemLabel="Quinto" itemValue="Quinto"/>
+
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Requisitos Mínimos: "/>
+                            <p:inputTextarea value="#{catedraBean.catedra.contenidos_minimos}"
+                                             label="Titulo" rows="3" cols="25"/>
+                            
+
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+                  
+                        <h:panelGrid columns="8" id="grid">  
+
+
+                            <h:outputLabel value="Número: "  ></h:outputLabel > 
+                            <p:inputText disabled="true"   size="1" value="#{listaHorarioBean.hora_semanal_carrera.numero}"/>
+
+                            <h:outputLabel value="Dia: " ></h:outputLabel> 
+                            
+                              <p:selectOneMenu id="somDia"
+                                             converter="ConversorGenerico"
+
+                                             value="#{listaHorarioBean.hora_semanal_carrera.dia}"
+                                             >
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItem itemLabel="Lunes" itemValue="Lunes"/>
+                                <f:selectItem itemLabel="Martes" itemValue="Martes"/>
+                                <f:selectItem itemLabel="Miércoles" itemValue="Miercoles"/>
+                                <f:selectItem itemLabel="Jueves" itemValue="Jueves"/>
+                                <f:selectItem itemLabel="Viernes" itemValue="Viernes"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputLabel value="Hora inico: " ></h:outputLabel> 
+                            <p:selectOneMenu id="somHoraInicio"
+                                             converter="ConversorGenerico"
+
+                                             value="#{listaHorarioBean.hora_semanal_carrera.hora_inicio}"
+                                             >
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItem itemLabel="08:00" itemValue="08:00"/>
+                                <f:selectItem itemLabel="09:00" itemValue="09:00"/>
+                                <f:selectItem itemLabel="10:00" itemValue="10:00"/>
+                                <f:selectItem itemLabel="11:00" itemValue="11:00"/>
+                                <f:selectItem itemLabel="12:00" itemValue="12:00"/>
+                                <f:selectItem itemLabel="15:00" itemValue="15:00"/>
+                                <f:selectItem itemLabel="16:00" itemValue="16:00"/>
+                                <f:selectItem itemLabel="17:00" itemValue="17:00"/>
+                                <f:selectItem itemLabel="18:00" itemValue="18:00"/>
+                                <f:selectItem itemLabel="19:00" itemValue="19:00"/>
+                                <f:selectItem itemLabel="20:00" itemValue="20:00"/>
+                                <f:selectItem itemLabel="21:00" itemValue="21:00"/>
+                                <f:selectItem itemLabel="22:00" itemValue="22:00"/>
+                                
+
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Hora fin:: " ></h:outputLabel> 
+                            <p:selectOneMenu id="somHoraFin"
+                                             converter="ConversorGenerico"
+
+                                             value="#{listaHorarioBean.hora_semanal_carrera.hora_fin}"
+                                             >
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItem itemLabel="08:00" itemValue="08:00"/>
+                                <f:selectItem itemLabel="09:00" itemValue="09:00"/>
+                                <f:selectItem itemLabel="10:00" itemValue="10:00"/>
+                                <f:selectItem itemLabel="11:00" itemValue="11:00"/>
+                                <f:selectItem itemLabel="12:00" itemValue="12:00"/>
+                                <f:selectItem itemLabel="15:00" itemValue="15:00"/>
+                                <f:selectItem itemLabel="16:00" itemValue="16:00"/>
+                                <f:selectItem itemLabel="17:00" itemValue="17:00"/>
+                                <f:selectItem itemLabel="18:00" itemValue="18:00"/>
+                                <f:selectItem itemLabel="19:00" itemValue="19:00"/>
+                                <f:selectItem itemLabel="20:00" itemValue="20:00"/>
+                                <f:selectItem itemLabel="21:00" itemValue="21:00"/>
+                                <f:selectItem itemLabel="22:00" itemValue="22:00"/>
+                                
+
+                            </p:selectOneMenu>
+
+                            
+
+                        </h:panelGrid> 
+                   <p:commandButton   update="grid" value="Limpiar" action="#{listaHorarioBean.reinit()}" />  
+
+                            <p:commandButton  update="cronograma" action="#{listaHorarioBean.setHora_semanal_carrera(listaHorarioBean.hora_semanal_carrera)}" value="Añadir"></p:commandButton> 
+
+                    <p:outputPanel id="cronograma">  
+                        <p:dataTable id="cronogramaTable" value="#{listaHorarioBean.lis_hor_sem}" var="cronograma" >  
+
+
+                            <p:column  >  
+                                <f:facet name="header" >  
+                                    <h:outputText value="N°" />   
+                                </f:facet>   
+                                <h:outputText value="#{cronograma.numero}"  />  
+                            </p:column> 
+
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Día" />  
+                                </f:facet>  
+                                <h:outputText value="#{cronograma.dia}" />
+                                
+                                
+                               
+                          
+                                
+                            </p:column>  
+
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="hora_inicio" />  
+                                </f:facet>  
+                                <h:outputText value="#{cronograma.hora_inicio}" />  
+                                
+                                
+                            </p:column> 
+
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Hora_fin" />  
+                                </f:facet>  
+                                <h:outputText value="#{cronograma.hora_fin}" />  
+                            </p:column>  
+
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Operación" />  
+                                </f:facet>  
+                                <p:commandButton  update=":frmMain:cronogramaTable, :frmMain:grid, @this"  action="#{listaHorarioBean.deleteAction(cronograma)}"
+                                                  value="Borrar"></p:commandButton>
+                                <br/>
+                            </p:column>  
+                        </p:dataTable>  
+                    </p:outputPanel> 
+             <p:outputLabel  value="Soporte digital del proyecto:  " style="font-style: normal"/>
+                        <h:form id="formFile" enctype="multipart/form-data" >
+
+                            <p:fileUpload   mode="advanced" update="messages" allowTypes="/(\.|\/)(pdf)$/" fileUploadListener="#{fileUploadController.upload}"
+                                            sizeLimit="1000000"  label="Seleccionar" uploadLabel="Cargar" cancelLabel="Cancelar" />
+                            <p:growl id="messages" showDetail="true" />
+
+                            <div style="clear: both;"/>
+
+                        </h:form> 
+
+
+               
+                <div style="clear: both;"/>
+
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{catedraBean.actionBtn}" 
+                                 update=":frmMain:dtCatedra, 
+                                 :frmMain:pCatedra, @this"
+                                 binding="#{catedraBean.cbAction}">
+                    <p:confirm header="Confirmación" message="Â¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="dlgCatedra.hide()"
+                                 update=":frmMain:pCatedra, 
+                                 :frmMain:dtCatedra"
+                                 process="@this"/>
+
+            </div   >
+
+        </p:dialog>
+
+
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+
+
+            <p:commandButton id="cbNuevo"
+                             value="Nueva Cátedra" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgCatedra.show();"
+                             actionListener="#{catedraBean.setBtnSelect}"
+                             update=":frmMain:dCatedra"
+                             process="@this"/><br/><br/>
+        </div>
+
+
+        <p:dataTable id="dtCatedra"
+                     value="#{listaCatedraBean.lstCatedra}"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     var="item">
+            <p:column  width="152"  headerText="Operaciones">
+                <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil"
+                                 update=":frmMain:dCatedra"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                 disabled="#{not item.active }" >
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/> 
+                   
+                    
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-unlocked" 
+                                 update=":frmMain:dCatedra, @this"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                 disabled="#{item.active }" 
+                                 >
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-close" 
+                                 update=":frmMain:dCatedra, @this"
+                                 oncomplete="dlgCatedra.show();"
+                                 actionListener="#{catedraBean.setBtnSelect}"
+                                 disabled="#{not item.active }"
+                                 >
+
+                    <f:setPropertyActionListener value="#{item}" target="#{catedraBean.catedra}"/> 
+                </p:commandButton>
+
+            </p:column>
+
+
+            <p:column filterBy="#{item.nombre}" sortBy="#{item.nombre}" >
+                <f:facet name="header">
+                    <h:outputText value="Cátedra"/>
+                </f:facet>  
+                <h:outputText value="#{item.nombre}"/>
+            </p:column>
+
+
+            <p:column filterBy="#{item.carrera}" sortBy="#{item.carrera}" >
+                <f:facet name="header">
+                    <h:outputText value="Carrera"/>
+                </f:facet>  
+                <h:outputText value="#{item.carrera.carrera}"/>
+            </p:column>
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

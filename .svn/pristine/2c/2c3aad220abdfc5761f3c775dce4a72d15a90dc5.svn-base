@@ -1,0 +1,395 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+    <ui:define name="content" >
+
+
+        <!-- DIALOGO PROYECTO PASO 1 !-->
+        <p:dialog id="dProyecto" 
+                  widgetVar="dlgProyecto" 
+                  modal="true"
+
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestion de Proyecto"/>
+            </f:facet>
+
+
+
+            <p:panel id="pProyecto" style="float:left;" >
+                <p:focus context="dProyecto"/> 
+
+
+                <h:inputHidden value="#{proyectoBean.proyecto.id}"/>
+
+
+
+
+
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+               
+                    <p:tab  closable="true" title="Alta de Proyecto  PASO 1" >
+                        <h:panelGrid  columns="2" cellpadding="5" >
+
+
+                            <h:outputText value="Carrera:  "/>
+                            <p:selectOneMenu id="somCarrera"
+
+                                             converter="ConversorGenerico"
+                                             value="#{proyectoBean.proyecto.carrera}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaCarreraBean.lstSICarrera}"/>
+
+                            </p:selectOneMenu>
+
+
+                            <h:outputText value="Fecha de Presentacion: "/>
+                            <p:inputText value="#{proyectoBean.proyecto.fecha_ingreso}"
+                                         disabled="true"  
+
+                                         />
+
+                            <h:outputText value="Titulo: "/>
+                            <p:inputText value="#{proyectoBean.proyecto.titulo}"
+                                         label="Titulo"/>
+
+
+
+                            <h:outputText value="Director:  "/>
+                            <p:selectOneMenu id="somDirector"
+                                             converter="ConversorGenerico"
+                                             value="#{proyectoBean.proy_direc.docente}">
+                                <f:selectItem itemLabel="Seleccionar.." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{listaDocenteBean.lstSIDocente}"/>
+
+                            </p:selectOneMenu>
+
+
+
+                            <h:outputText value="Palabras claves "/>
+                            <p:inputText value="#/{proyectoBean.proyecto.estado}"
+                                         label="Palabras Claves"/>
+
+                        </h:panelGrid>    
+                    </p:tab>
+
+
+                    <div style="clear: both;"/>
+
+
+                    <p:tab title="Alumno"  >
+
+                        <h:panelGrid columns="3" cellpadding="0">
+
+                            <p:selectCheckboxMenu id="menu"  label="Seleccionar Alumno/s" 
+                                                  converter="ConversorGenerico"
+                                                  value="#{proyectoBean.selectedAlu}"
+                                                  scrollHeight="150"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItems   value="#{listaAlumnoBean.lstSIProyectoAlumno}" />
+                            </p:selectCheckboxMenu>
+
+
+                            <p:commandLink  styleClass="fa fa-plus-square"  update="display" />
+
+
+
+                            <p:outputPanel id="display" style="width:350px;padding-left:100px;margin-top:10px" >
+
+                                <p:dataList value="#{proyectoBean.selectedAlu}"
+                                            var="alu" 
+                                            emptyMessage="No hay alumnos seleccionados">
+                                    <h:outputText value="#{alu.apellido},#{alu.nombre}"/>
+                                </p:dataList>
+
+
+                            </p:outputPanel>
+                        </h:panelGrid>
+                    </p:tab>
+
+
+
+                    <p:tab title="Codirector"  >
+
+                        <h:panelGrid columns="3" cellpadding="0">
+
+                            <p:selectCheckboxMenu id="scbmProf"  label="Seleccionar Co-director/es" 
+                                                  converter="ConversorGenerico"
+                                                  value="#{proyectoBean.selectedCodir}"
+                                                  scrollHeight="150"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItems   value="#{listaProfesionalBean.lstSIProfesional}" />
+                            </p:selectCheckboxMenu>
+                            <p:commandLink  styleClass="fa fa-plus-square"  update="display2" />
+
+
+
+                            <p:outputPanel id="display2" style="width:350px;padding-left:50px;margin-top:10px">
+
+                                <p:dataList value="#{proyectoBean.selectedCodir}"
+                                            var="cod" 
+                                            emptyMessage="No hay codirectores seleccionados">
+                                    <h:outputText value="#{cod.apellido},#{cod.nombre}"/>
+                                </p:dataList>
+
+
+
+                            </p:outputPanel>
+                        </h:panelGrid>
+                    </p:tab>
+
+
+
+                    <p:tab title="Asesor"  >
+                        <h:panelGrid columns="3" cellpadding="0">
+
+                            <p:selectCheckboxMenu id="scbmAsesor"  label="Seleccionar Asesor/es" 
+                                                  converter="ConversorGenerico"
+                                                  value="#{proyectoBean.selectedAses}"
+                                                  scrollHeight="150"
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px without-selectall">
+                                <f:selectItems   value="#{listaProfesionalBean.lstSIProfesional}" />
+                            </p:selectCheckboxMenu>
+                            <p:commandLink   styleClass="fa fa-plus-square" update="display3" />
+
+                            <p:outputPanel id="display3" style="width:350px;padding-left:100px;margin-top:10px">
+
+
+                                <p:dataList value="#{proyectoBean.selectedAses}"
+                                            var="ases" 
+                                            emptyMessage="No hay asesores seleccionados">
+                                    <h:outputText value="#{ases.apellido},#{ases.nombre}"/>
+                                </p:dataList>
+
+                                <!--
+                                <p:dataTable id="dtSelectedAse"
+                                             value="#/{listaProfesionalBean.selectedAsesor}"
+                                             var="ases"
+                                             emptyMessage="No hay profesionales seleccionados">
+                                    <p:column headerText="Asesores Seleccionados">
+                                        <h:outputText value="#/{ases.apellido},#/{ases.nombre}"/>
+                                    </p:column>  
+                                </p:dataTable> -->
+                            </p:outputPanel>
+                        </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Requisitos de presentacion"  >
+
+                        <p:outputLabel value="Requisistos de presentacion de Aceptacion:"/>
+                        <h:panelGrid columns="2" cellpadding="0" >
+
+                            <h:outputText value="Nota de director: " />
+                            <p:selectBooleanCheckbox value="#{proyectoBean.notadeDirector}" />
+
+                            <h:outputText value="Certificado: " />
+                            <p:selectBooleanCheckbox value="#{proyectoBean.certificado}" />
+                            <h:outputText value="Nota de aceptacion: " />
+                            <p:selectBooleanCheckbox value="#{proyectoBean.notadeAceptacion}"/>
+
+
+                            <h:form enctype="multipart/form-data">
+                               
+                                    <h:outputLabel value="Cargar archivo" for="fileUpload" />
+                                    <h:inputFile value="#{fileUploadFormBean.fileUpload}" id="fileUpload" />
+
+                                    <p:commandButton id="cargar"
+                                                     value=" cargar archivo " 
+                                                     icon="ui-icon-circle-plus"
+                                                     actionListener="#{proyectoBean.imprimir()}"
+                                                     ajax="false" 
+                                                     />
+                                
+                            </h:form> 
+
+                        </h:panelGrid>
+
+                    </p:tab>
+
+
+                    <div style="clear: both;"/>
+
+               
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+
+            <div  style="float: left; margin: 1px;
+                  width: 100%;
+                  text-align: center;">
+
+
+
+                <p:commandButton id="btnPdf"
+                                 value=" Ver PDF " 
+                                 icon="ui-icon-circle-plus"
+                                 actionListener="#{proyectoBean.imprimir()}"
+                                 ajax="false" 
+                                 />
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+                <p:commandButton id="btnCancelar"
+                                 value=" Cancelar " 
+                                 icon="ui-icon-circle-plus"
+                                 oncomplete="dlgProyecto.hide()"
+                                 process="@this"
+                                 />
+
+                <p:commandButton id="btnAction"
+                                 value="Guardar " 
+                                 icon="ui-icon-circle-plus"
+                                 actionListener="#{proyectoBean.actionBtn}" 
+                                 update=":frmMain:dtProyecto, 
+                                 :frmMain:pProyecto, message, @this"
+                                   binding="#{proyectoBean.cbAction}"
+                                  
+                           >
+                             <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                             </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                 ajax="false"  />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+
+
+            </div>
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbNuevo"
+                             value="Nuevo Proyecto" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="dlgProyecto.show();"
+                             actionListener="#{proyectoBean.setBtnSelect}"
+                             update=":frmMain:dProyecto"
+                             process="@this"/><br/><br/>
+
+        </div>
+
+        <p:dataTable id="dtProyecto"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaProyectoBean.lstProyecto}"
+                     var="proy"
+                     >
+
+
+
+            <p:column>
+
+                <p:commandButton id="cbEditar"
+                                 title="Editar"
+                                 icon="ui-icon-pencil" 
+                                 update=":frmMain:dProyecto"
+                                 oncomplete="dlgProyecto.show();"
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+
+                                 >
+                    <f:setPropertyActionListener value="#/{prof}" target="#/{profesionalBean.profesional}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="cbHabilitado"
+                                 title="Activar"
+                                 icon="ui-icon-circle-triangle-n" 
+                                 update=":frmMain:dProyecto, @this"
+                                 oncomplete="dlgProyecto.show();"
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+                                 >
+                    <f:setPropertyActionListener value="#/{prof}" target="#/{profesionalBean.profesional}"/>  
+
+
+                </p:commandButton>
+
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Desactivar"
+                                 icon="ui-icon-circle-triangle-s"
+                                 update=":frmMain:dProyecto, @this"
+                                 oncomplete="dlgProyecto.show();"
+                                 actionListener="#/{profesionalBean.setBtnSelect}"
+                                 >
+
+                    <f:setPropertyActionListener value="#7{prof}" target="#/{profesionalBean.profesional}"/> 
+                </p:commandButton>
+
+                <p:commandButton id="btnPdf"
+                                 value=" Ver PDF " 
+                                 icon="ui-icon-circle-plus"
+                                 actionListener="#{proyectoBean.imprimir()}"
+                                 ajax="false" 
+                                 >
+                    <f:setPropertyActionListener value="#{proy}" target="#{proyectoBean.proyecto}"/> 
+                </p:commandButton>
+            </p:column>
+
+
+            <p:column filterBy="#{proy.titulo}" sortBy="#{proy.titulo}" >
+                <f:facet name="header">
+                    <h:outputText value="Titulo"/>
+                </f:facet>               
+                <h:outputText value="#{proy.titulo}"/>
+
+            </p:column>
+
+            <p:column filterBy="#{proy.fecha_ingreso}" sortBy="#{proy.fecha_ingreso}">
+                <f:facet name="header">
+                    <h:outputText value="Fecha de Ingreso" />
+                </f:facet>               
+                <h:outputText value="#{proy.fecha_ingreso}">
+                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                </h:outputText>
+
+            </p:column>
+
+            <p:column filterBy="#{proy.estado.estado}" sortBy="#{proy.estado.estado}">
+                <f:facet name="header">
+                    <h:outputText value="Estado"/>
+                </f:facet>               
+                <h:outputText value="#{proy.estado.estado}"/>
+
+            </p:column>
+
+
+
+        </p:dataTable>
+
+
+
+
+    </ui:define>
+
+</ui:composition>

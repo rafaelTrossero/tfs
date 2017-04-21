@@ -1,0 +1,132 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package RN;
+
+import DAO.ProyectoCodirectorFacadeLocal;
+import entidad.Docente;
+import entidad.Profesional;
+import entidad.ProyectoCodirector;
+import java.util.Iterator;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+/**
+ *
+ * @author cristian
+ */
+@Stateless
+public class ProyectoCodirectorRN implements ProyectoCodirectorRNLocal {
+
+    private Profesional proyAsesorActivo;
+    private Profesional proyCodirecActivo;
+     private Profesional proyAsesorActivo1;
+    private Profesional proyCodirecActivo1;
+
+
+    public Profesional getProyAsesorActivo() {
+        return proyAsesorActivo;
+    }
+
+    public void setProyAsesorActivo(Profesional proyAsesorActivo) {
+        this.proyAsesorActivo = proyAsesorActivo;
+    }
+
+    public Profesional getProyCodirecActivo() {
+        return proyCodirecActivo;
+    }
+
+    public void setProyCodirecActivo(Profesional proyCodirecActivo) {
+        this.proyCodirecActivo = proyCodirecActivo;
+    }
+
+    public Profesional getProyAsesorActivo1() {
+        return proyAsesorActivo1;
+    }
+
+    public void setProyAsesorActivo1(Profesional proyAsesorActivo1) {
+        this.proyAsesorActivo1 = proyAsesorActivo1;
+    }
+
+    public Profesional getProyCodirecActivo1() {
+        return proyCodirecActivo1;
+    }
+
+    public void setProyCodirecActivo1(Profesional proyCodirecActivo1) {
+        this.proyCodirecActivo1 = proyCodirecActivo1;
+    }
+
+    @EJB
+    private ProyectoCodirectorFacadeLocal proy_codirectorFacadeLocal;
+
+    @Override
+    public void create(ProyectoCodirector a) throws Exception {
+        this.proy_codirectorFacadeLocal.create(a);
+    }
+
+    @Override
+    public void remove(ProyectoCodirector a) throws Exception {
+        this.proy_codirectorFacadeLocal.remove(a);
+    }
+
+    @Override
+    public void edit(ProyectoCodirector a) throws Exception {
+        this.proy_codirectorFacadeLocal.edit(a);
+    }
+
+    @Override
+    public List<ProyectoCodirector> findAll() throws Exception {
+        return (this.proy_codirectorFacadeLocal.findAll());
+    }
+
+    @Override
+    public void validar(Docente proDirec, List<Profesional> proyAsesor, List<Profesional> proyCodirector) throws Exception {
+        if (proDirec != null) {
+            Iterator<Profesional> as = proyAsesor.iterator();
+            while (as.hasNext()) {
+                proyAsesorActivo = as.next();
+                System.out.println("uuuuuuuuuuuuuuuuASESORuuuuuuuuuuuuuuuu" + proyAsesorActivo);
+                if (proDirec.getId().equals(proyAsesorActivo.getId())) {
+
+                    throw new Exception("El profesional" + proyAsesorActivo.getApellido() + "," + proyAsesorActivo.getNombre() + " ya ha sido seleccionado como director del proyecto");
+                }
+
+            }
+            Iterator<Profesional> codirec = proyCodirector.iterator();
+            while (codirec.hasNext()) {
+                proyCodirecActivo = codirec.next();
+                System.out.println("uuuuuuuuuuuuuuuuCODIRECTORuuuuuuuuuuuuuuuu" + proyCodirecActivo);
+                if (proDirec.getId().equals(proyCodirecActivo.getId())) {
+
+                    throw new Exception("El profesional" + proyCodirecActivo.getApellido() + "," + proyCodirecActivo.getNombre() + " ya ha sido seleccionado como director del proyecto");
+                }
+                
+                
+
+            }
+            Iterator<Profesional> codirector = proyCodirector.iterator();
+            Iterator<Profesional> asesor = proyAsesor.iterator();
+            while (asesor.hasNext()) {
+
+                proyAsesorActivo1 = asesor.next();
+                while (codirector.hasNext()) {
+                    proyCodirecActivo1 = codirector.next();
+                    System.out.println("los docentes son" + proyCodirecActivo1 + "," + proyAsesorActivo1);
+
+                    if (proyCodirecActivo1.getId().equals(proyAsesorActivo1.getId())) {
+
+                        throw new Exception("El profesional" + proyAsesorActivo1.getApellido() + "," + proyAsesorActivo1.getNombre() + " ya ha sido seleccionado como asesor del proyecto");
+                    }
+                    
+                }
+            }
+
+        } else {
+            throw new Exception("debe ingresar el director del proyecto");
+        }
+    }
+
+}

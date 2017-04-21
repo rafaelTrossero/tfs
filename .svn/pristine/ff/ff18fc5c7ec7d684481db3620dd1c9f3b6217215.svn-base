@@ -1,0 +1,115 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entidad;
+
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+/**
+ *
+ * @author cris
+ */
+@Entity
+@NamedQueries({
+           
+           @NamedQuery(name="Horario_semanal_catedra.BuscarHorarios", query = "SELECT u FROM Horario_semanal_catedra u WHERE u.horario_catedra =:hora_catedra")
+
+})
+public class Horario_semanal_catedra implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private int numero;
+    private String dia;
+    private String hora_inicio;
+    private String hora_fin;
+    @ManyToOne
+    @JoinColumn(name = "id_horario", referencedColumnName = "id", nullable = true)
+    private Horario_catedra horario_catedra;
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getHora_inicio() {
+        return hora_inicio;
+    }
+
+    public void setHora_inicio(String hora_inicio) {
+        this.hora_inicio = hora_inicio;
+    }
+
+    public String getHora_fin() {
+        return hora_fin;
+    }
+
+    public void setHora_fin(String hora_fin) {
+        this.hora_fin = hora_fin;
+    }
+
+    public Horario_catedra getHorario_catedra() {
+        return horario_catedra;
+    }
+
+    public void setHorario_catedra(Horario_catedra horario_catedra) {
+        this.horario_catedra = horario_catedra;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Horario_semanal_catedra)) {
+            return false;
+        }
+        Horario_semanal_catedra other = (Horario_semanal_catedra) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidad.Horario_semanal_catedra[ id=" + id + " ]";
+    }
+
+}

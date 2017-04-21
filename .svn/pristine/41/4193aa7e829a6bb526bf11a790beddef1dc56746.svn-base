@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package DAO;
+
+import entidad.EvaluacionProyecto;
+import entidad.Presentacion;
+import entidad.Proyecto;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author cristian
+ */
+@Local
+public interface EvaluacionProyectoFacadeLocal {
+
+    void create(EvaluacionProyecto evaluacion_Proyecto);
+
+    void edit(EvaluacionProyecto evaluacion_Proyecto);
+
+    void remove(EvaluacionProyecto evaluacion_Proyecto);
+
+    EvaluacionProyecto find(Object id);
+
+    List<EvaluacionProyecto> findAll();
+
+    List<EvaluacionProyecto> findRange(int[] range);
+
+    int count();
+    public EvaluacionProyecto findByEvaluacion(Proyecto pro, Presentacion pres) throws Exception;
+    
+    public List<EvaluacionProyecto> findByEvaluacionByProyecto(Proyecto pro) throws Exception;
+    
+}

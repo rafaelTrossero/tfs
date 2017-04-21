@@ -1,0 +1,169 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.CronogramaActividadRNLocal;
+import RN.CronogramaRNLocal;
+import entidad.Cronograma;
+import entidad.CronogramaActividad;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author Cristian PC
+ */
+@ManagedBean
+@SessionScoped
+public class ListaCronogramaBean {
+
+    @EJB
+    private CronogramaRNLocal cronogramaRNbeanLocal;
+    @EJB
+    private CronogramaActividadRNLocal cronogramaActividadRNbeanLocal;
+    private List<CronogramaActividad> lstCronogramaActividad;
+    private List<SelectItem> lstSICronogramaActividad;
+    private Cronograma cronograma;
+    private CronogramaActividad cronogramaActividadObj = new CronogramaActividad();
+    private List<CronogramaActividad> listaCronActiv;
+    int i = 1;
+    
+
+    /**
+     * Creates a new instance of ListaCronogramaBean
+     */
+    public ListaCronogramaBean() {
+        System.out.println("Constructor ListaCronogramaBean");
+         cronogramaActividadObj.setNumero(i);
+        lstCronogramaActividad = new ArrayList<CronogramaActividad>();
+        cronograma = new Cronograma();
+        
+        listaCronActiv = new ArrayList<CronogramaActividad>();
+        System.out.println("cuando entra"+i);
+    }
+
+    @PostConstruct
+    void init() {
+        System.out.println("PostConstructor ListaDepartamentoBean");
+
+       // this.cargar_SI_departamentos();
+        // this.cargar_departamentos_activos();
+        // this.cargar_SI_departamentos_activos();
+        // System.out.println("Departamentos: " + this.getLstDepartamento());
+        
+       
+    }
+
+    public List<CronogramaActividad> getLstCronogramaActividad() {
+        return lstCronogramaActividad;
+    }
+
+    public CronogramaActividad getCronogramaActividadObj() {
+        return cronogramaActividadObj;
+    }
+
+    public void setCronogramaActividadObj(CronogramaActividad cronogramaActividadObj) {
+        
+        listaCronActiv.add(cronogramaActividadObj);
+        
+        System.out.println("asdassssssssssss" +cronogramaActividadObj);
+        System.out.println("priiiiimeerooooooooooooooooo" +i);
+    }
+
+    public void setLstCronogramaActividad(List<CronogramaActividad> lstCronogramaActividad) {
+        this.lstCronogramaActividad = lstCronogramaActividad;
+    }
+
+    public List<SelectItem> getLstSICronogramaActividad() {
+        return lstSICronogramaActividad;
+    }
+
+    public void setLstSICronogramaActividad(List<SelectItem> lstSICronogramaActividad) {
+        this.lstSICronogramaActividad = lstSICronogramaActividad;
+    }
+
+    public Cronograma getCronograma() {
+        return cronograma;
+    }
+
+    public void setCronograma(Cronograma cronograma) {
+        this.cronograma = cronograma;
+    }
+
+    public List<CronogramaActividad> getListaCronActiv() {
+        return listaCronActiv;
+    }
+
+    public void setListaCronActiv(List<CronogramaActividad> listaCronActiv) {
+        this.listaCronActiv = listaCronActiv;
+    }
+
+    public void cargar_Cronograma(Proyecto pro) {
+        try {
+            this.setCronograma(this.cronogramaRNbeanLocal.findByCronograma(pro));
+            System.out.println("el croograma resultantes es " + cronograma);
+            this.setLstCronogramaActividad(this.cronogramaActividadRNbeanLocal.findByCronogramaActividad(cronograma));
+            System.out.println("las actividades de cronograma  resultantes es " + lstCronogramaActividad);
+            cargar_SI_departamentos();
+        } catch (Exception ex) {
+            System.out.println("Error al cargar cronograma " + ex.toString());
+        }
+    }
+
+    public void cargar_SI_departamentos() {
+        this.setLstSICronogramaActividad(new ArrayList<SelectItem>());
+
+        for (CronogramaActividad e : this.getLstCronogramaActividad()) {
+            SelectItem si = new SelectItem(e, e.getDescripcion_act());
+            this.getLstSICronogramaActividad().add(si);
+        }
+        System.out.println("el selectitem de cronograma tiene " + lstSICronogramaActividad);
+    }//fin for
+
+    public void agregar_objetivos() {
+        listaCronActiv.add(new CronogramaActividad());
+        System.out.println("hizo el add pero no paso nada parece");
+        
+        System.out.println("si lo hace da esto" + listaCronActiv);
+        
+    }
+
+    public void quitar_objetivos() {
+        listaCronActiv.remove(listaCronActiv.size());
+
+        System.out.println("hizo el add pero no paso nada parece");
+
+        System.out.println("si lo hace da esto" + listaCronActiv);
+    }
+
+    public void limpiar() {
+        lstCronogramaActividad = new ArrayList<CronogramaActividad>();
+    }
+
+    public void deleteAction(CronogramaActividad actividad) {
+        
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<"+listaCronActiv.get(actividad.getNumero()-1));
+        listaCronActiv.remove(actividad);
+        System.out.println("tamañoooooooooo" +listaCronActiv.size());
+    }
+
+    public String reinit() {
+        
+        System.out.println("antes de sumar" +i);
+        i=i+1;
+        cronogramaActividadObj = new CronogramaActividad();
+        cronogramaActividadObj.setNumero(i);
+         System.out.println("despues de sumar" +i);
+        return null;
+    }
+
+}

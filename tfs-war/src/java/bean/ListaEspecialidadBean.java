@@ -1,0 +1,132 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package bean;
+
+import RN.EspecialidadRNLocal;
+import entidad.Especialidad;
+import entidad.Pais;
+import entidad.Profesion;
+import entidad.Provincia;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
+/**
+ *
+ * @author Trossero
+ */
+@ManagedBean
+@SessionScoped
+public class ListaEspecialidadBean {
+
+    @EJB
+    private EspecialidadRNLocal especialidadRNbeanLocal;
+    private List<Especialidad> lstEspecialidad;
+    private List<SelectItem> lstSIEspecialidad;
+     private int iActionBtnSelect;
+    
+    public ListaEspecialidadBean() {
+    
+    System.out.println("Constructor ListaProfesionBean");
+        lstEspecialidad = new ArrayList<Especialidad>();
+    }
+    
+     @PostConstruct
+    void init() {
+        System.out.println("PostConstructor ListaProfesionBean");
+        cargar_especialidades();
+        cargar_SI_especialidades();
+        System.out.println("Profesiones: " + this.getLstEspecialidad());
+    }
+
+    public List<Especialidad> getLstEspecialidad() {
+        return lstEspecialidad;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
+    public void setLstEspecialidad(List<Especialidad> lstEspecialidad) {
+        this.lstEspecialidad = lstEspecialidad;
+    }
+
+    public List<SelectItem> getLstSIEspecialidad() {
+        return lstSIEspecialidad;
+    }
+
+    public void setLstSIEspecialidad(List<SelectItem> lstSIEspecialidad) {
+        this.lstSIEspecialidad = lstSIEspecialidad;
+    }
+    
+    public void cargar_especialidades() {
+        try {
+            this.setLstEspecialidad(this.especialidadRNbeanLocal.findAll());
+            
+            
+        } catch (Exception ex) {
+            System.out.println("Error al cargar Profesiones " + ex.toString());
+        }
+    }
+
+    public void cargar_SI_especialidades() {
+        this.setLstSIEspecialidad(new ArrayList<SelectItem>());
+        
+        
+
+        for (Especialidad p : this.getLstEspecialidad()) {
+            SelectItem si = new SelectItem(p, p.getEspecialidad());
+            this.getLstSIEspecialidad().add(si);
+        }
+    }//fin for
+
+     public void recuperarEspecialidades(ValueChangeEvent event) {
+
+        try {
+
+            if (event.getNewValue() != null) {
+                if (!"0".equals(event.getNewValue().toString())) {
+                    Profesion profesion = (Profesion) event.getNewValue();
+
+                    System.out.println("profesion; " + profesion);
+                    this.setLstEspecialidad(this.especialidadRNbeanLocal.findByProfesion(profesion.getId()));
+                   
+                   this.cargar_SI_especialidades();
+                  
+                } else {
+                    this.setLstEspecialidad(new ArrayList<Especialidad>());
+                   
+                   
+                    this.setLstSIEspecialidad(new ArrayList<SelectItem>());
+                }
+
+            }//fin if
+        } catch (Exception ex) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error al cargar las especialidades: " + ex,
+                    null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+
+        //this.cargarProvincias();
+    }//fin recuperarProvincias
+    public void limpiar() {
+        lstEspecialidad = new ArrayList<Especialidad>();
+    }
+}

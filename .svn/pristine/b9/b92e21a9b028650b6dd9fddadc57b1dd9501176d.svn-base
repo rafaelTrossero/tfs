@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entidad;
+
+
+
+/**
+ *
+ * @author RafaTrossero
+ */
+public enum rutasArchivos {
+    
+   
+    AltaDeProyecto("C:\\FilesTFS\\altaDeProyecto\\"),
+    NuevaPresentacionProyecto("C:\\FilesTFS\\nuevaPresentacionProyecto\\"),
+    NuevaPresentacionBorrador("C:\\FilesTFS\\nuevaPresentacionBorrador\\"),
+    ResolucionTribunalEvaluador("C:\\FilesTFS\\resolucionTribunalEvaluador\\"),
+    Catedras("C:\\FilesTFS\\catedras\\");
+  
+private String name;
+
+    private rutasArchivos (String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}

@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import entidad.Catedra;
+import entidad.Docente;
+import entidad.DocenteCatedra;
+import java.util.List;
+import javax.ejb.Local;
+
+/**
+ *
+ * @author RafaTrossero
+ */
+@Local
+public interface DocenteCatedraFacadeLocal {
+
+   
+    void create(DocenteCatedra docente_Comision);
+
+    void edit(DocenteCatedra docente_Comision);
+
+    void remove(DocenteCatedra docente_Comision);
+
+    DocenteCatedra find(Object id);
+
+    List<DocenteCatedra> findAll();
+
+    List<DocenteCatedra> findRange(int[] range);
+
+    int count();
+    
+    public DocenteCatedra findByDocente(DocenteCatedra doc) throws Exception;
+    
+     public List<Docente> findDocentesbyCatedra (long idCatedra) throws Exception;
+  
+    public Catedra findByIdDocente (long idDoc) throws Exception;
+    
+}

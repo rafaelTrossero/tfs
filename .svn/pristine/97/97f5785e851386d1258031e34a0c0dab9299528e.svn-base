@@ -1,0 +1,416 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.ProyectoAsesorRNLocal;
+import RN.ProyectoDirectorRNLocal;
+import RN.ProyectoRNbeanLocal;
+import entidad.Operacion;
+import entidad.ProyectoAsesor;
+import entidad.ProyectoDirector;
+import entidad.Proyecto;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
+/**
+ *
+ * @author Trossero
+ */
+@ManagedBean
+@RequestScoped
+public class OperacionBean {
+
+    @ManagedProperty("#{listaProyectoBean}")
+    private ListaProyectoBean listaProyectoBean;
+    @ManagedProperty("#{listaOperacionBean}")
+    private ListaOperacionBean listaOperacionBean;
+    private List<ProyectoDirector> lstProyDirector;
+    private ProyectoDirector proy_director;
+    private List<ProyectoAsesor> lstProyAsesor;
+    private ProyectoAsesor proy_asesor;
+    private List<SelectItem> lstSIasesor;
+    private ProyectoAsesor proy_ases;
+    private List<ProyectoAsesor> selectedAses;
+
+    @EJB
+    private ProyectoDirectorRNLocal proy_directorRNbeanLocal;
+    @EJB
+    private ProyectoAsesorRNLocal proy_asesorRNbeanLocal;
+    @EJB
+    private ProyectoRNbeanLocal proyectoRNbeanLocal;
+
+    private ProyectoDirector proy_direc;
+    private Proyecto proyecto;
+    
+    private String NuevoTitulo;
+
+    public OperacionBean() {
+        proyecto = new Proyecto();
+        this.proy_direc = new ProyectoDirector();
+        this.proy_director = new ProyectoDirector();
+        this.proy_asesor = new ProyectoAsesor();
+
+    }
+
+    public List<ProyectoAsesor> getSelectedAses() {
+        return selectedAses;
+    }
+
+    public void setSelectedAses(List<ProyectoAsesor> selectedAses) {
+        this.selectedAses = selectedAses;
+    }
+
+    public List<ProyectoAsesor> getLstProyAsesor() {
+        return lstProyAsesor;
+    }
+
+    public void setLstProyAsesor(List<ProyectoAsesor> lstProyAsesor) {
+        this.lstProyAsesor = lstProyAsesor;
+    }
+
+    public ProyectoAsesor getProy_asesor() {
+        return proy_asesor;
+    }
+
+    public void setProy_asesor(ProyectoAsesor proy_asesor) {
+        this.proy_asesor = proy_asesor;
+    }
+
+    public ProyectoAsesor getProy_ases() {
+        return proy_ases;
+    }
+
+    public void setProy_ases(ProyectoAsesor proy_ases) {
+        this.proy_ases = proy_ases;
+    }
+
+    public List<SelectItem> getLstSIasesor() {
+        return lstSIasesor;
+    }
+
+    public void setLstSIasesor(List<SelectItem> lstSIasesor) {
+        this.lstSIasesor = lstSIasesor;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public ProyectoDirector getProy_direc() {
+        return proy_direc;
+    }
+
+    public void setProy_direc(ProyectoDirector proy_direc) {
+        this.proy_direc = proy_direc;
+    }
+
+    public List<ProyectoDirector> getLstProyDirector() {
+        return lstProyDirector;
+    }
+
+    public void setLstProyDirector(List<ProyectoDirector> lstProyDirector) {
+        this.lstProyDirector = lstProyDirector;
+    }
+
+    public ProyectoDirector getProy_director() {
+        return proy_director;
+    }
+
+    public void setProy_director(ProyectoDirector proy_director) {
+        this.proy_director = proy_director;
+    }
+
+    public ListaProyectoBean getListaProyectoBean() {
+        return listaProyectoBean;
+    }
+
+    public void setListaProyectoBean(ListaProyectoBean listaProyectoBean) {
+        this.listaProyectoBean = listaProyectoBean;
+    }
+
+    public ListaOperacionBean getListaOperacionBean() {
+        return listaOperacionBean;
+    }
+
+    public void setListaOperacionBean(ListaOperacionBean listaOperacionBean) {
+        this.listaOperacionBean = listaOperacionBean;
+    }
+
+    public String getNuevoTitulo() {
+        return NuevoTitulo;
+    }
+
+    public void setNuevoTitulo(String NuevoTitulo) {
+        this.NuevoTitulo = NuevoTitulo;
+    }
+    
+    public void crear() throws Exception {
+
+        System.out.println("ahora para el proyecto");
+        this.setLstProyDirector(proy_directorRNbeanLocal.findByProyDirector(proyecto));
+        if (lstProyDirector == null) {
+            System.out.println("h proyecto  no tiene nadallllllllllllllaaaaaaaaaaa" + lstProyDirector + proyecto.getId());
+
+        } else {
+            System.out.println(" si hay un proyecto" + lstProyDirector + proyecto.getId());
+        }
+        this.listaOperacionBean.setLstProyAsesor(proy_asesorRNbeanLocal.findByProyAsesor(proyecto, true));
+        this.listaOperacionBean.cargar_SI_asesor();
+        if (lstProyAsesor == null) {
+            System.out.println("no hay asesores cargados" + lstProyAsesor);
+
+        } else {
+            System.out.println(" si hay asesores" + lstProyAsesor);
+            
+        }
+
+    }
+
+    public void cargar_SI_asesor() {
+        System.out.println("si pasa para cargar los asesores");
+        this.setLstSIasesor(new ArrayList<SelectItem>());
+
+        for (ProyectoAsesor d : this.getLstProyAsesor()) {
+            System.out.println("los archivos son" + this.getLstProyAsesor());
+
+            SelectItem si = new SelectItem(d, d.getProfesional().getApellido());
+
+            this.getLstSIasesor().add(si);
+            System.out.println("el selectitem" + si);
+
+        }
+
+    }
+
+    public void cargarOperacionSelect(SelectEvent event) {
+
+        System.out.println(" entra a cargarOperacionSelect: ");
+        Operacion operacion = ((Operacion) event.getObject());
+        System.out.println(" operacion: " + operacion);
+
+        this.getListaOperacionBean().setSelectedOpe(operacion);
+
+        System.out.println(" operacion222222222: " + this.getListaOperacionBean().getSelectedOpe());
+
+        /* if(selectedOpe.getId().equals(1L)){
+         RequestContext context = RequestContext.getCurrentInstance();
+       
+         context.execute("dlgModProyecto1.show()");}*/
+    }
+
+    public void seleccionar_operacion() throws Exception {
+
+        System.out.println("Posadasdasd" + this.getListaOperacionBean().getSelectedOpe());
+        System.out.println("el proyecto es " + proyecto);
+        if (this.getListaOperacionBean().getSelectedOpe().getId().equals(1L)) {
+
+            RequestContext context = RequestContext.getCurrentInstance();
+
+            context.execute("dlgModTitulo.show()");
+
+        }
+        if (this.getListaOperacionBean().getSelectedOpe().getId().equals(2L)) {
+            System.out.println("Pasapasapsasappsas");
+            RequestContext context = RequestContext.getCurrentInstance();
+
+            context.execute("dlgBajaDir.show()");
+
+        }
+        if (this.getListaOperacionBean().getSelectedOpe().getId().equals(5L)) {
+            System.out.println("aquiaquiaquiaquiaqui");
+            RequestContext context = RequestContext.getCurrentInstance();
+
+            context.execute("dlgBajaDir2.show()");
+
+        }
+        if (this.getListaOperacionBean().getSelectedOpe().getId().equals(7L)) {
+            System.out.println("asesorasesorasesor");
+            RequestContext context = RequestContext.getCurrentInstance();
+
+            context.execute("dlgBajaAsesor.show()");
+
+        }
+        crear();
+
+    }
+
+    public void alta_dir() throws Exception {
+        System.out.println("Entro al alta dir");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            this.proy_direc.setProyecto(proyecto);
+            this.proy_direc.setActive(Boolean.TRUE);
+
+            proy_directorRNbeanLocal.create(proy_direc);
+
+            sMensaje = "Director ha sido dado de alta correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al dar de alta: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+
+    }
+
+    public void baja_dir() throws Exception {
+        System.out.println("Entro al baja dir");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+
+            this.setProy_director(proy_directorRNbeanLocal.findProyDirectorActivo(proyecto, true));
+            System.out.println("aaaaaaaaaaaaabbbbbbbbbbbbbbaccccccccc" + proy_director);
+            this.proy_director.setActive(Boolean.FALSE);
+            proy_directorRNbeanLocal.edit(proy_director);
+
+            sMensaje = "Director ha sido dado de baja correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al dar de baja: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }
+
+    public void baja_as() {
+        System.out.println("::::::::::::::::ENTRO:::::::::::::::::::::::");
+        System.out.println("el asesor seleccionado es: " + proy_ases);
+    }
+
+    public void baja_asesor() throws Exception {
+        System.out.println("Entro al baja asesor");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            System.out.println("el asesor seleccionado es: " + proy_ases);
+
+            sMensaje = "Director ha sido dado de baja correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al dar de baja: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }
+
+    public void edit() {
+        System.out.println("Entro al edit");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            //get la fila seleccionada   
+
+            System.out.println("el proyecto essssss" + this.getProyecto().getTitulo() + NuevoTitulo);
+            proyecto.setActive(Boolean.TRUE);
+            proyecto.setTitulo(NuevoTitulo);
+            proyectoRNbeanLocal.edit(this.getProyecto());
+
+            System.out.println("el TITULO NUEVO essssss" + this.getProyecto().getTitulo());
+
+            sMensaje = "Datos actualizados correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+            //elimino y agrego el organismo modificado a la lista
+            int iPos = this.getListaProyectoBean().getLstProyecto().indexOf(this.getProyecto());
+            this.getListaProyectoBean().getLstProyecto().remove(iPos);
+            this.getListaProyectoBean().getLstProyecto().add(iPos, this.getProyecto());
+
+            //this.getCbAction().setValue("Update");
+            //  this.setbCamposRequeridos(false);
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Actualizacion error: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin edit
+
+    public void activate() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+
+        try {
+
+            System.out.println("el asesor seleccionado es: " + proy_ases);
+
+            sMensaje = "Director ha sido dado de baja correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+            /* alumnoRNbeanLocal.activate(this.getAlumno(), bEstado);
+            
+
+             //elimino el organismo de la lista
+             //int iPos = this.getListaAlumnoBean().getLstAlumno()).indexOf(this.getAlumno());
+             int iPos = this.getListaAlumnoBean().getLstAlumno().indexOf(this.getAlumno());
+
+             this.setAlumno(this.getListaAlumnoBean().getLstAlumno().get(iPos));
+             this.getAlumno().setActive(bEstado);
+            
+             this.getListaAlumnoBean().getLstAlumno().remove(iPos);
+             this.getListaAlumnoBean().getLstAlumno().add(iPos, this.getAlumno());
+
+             if (!bEstado) {
+             sMensaje = "User desactivated succesfully";
+             } else {
+             sMensaje = "User reactivated succesfully ";
+             }
+             severity = FacesMessage.SEVERITY_INFO;
+
+             this.getCbAction().setDisabled(true);
+
+             //limíar campos
+             this.clear();
+             //this.setbCamposRequeridos(false);
+             */
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "An error ocurred during activation: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }
+}

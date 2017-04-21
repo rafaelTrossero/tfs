@@ -1,0 +1,130 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entidad;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+/**
+ *
+ * @author cristian
+ */
+@Entity
+@NamedQueries({
+    //@NamedQuery(name = "Carrera.FindByCarreraName", query = "SELECT u FROM Carrera u WHERE u.id = :id"),
+    @NamedQuery(name = "Depto.findByNombreDepto", query = "SELECT p FROM Depto p WHERE p.departamento = :nombre ORDER BY p.departamento"),
+    @NamedQuery(name = "Depto.findByNombreDeptoID", query = "SELECT p FROM Depto p WHERE p.departamento = :nombre  AND p.id <>:id ORDER BY p.departamento"),
+    @NamedQuery(name = "Depto.ActualizarEstado", query = "UPDATE Depto u SET u.active =:active WHERE u.id =:id "),
+     @NamedQuery(name = "Dpto.SelectAll", query = "SELECT u FROM Depto u WHERE u.active =:active ")
+})
+public class Depto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String departamento;
+    @OneToOne
+    @JoinColumn(name = "director_id", referencedColumnName = "id", nullable = true)
+    private Docente director;
+    //@OneToMany(mappedBy = "departamento")
+    //private List<Carrera> lstCarrera;
+    //@OneToMany(mappedBy = "departamento")
+    //private List<Docente> lstDocente;
+    @Column(name = "active", length = 100, nullable = false)
+    private Boolean active;
+
+   // public List<Docente> getLstDocente() {
+     //   return lstDocente;
+   // }
+
+    //public void setLstDocente(List<Docente> lstDocente) {
+      //  this.lstDocente = lstDocente;
+   // }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Docente getDirector() {
+        return director;
+    }
+
+    public void setDirector(Docente director) {
+        this.director = director;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    //public List<Carrera> getLstCarrera() {
+      //  return lstCarrera;
+   // }
+
+   // public void setLstCarrera(List<Carrera> lstCarrera) {
+     //   this.lstCarrera = lstCarrera;
+    //}
+
+    /* public List<Docente> getLstDocente() {
+     return lstDocente;
+     }
+
+     public void setLstDocente(List<Docente> lstDocente) {
+     this.lstDocente = lstDocente;
+     }*/
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Depto)) {
+            return false;
+        }
+        Depto other = (Depto) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidad.Departamento[ id=" + id + " ]";
+    }
+}

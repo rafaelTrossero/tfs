@@ -1,0 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import RN.ComisionRNLocal;
+import entidad.Carrera;
+import entidad.Comision;
+import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+
+/**
+ *
+ * @author WalterVergara
+ */
+@ManagedBean
+@RequestScoped
+public class ComisionBean {
+
+    @ManagedProperty("#{listaCarreraBean}")
+    private ListaComisionBean listaComisionBean;
+    private Comision comision;
+    
+    @EJB
+    private ComisionRNLocal comisionRNbeanLocal;
+    
+    public ComisionBean() {
+        this.comision = new Comision();
+    }
+
+    public ListaComisionBean getListaComisionBean() {
+        return listaComisionBean;
+    }
+
+    public void setListaComisionBean(ListaComisionBean listaComisionBean) {
+        this.listaComisionBean = listaComisionBean;
+    }
+
+    public Comision getComision() {
+        return comision;
+    }
+
+    public void setComision(Comision comision) {
+        this.comision = comision;
+    }
+    
+     public void create() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            comisionRNbeanLocal.create(comision);
+            sMensaje = "El dato fue guardado";
+            severity = FacesMessage.SEVERITY_INFO;
+
+            //agregar a la lista
+            this.getListaComisionBean().getLstComision().add(comision);
+           
+            //limpiar campos
+            this.limpiar();
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }
+     
+     private void limpiar() {
+        this.comision = new Comision();
+    }
+    
+}
