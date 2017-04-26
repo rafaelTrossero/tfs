@@ -30,7 +30,7 @@ import javax.persistence.OneToMany;
 public class Especialidad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String  especialidad;
@@ -52,6 +52,7 @@ public class Especialidad implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+       
 
     public String getEspecialidad() {
         return especialidad;

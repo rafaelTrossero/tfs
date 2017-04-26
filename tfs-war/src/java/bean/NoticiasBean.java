@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -362,6 +363,7 @@ public class NoticiasBean {
                 pre.close();
                 FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
+                cargarNoticias();
 
             } catch (Exception e) {
                 System.out.println("Exception-File Upload." + e.getMessage());
@@ -377,5 +379,11 @@ public class NoticiasBean {
    public java.sql.Date sqlDate(java.util.Date calendarDate) {
   return new java.sql.Date(calendarDate.getTime());
 }
+   public void cargarNoticias(){
+       this.noticias = new Noticias();
+       this.getListaNoticiasBean().setLstNoticias(new ArrayList<Noticias>());
+       this.getListaNoticiasBean().cargarLstNoticias();
+       
+   }
     }
 

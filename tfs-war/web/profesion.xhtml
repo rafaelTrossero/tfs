@@ -16,23 +16,21 @@
             <f:facet name="header">
                 <h:outputText value="Gestión de Profesiones"/>
             </f:facet>
-            <p:panel id="pDepartamento" style="float:left;">
+            <p:panel id="pProfesion" style="float:left;">
                 <p:focus context="pProfesion"/> 
                 <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
                 <h:inputHidden value="#/{paisBean.pais.borrado}"/>
                 <h:inputHidden value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
 
                 <div style="clear: both;"/>
+                
+                <h:inputHidden value="#{profesionBean.profesion.id}"/>
                 <h:panelGrid columns="2" cellpadding="2" >
                 
-                    <h:outputText value="ID:"/>
-
-                    <p:inputText value="#{profesionBean.profesion.id}}"
-                                 label="ID"/>
                 
-                    <h:outputText value="Profesion:"/>
+                    <h:outputText value="Profesión:"/>
                     <p:inputText value="#{profesionBean.profesion.descripcion}"
-                                 label="Profesion"/>
+                                 label="Profesión"/>
                 
                                    
                 </h:panelGrid>
@@ -60,7 +58,7 @@
 
                 <p:commandButton id="btnSalir"
                                  value="Salir" 
-                                 oncomplete="dlgProfesion.hide()"
+                                 oncomplete="PF('dlgProfesion').hide()"
                                  update=":frmMain:dtProfesion, :frmMain:pProfesion"
                                  process="@this"/>
             </div>
@@ -78,7 +76,7 @@
             <p:commandButton id="cbNuevo"
                              value="Nueva Profesion" 
                              icon="ui-icon-circle-plus" 
-                             oncomplete="lgProfesion.show();"
+                             oncomplete="PF('dlgProfesion').show();"
 
                              process="@this"/><br/><br/>
         </div>

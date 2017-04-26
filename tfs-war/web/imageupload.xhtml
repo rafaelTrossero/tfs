@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     <h:head>
-        <title>Image Upload</title>
+        <title>Carga de Noticias</title>
     </h:head>
     <h:body>
         <h:form enctype="multipart/form-data"> 
@@ -48,7 +48,7 @@
 
                         <p:commandButton value="Submit" ajax="false"  
                                          actionListener="#{noticiasBean.upload}"
-                                         update="tablaNoticias"/>
+                                         update="tablaNoticias, pNoticias"/>
 
 
                     </p:tab>

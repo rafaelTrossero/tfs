@@ -14,9 +14,13 @@ import entidad.CronogramaActividad;
 import entidad.Departamento;
 import entidad.Depto;
 import entidad.Docente;
+import entidad.Especialidad;
+import entidad.Estado;
 import entidad.Localidad;
+import entidad.Noticias;
 import entidad.Operacion;
 import entidad.Pais;
+import entidad.Profesion;
 import entidad.Profesional;
 import entidad.Provincia;
 import entidad.Proyecto;
@@ -37,7 +41,11 @@ import org.primefaces.context.RequestContext;
 @RequestScoped
 public class navegarBean {
 
+    @ManagedProperty("#{listaEstadoBean}")
+    private ListaEstadoBean listaEstadoBean;
     
+    @ManagedProperty("#{listaNoticiasBean}")
+    private ListaNoticiasBean listaNoticiasBean;
     @ManagedProperty("#{listaCronogramaBean}")
     private ListaCronogramaBean listaCronogramaBean;
     @ManagedProperty("#{listaPaisBean}")
@@ -94,6 +102,14 @@ public class navegarBean {
      * Creates a new instance of navegarBean
      */
     public navegarBean() {
+    }
+
+    public ListaNoticiasBean getListaNoticiasBean() {
+        return listaNoticiasBean;
+    }
+
+    public void setListaNoticiasBean(ListaNoticiasBean listaNoticiasBean) {
+        this.listaNoticiasBean = listaNoticiasBean;
     }
 
     public ListaProyectosInvestigacionBean getListaProyectosInvestigacionBean() {
@@ -287,6 +303,14 @@ public class navegarBean {
 
     public void setEnvioMailsBean(EnvioMailsBean envioMailsBean) {
         this.envioMailsBean = envioMailsBean;
+    }
+
+    public ListaEstadoBean getListaEstadoBean() {
+        return listaEstadoBean;
+    }
+
+    public void setListaEstadoBean(ListaEstadoBean listaEstadoBean) {
+        this.listaEstadoBean = listaEstadoBean;
     }
 
 
@@ -825,7 +849,31 @@ public class navegarBean {
     
       public String entrarFormNoticias() {
 
-
+          this.getListaNoticiasBean().setLstNoticias(new ArrayList<Noticias>());
+          this.getListaNoticiasBean().cargarLstNoticias();
         return "imageupload.xhtml?faces-redirect=true";
+    }
+      
+      public String entrarFormEstados() {
+
+          this.getListaEstadoBean().setLstEstado(new ArrayList<Estado>());
+          this.getListaEstadoBean().cargar_estados();
+        return "estados.xhtml?faces-redirect=true";
+    }
+      
+       public String entrarFormProfesion() {
+
+          this.getListaProfesionBean().setLstProfesion(new ArrayList<Profesion>());
+          this.getListaProfesionBean().cargar_profesiones();
+        return "profesion.xhtml?faces-redirect=true";
+    }
+       
+        public String entrarFormEspecialidad() {
+          this.getListaProfesionBean().setLstSIProfesion(null);
+          this.getListaProfesionBean().cargar_SI_profesiones();
+          this.getListaEspecialidadBean().setLstEspecialidad(new ArrayList<Especialidad>());
+          
+          this.getListaEspecialidadBean().cargar_especialidades();
+        return "especialidad.xhtml?faces-redirect=true";
     }
 }

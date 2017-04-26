@@ -24,19 +24,17 @@
                 <h:inputHidden value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
 
                 <div style="clear: both;"/>
+                <h:inputHidden value="#{especialidadBean.especialidad.id}"/>
                 <h:panelGrid columns="2" cellpadding="2" >
                 
-                    <h:outputText value="ID:"/>
-
-                    <p:inputText value="#{especialidadBean.especialidad.id}}"
-                                 label="ID"/>
+                                      
                 
-                    <h:outputText value="Profesion:"/>
+                    <h:outputText value="Profesión:"/>
                     <p:selectOneMenu id="somProfesion"
                                      converter="ConversorGenerico"
-                                     value="#{deptoBean.departamento.director}">
+                                     value="#{especialidadBean.especialidad.profesion}">
                         <f:selectItem itemLabel="Seleccione...." itemValue=""/>
-                        <f:selectItems value="#{listaEspecialidadBean.lstSIEspecialidad}"/>
+                        <f:selectItems value="#{listaProfesionBean.lstSIProfesion}"/>
                     </p:selectOneMenu>
                     
                     <h:outputText value="Especialidad:"/>
@@ -64,13 +62,13 @@
                   text-align: center;">
                 <p:commandButton id="btnAction"
                                  value="Guardar " 
-                                 actionListener="#{profesionBean.create()}" 
-                                 update=":frmMain:dtProfesion, :frmMain:pProfesion, @this"/>
+                                 actionListener="#{especialidadBean.create()}" 
+                                 update=":frmMain:dtEspecialidad, :frmMain:pEspecialidad, @this"/>
 
                 <p:commandButton id="btnSalir"
                                  value="Salir" 
-                                 oncomplete="dlgProfesion.hide()"
-                                 update=":frmMain:dtProfesion, :frmMain:pProfesion"
+                                 oncomplete="PF('dlgEspecialidad').hide()"
+                                 update=":frmMain:dtEspecialidad, :frmMain:pEspecialidad"
                                  process="@this"/>
             </div>
 
@@ -85,23 +83,26 @@
              width: 100%;
              text-align: center;">
             <p:commandButton id="cbNuevo"
-                             value="Nueva Profesion" 
+                             value="Nueva Especialidad" 
                              icon="ui-icon-circle-plus" 
-                             oncomplete="lgProfesion.show();"
+                             oncomplete="PF('dlgEspecialidad').show();"
 
                              process="@this"/><br/><br/>
         </div>
       
         <div>
 
-            <p:dataTable id="dtProfesion"
+            <p:dataTable id="dtEspecialidad"
                          paginator="true"
                          rows="50"
                          scrollable="true"
-                         value="#{listaProfesionBean.lstProfesion}"
+                         value="#{listaEspecialidadBean.lstEspecialidad}"
                          var="var">
-                <p:column headerText="Profesion">
-                    <h:outputText value="#{var.descripcion}"/>
+                <p:column headerText="Profesión">
+                    <h:outputText value="#{var.profesion.descripcion}"/>
+                </p:column>
+                   <p:column headerText="Especialidad">
+                       <h:outputText value="#{var.especialidad}"/>
                 </p:column>
             </p:dataTable>
         </div>
