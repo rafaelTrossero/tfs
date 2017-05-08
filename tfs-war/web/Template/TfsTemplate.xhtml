@@ -69,6 +69,14 @@
                                      immediate="true" icon="fa fa-arrow-circle-o-right"
                                      rendered="#{usuarioLogerBean.isAdministracion()}"
                                      />
+                        <p:menuitem  value="Cargos" action="#{navegarBean.entrarFormCargo()}"
+                                     immediate="true" icon="fa fa-arrow-circle-o-right"
+                                     rendered="#{usuarioLogerBean.isAdministracion()}"
+                                     />
+                        <p:menuitem  value="Dedicación" action="#{navegarBean.entrarFormDedicacion()}"
+                                     immediate="true" icon="fa fa-arrow-circle-o-right"
+                                     rendered="#{usuarioLogerBean.isAdministracion()}"
+                                     />
                         <p:menuitem  value="Fechas de Exámen" action="#{navegarBean.entrarFormFechasExamen()}"
                                      immediate="true" icon="fa fa-arrow-circle-o-right"
                                      rendered="#{usuarioLogerBean.isAdministracion()}"
@@ -85,12 +93,18 @@
                          <p:menuitem value="Estados" action="#{navegarBean.entrarFormEstados()}"
                                     immediate="true" icon="fa fa-arrow-circle-o-right"
                                     />
+                         <p:menuitem value="Calificaciones" action="#{navegarBean.entrarFormCalificacion()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"
+                                    />
                          
                          <p:menuitem value="Profesiones" action="#{navegarBean.entrarFormProfesion()}"
                                     immediate="true" icon="fa fa-arrow-circle-o-right"
                                     />
                            
                          <p:menuitem value="Especialidades" action="#{navegarBean.entrarFormEspecialidad()}"
+                                    immediate="true" icon="fa fa-arrow-circle-o-right"
+                                    />
+                         <p:menuitem value="Operaciones" action="#{navegarBean.entrarFormOperacion()}"
                                     immediate="true" icon="fa fa-arrow-circle-o-right"
                                     />
                          

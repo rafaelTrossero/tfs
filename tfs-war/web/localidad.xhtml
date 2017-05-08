@@ -68,7 +68,7 @@
                                          rows="10">
                                 <p:ajax  event="rowSelect" listener="#{localidadBean.cargarDepartamentoSelect}"   
                                         update=":frmMain:otDomicilio, :frmMain:pgLugares"
-                                        oncomplete="dlgPaisProvDep.hide()" />
+                                        oncomplete="PF('dlgPaisProvDep').hide()" />
 
                                 <p:column>
                                     <f:facet name="header">
@@ -151,7 +151,7 @@
                     <p:commandButton id="cbBuscarDep" 
                                      title="Buscar"
                                      icon="ui-icon-search"
-                                     onclick="dlgPaisProvDep.show()"
+                                     onclick="PF('dlgPaisProvDep').show()"
                                      action="#{listaDepartamentoBean.cargarSIDepartamentos()}"
                                      process="@this"
                                      immediate="true"

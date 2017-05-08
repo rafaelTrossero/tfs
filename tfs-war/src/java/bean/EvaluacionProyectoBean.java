@@ -620,7 +620,9 @@ public class EvaluacionProyectoBean {
 
             this.proy_evaluacion_obsRNbeanLocal.create(proy_evaluacion_obs);
             //si la  calificacion es: APROBADO el proyecto cambia el estado a: Desarrollando el trabajo final
-            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Aprobado")) {
+            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Aprobado")
+                    || evaluacion_Proyecto.getCalificacion().getCalificacion().equals("APROBADO")
+                    || evaluacion_Proyecto.getCalificacion().getId().equals(1L)) {
                 //si la  calificacion es: APROBADO el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
                 estado = proyectoRNbeanLocal.findByEstado(5);
                 System.out.println("El estado esw:" + estado.getEstado());
@@ -633,7 +635,9 @@ public class EvaluacionProyectoBean {
                 sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
             }
             //si la  calificacion es: APROBADO con modificaciones el proyecto cambia el estado a: Se debe modificar proyecto
-            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Aprobado con modificaciones")) {
+            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Aprobado con modificaciones")
+                    || evaluacion_Proyecto.getCalificacion().getCalificacion().equals("APROBADO CON MODIFICACIONES")
+                    || evaluacion_Proyecto.getCalificacion().getId().equals(2L)) {
 
                 estado = proyectoRNbeanLocal.findByEstado(6);
                 System.out.println("El estado esw:" + estado.getEstado());
@@ -646,7 +650,9 @@ public class EvaluacionProyectoBean {
             }
             //si la  calificacion es: SE REQUIERE UNA NUEVA PRESENTACION el proyecto cambia el estado a: Se debe modificar proyecto
 
-            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Se requiere una nueva presentacion")) {
+            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Se requiere una nueva presentacion")
+                    || evaluacion_Proyecto.getCalificacion().getCalificacion().equals("SE REQUIERE UNA NUEVA PRESENTACION")
+                    || evaluacion_Proyecto.getCalificacion().getId().equals(3L)) {
                 estado = proyectoRNbeanLocal.findByEstado(6);
                 System.out.println("El estado esw:" + estado.getEstado());
                 proyecto.setEstado(estado);
@@ -656,7 +662,9 @@ public class EvaluacionProyectoBean {
                 sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
             }
             //si la  calificacion es: RECHAZADO el proyecto cambia el estado a: pROYECTO RECHAZADO
-            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Rechazado")) {
+            if (evaluacion_Proyecto.getCalificacion().getCalificacion().equals("Rechazado")
+                    || evaluacion_Proyecto.getCalificacion().getCalificacion().equals("RECHAZADO")
+                    || evaluacion_Proyecto.getCalificacion().getId().equals(4L)) {
                 estado = proyectoRNbeanLocal.findByEstado(7);
                 System.out.println("El estado esw:" + estado.getEstado());
                 proyecto.setEstado(estado);

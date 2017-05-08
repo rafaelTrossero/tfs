@@ -425,9 +425,8 @@ public class AceptacionBean {
     }
 
     public void crear() throws Exception {
-        
 
-        System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" +this.listaDocenteBean.getLstSIDocenteParaTribunal());
+        System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" + this.listaDocenteBean.getLstSIDocenteParaTribunal());
         this.setLstProyAlumno(proy_alumnoRNbeanLocal.findByProyAlumno(proyecto));
         if (lstProyAlumno == null) {
             System.out.println("hoooooooooooooooooooooooooooooooooooooooooooooollllllllllllllaaaaaaaaaaa" + lstProyAlumno + proyecto.getId());
@@ -507,7 +506,9 @@ public class AceptacionBean {
             System.out.println("el objeto aceptacion es " + aceptacion);
 
             //si la  calificacion es: APROBADO el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
-            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado")) {
+            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado")
+                    || aceptacion.getCalificacion().getCalificacion().equals("APROBADO")
+                    || aceptacion.getCalificacion().getId().equals(1L)) {
                 //si la  calificacion es: APROBADO el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
                 estado = proyectoRNbeanLocal.findByEstado(2);
                 System.out.println("El estado esw:" + estado.getEstado());
@@ -520,7 +521,9 @@ public class AceptacionBean {
 
             }
             //si la  calificacion es: APROBADO con modificaciones el proyecto cambia el estado a: en proceso de asignacion de comision evaluadora
-            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado con modificaciones")) {
+            if (aceptacion.getCalificacion().getCalificacion().equals("Aprobado con modificaciones")
+                    || aceptacion.getCalificacion().getCalificacion().equals("APROBADO CON MODIFICACIONES")
+                    || aceptacion.getCalificacion().getId().equals(2L)) {
 
                 estado = proyectoRNbeanLocal.findByEstado(2);
                 System.out.println("El estado esw:" + estado.getEstado());
@@ -533,7 +536,9 @@ public class AceptacionBean {
             }
             //si la  calificacion es: SE REQUIERE UNA NUEVA PRESENTACION el proyecto cambia el estado a: SE REQUIERE UNA NUEVA PRESENTACION
 
-            if (aceptacion.getCalificacion().getCalificacion().equals("Se requiere una nueva presentacion")) {
+            if (aceptacion.getCalificacion().getCalificacion().equals("Se requiere una nueva presentacion")
+                    || aceptacion.getCalificacion().getCalificacion().equals("SE REQUIERE UNA NUEVA PRESENTACION")
+                    || aceptacion.getCalificacion().getId().equals(3L)) {
                 estado = proyectoRNbeanLocal.findByEstado(3);
                 System.out.println("El estado esw:" + estado.getEstado());
                 proyecto.setEstado(estado);
@@ -543,7 +548,9 @@ public class AceptacionBean {
                 sDetalle = "El estado del proyecto es ahora : " + estado.getEstado();
             }
             //si la  calificacion es: RECHAZADO el proyecto cambia el estado a: pROYECTO RECHAZADO
-            if (aceptacion.getCalificacion().getCalificacion().equals("Rechazado")) {
+            if (aceptacion.getCalificacion().getCalificacion().equals("Rechazado")
+                    || aceptacion.getCalificacion().getCalificacion().equals("RECHAZADO")
+                    || aceptacion.getCalificacion().getId().equals(4L)) {
                 estado = proyectoRNbeanLocal.findByEstado(7);
                 System.out.println("El estado esw:" + estado.getEstado());
                 proyecto.setEstado(estado);
@@ -575,7 +582,6 @@ public class AceptacionBean {
         } catch (Exception ex) {
             severity = FacesMessage.SEVERITY_ERROR;
             sMensaje = "Error al crear Aceptación de proyecto: " + ex.getMessage();
-         
 
         } finally {
             fm = new FacesMessage(severity, sMensaje, sDetalle);
@@ -601,7 +607,7 @@ public class AceptacionBean {
         System.out.println("ENTRO A MOSTRAR DIALOGO");
         System.out.println("El selct item de trubunal es" + lstSIDocenteParaTribunal);
         RequestContext context = RequestContext.getCurrentInstance();
-              
+
         context.execute("PF('dlgTribunal').show();");
 
     }
@@ -676,7 +682,5 @@ public class AceptacionBean {
 
         System.out.println("SALIO DEL CHECKBOX LISTENER ~~~~~~~~~~~~~~~~~~>" + this.checkedF);
     }
-
-  
 
 }

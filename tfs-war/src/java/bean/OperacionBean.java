@@ -8,10 +8,12 @@ package bean;
 import RN.AceptacionRNLocal;
 import RN.BorradorEvaluacionRNLocal;
 import RN.BorradorRNLocal;
+import RN.CargoRNLocal;
 import RN.CronogramaActividadRNLocal;
 import RN.CronogramaRNLocal;
 import RN.DocenteRNLocal;
 import RN.EvaluacionProyectoRNLocal;
+import RN.OperacionRNLocal;
 import RN.PresentacionRNLocal;
 import RN.ProyectoAlumnoRNLocal;
 import RN.ProyectoAsesorRNLocal;
@@ -25,6 +27,7 @@ import com.sun.jmx.remote.internal.ArrayQueue;
 import entidad.Aceptacion;
 import entidad.Borrador;
 import entidad.BorradorEvaluacion;
+import entidad.Cargo;
 import entidad.Cronograma;
 import entidad.CronogramaActividad;
 import entidad.Docente;
@@ -50,6 +53,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
@@ -158,8 +162,16 @@ public class OperacionBean {
     private String observacionBaja;
     private String ObservacionBajaCodirector;
     private Presentacion presentacion;
+    
+    
+    private Operacion operacion;
+   
+    private Boolean bCamposEditables;
+    @EJB
+    private OperacionRNLocal operacionRNbeanLocal;
 
     public OperacionBean() {
+        this.operacion = new Operacion();
         proyecto = new Proyecto();
         this.proy_direc = new ProyectoDirector();
         this.proy_director = new ProyectoDirector();
@@ -181,6 +193,62 @@ public class OperacionBean {
         this.borrador = new Borrador();
         cronogramaObj = new CronogramaActividad();
         cronogramaOriginal = new Cronograma();
+    }
+
+    public CronogramaActividadRNLocal getCronoActividadRNLocal() {
+        return cronoActividadRNLocal;
+    }
+
+    public void setCronoActividadRNLocal(CronogramaActividadRNLocal cronoActividadRNLocal) {
+        this.cronoActividadRNLocal = cronoActividadRNLocal;
+    }
+
+    public Encriptacion getA() {
+        return a;
+    }
+
+    public void setA(Encriptacion a) {
+        this.a = a;
+    }
+
+    public BorradorEvaluacionRNLocal getBrr_evaluacionRNbeanLocal() {
+        return brr_evaluacionRNbeanLocal;
+    }
+
+    public void setBrr_evaluacionRNbeanLocal(BorradorEvaluacionRNLocal brr_evaluacionRNbeanLocal) {
+        this.brr_evaluacionRNbeanLocal = brr_evaluacionRNbeanLocal;
+    }
+
+    public CronogramaRNLocal getCronogramaRNLocal() {
+        return cronogramaRNLocal;
+    }
+
+    public void setCronogramaRNLocal(CronogramaRNLocal cronogramaRNLocal) {
+        this.cronogramaRNLocal = cronogramaRNLocal;
+    }
+
+    public Operacion getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(Operacion operacion) {
+        this.operacion = operacion;
+    }
+
+    public Boolean getbCamposEditables() {
+        return bCamposEditables;
+    }
+
+    public void setbCamposEditables(Boolean bCamposEditables) {
+        this.bCamposEditables = bCamposEditables;
+    }
+
+    public OperacionRNLocal getOperacionRNbeanLocal() {
+        return operacionRNbeanLocal;
+    }
+
+    public void setOperacionRNbeanLocal(OperacionRNLocal operacionRNbeanLocal) {
+        this.operacionRNbeanLocal = operacionRNbeanLocal;
     }
 
     public List<ProyectoAlumno> getLstProyAlumno() {
@@ -1469,6 +1537,7 @@ public class OperacionBean {
         this.vocal2 = new Docente();
         this.suplente1 = new Docente();
         this.suplente2 = new Docente();
+        this.operacion = new Operacion();
 
     }
 
@@ -1513,5 +1582,142 @@ public class OperacionBean {
             fc.addMessage(null, fm);
         }
     }
+    
+    public void actionBtn() {
+
+        switch (this.getListaOperacionBean().getiActionBtnSelect()) {
+            case 0:
+                create();
+                //limíar campos
+                //this.limpiar();
+                break;
+            case 1:
+                this.editOperacion();
+                break;
+            case 2:
+                //deshabilita el campo
+               // this.activate(Boolean.FALSE);
+                break;
+            case 3:
+                //habilita el campo
+              //  this.activate(Boolean.TRUE);
+                break;
+
+        }//fin switch
+    }//fin actionBtn
+    
+    public void setBtnSelect(ActionEvent e) {
+        CommandButton btnSelect = (CommandButton) e.getSource();
+        System.out.println("boton select: " + btnSelect.getId());
+    //0 crea
+        //1: edit
+        //2 delete
+
+        //activo el boton
+        this.getCbAction().setDisabled(false);
+
+        if (btnSelect.getId().equals("cbCreate")) {
+             this.getCbAction().setValue("Guardar");
+            this.getListaOperacionBean().setiActionBtnSelect(0);
+           
+            //campos requeridos
+            //this.setbCamposRequeridos(true);
+
+        } else if (btnSelect.getId().equals("cbEdit")) {
+            this.getCbAction().setValue("Modificar");
+            this.getListaOperacionBean().setiActionBtnSelect(1);
+            
+            
+            
+
+            //campos requeridos
+            // this.setbCamposRequeridos(true);
+        } else if (btnSelect.getId().equals("cbDeshabilitado")) {
+            this.getListaOperacionBean().setiActionBtnSelect(2);
+
+            this.setbCamposEditables(true);
+            this.getCbAction().setValue("Desactivar");
+
+        } else if (btnSelect.getId().equals("cbHabilitado")) {
+            this.getListaOperacionBean().setiActionBtnSelect(3);
+
+            this.setbCamposEditables(true);
+            this.getCbAction().setValue("Reactivar");
+
+        }
+
+        //fin else
+    }//fin setBtnSelect
+    
+       public void create() {
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+            
+            
+            operacionRNbeanLocal.create(operacion);
+            sMensaje = "El dato fue guardado";
+            severity = FacesMessage.SEVERITY_INFO;
+            this.getCbAction().setDisabled(true);
+
+            //agregar a la lista
+            this.getListaOperacionBean().getLstOperacion().add(operacion);
+
+            //limpiar campos
+            this.limpiar();
+             RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('dlgOperacion').hide()");
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Error al crear: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }// fin crear
+     
+       public void editOperacion() {
+        System.out.println("Entro al edit");
+        String sMensaje = "";
+        FacesMessage fm;
+        FacesMessage.Severity severity = null;
+        try {
+          
+            operacionRNbeanLocal.edit(this.getOperacion());
+          
+
+            sMensaje = "Datos actualizados correctamente";
+            severity = FacesMessage.SEVERITY_INFO;
+
+            //elimino y agrego el organismo modificado a la lista
+            int iPos = this.getListaOperacionBean().getLstOperacion().indexOf(this.getOperacion());
+            this.getListaOperacionBean().getLstOperacion().remove(iPos);
+            this.getListaOperacionBean().getLstOperacion().add(iPos, this.getOperacion());
+
+            this.getCbAction().setValue("Update");
+            this.getCbAction().setDisabled(true);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('dlgOperacion').hide()");
+
+          //  this.setbCamposRequeridos(false);
+
+        } catch (Exception ex) {
+            severity = FacesMessage.SEVERITY_ERROR;
+            sMensaje = "Actualizacion error: " + ex.getMessage();
+
+        } finally {
+            fm = new FacesMessage(severity, sMensaje, null);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, fm);
+        }
+    }//fin edit
+     
+     
+      
+    
 
 }

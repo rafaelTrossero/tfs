@@ -5,9 +5,9 @@
  */
 package bean;
 
-import RN.ComisionRNLocal;
-import entidad.Carrera;
-import entidad.Comision;
+
+import RN.CargoRNLocal;
+import entidad.Cargo;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,46 +15,38 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Named;
-
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author WalterVergara
+ * @author USUARIO
  */
 @ManagedBean
 @RequestScoped
-public class ComisionBean {
+public class CargoBean {
 
-    @ManagedProperty("#{listaComisionBean}")
-    private ListaComisionBean listaComisionBean;
-    private Comision comision;
+     @ManagedProperty("#{listaCargoBean}")
+    private ListaCargoBean listaCargoBean;
+    private Cargo cargo;
     private CommandButton cbAction;
     private Boolean bCamposEditables;
     @EJB
-    private ComisionRNLocal comisionRNbeanLocal;
+    private CargoRNLocal cargoRNbeanLocal;
     
-    public ComisionBean() {
-        this.comision = new Comision();
+    public CargoBean() {
+        this.cargo = new Cargo();
     }
 
-    public ListaComisionBean getListaComisionBean() {
-        return listaComisionBean;
+    public ListaCargoBean getListaCargoBean() {
+        return listaCargoBean;
     }
 
-    public void setListaComisionBean(ListaComisionBean listaComisionBean) {
-        this.listaComisionBean = listaComisionBean;
+    public void setListaCargoBean(ListaCargoBean listaCargoBean) {
+        this.listaCargoBean = listaCargoBean;
     }
 
-    public Comision getComision() {
-        return comision;
-    }
-
-    public void setComision(Comision comision) {
-        this.comision = comision;
-    }
+   
     public Boolean isbCamposEditables() {
         return bCamposEditables;
     }
@@ -66,6 +58,22 @@ public class ComisionBean {
     public void setbCamposEditables(Boolean bCamposEditables) {
         this.bCamposEditables = bCamposEditables;
     }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+
+    public CargoRNLocal getCargoRNbeanLocal() {
+        return cargoRNbeanLocal;
+    }
+
+    public void setCargoRNbeanLocal(CargoRNLocal cargoRNbeanLocal) {
+        this.cargoRNbeanLocal = cargoRNbeanLocal;
+    }
     
 
     public CommandButton getCbAction() {
@@ -76,16 +84,10 @@ public class ComisionBean {
         this.cbAction = cbAction;
     }
 
-    public ComisionRNLocal getComisionRNbeanLocal() {
-        return comisionRNbeanLocal;
-    }
-
-    public void setComisionRNbeanLocal(ComisionRNLocal comisionRNbeanLocal) {
-        this.comisionRNbeanLocal = comisionRNbeanLocal;
-    }
+   
     public void actionBtn() {
 
-        switch (this.getListaComisionBean().getiActionBtnSelect()) {
+        switch (this.getListaCargoBean().getiActionBtnSelect()) {
             case 0:
                 create();
                 //limíar campos
@@ -96,11 +98,11 @@ public class ComisionBean {
                 break;
             case 2:
                 //deshabilita el campo
-                this.activate(Boolean.FALSE);
+               // this.activate(Boolean.FALSE);
                 break;
             case 3:
                 //habilita el campo
-                this.activate(Boolean.TRUE);
+              //  this.activate(Boolean.TRUE);
                 break;
 
         }//fin switch
@@ -118,28 +120,28 @@ public class ComisionBean {
 
         if (btnSelect.getId().equals("cbCreate")) {
              this.getCbAction().setValue("Guardar");
-            this.getListaComisionBean().setiActionBtnSelect(0);
+            this.getListaCargoBean().setiActionBtnSelect(0);
            
             //campos requeridos
             //this.setbCamposRequeridos(true);
 
         } else if (btnSelect.getId().equals("cbEdit")) {
             this.getCbAction().setValue("Modificar");
-            this.getListaComisionBean().setiActionBtnSelect(1);
+            this.getListaCargoBean().setiActionBtnSelect(1);
             
             
-            System.out.println("valor del boton: " + listaComisionBean.getiActionBtnSelect());
+            
 
             //campos requeridos
             // this.setbCamposRequeridos(true);
         } else if (btnSelect.getId().equals("cbDeshabilitado")) {
-            this.getListaComisionBean().setiActionBtnSelect(2);
+            this.getListaCargoBean().setiActionBtnSelect(2);
 
             this.setbCamposEditables(true);
             this.getCbAction().setValue("Desactivar");
 
         } else if (btnSelect.getId().equals("cbHabilitado")) {
-            this.getListaComisionBean().setiActionBtnSelect(3);
+            this.getListaCargoBean().setiActionBtnSelect(3);
 
             this.setbCamposEditables(true);
             this.getCbAction().setValue("Reactivar");
@@ -154,19 +156,20 @@ public class ComisionBean {
         FacesMessage fm;
         FacesMessage.Severity severity = null;
         try {
-            comision.setActive(Boolean.TRUE);
-            comisionRNbeanLocal.create(comision);
+            
+            
+            cargoRNbeanLocal.create(cargo);
             sMensaje = "El dato fue guardado";
             severity = FacesMessage.SEVERITY_INFO;
             this.getCbAction().setDisabled(true);
 
             //agregar a la lista
-            this.getListaComisionBean().getLstComision().add(comision);
+            this.getListaCargoBean().getLstCargo().add(cargo);
 
             //limpiar campos
             this.limpiar();
              RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('dlgComision').hide()");
+            context.execute("PF('dlgCargo').hide()");
 
         } catch (Exception ex) {
             severity = FacesMessage.SEVERITY_ERROR;
@@ -185,25 +188,22 @@ public class ComisionBean {
         FacesMessage fm;
         FacesMessage.Severity severity = null;
         try {
-            //get la fila seleccionada   
-            comision.setActive(Boolean.TRUE);
-
-            
-            comisionRNbeanLocal.edit(this.getComision());
+          
+            cargoRNbeanLocal.edit(this.getCargo());
           
 
             sMensaje = "Datos actualizados correctamente";
             severity = FacesMessage.SEVERITY_INFO;
 
             //elimino y agrego el organismo modificado a la lista
-            int iPos = this.getListaComisionBean().getLstComision().indexOf(this.getComision());
-            this.getListaComisionBean().getLstComision().remove(iPos);
-            this.getListaComisionBean().getLstComision().add(iPos, this.getComision());
+            int iPos = this.getListaCargoBean().getLstCargo().indexOf(this.getCargo());
+            this.getListaCargoBean().getLstCargo().remove(iPos);
+            this.getListaCargoBean().getLstCargo().add(iPos, this.getCargo());
 
             this.getCbAction().setValue("Update");
             this.getCbAction().setDisabled(true);
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('dlgComision'}.hide()");
+            context.execute("PF('dlgCargo'}.hide()");
 
           //  this.setbCamposRequeridos(false);
 
@@ -218,57 +218,13 @@ public class ComisionBean {
         }
     }//fin edit
      
-      public void activate(Boolean bEstado) {
-        String sMensaje = "";
-        FacesMessage fm;
-        FacesMessage.Severity severity = null;
-
-        try {
-
-            comisionRNbeanLocal.activate(this.getComision(), bEstado);
-
-            //elimino el organismo de la lista
-
-            int iPos = this.getListaComisionBean().getLstComision().indexOf(this.getComision());
-            
-            this.setComision(this.getListaComisionBean().getLstComision().get(iPos));
-            this.getComision().setActive(bEstado);
-            this.getListaComisionBean().getLstComision().remove(iPos);
-            this.getListaComisionBean().getLstComision().add(iPos, this.getComision());
-
-            if (!bEstado) {
-                sMensaje = "Comision deshabilitada correctamente";
-            } else {
-                sMensaje = "Comision habilitada correctamente";
-            }
-            severity = FacesMessage.SEVERITY_INFO;
-
-            this.getCbAction().setDisabled(true);
-
-            //limíar campos
-           this.clear();
-           RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('dlgComision'}.hide()");
-           // this.setbCamposRequeridos(false);
-
-        } catch (Exception ex) {
-            severity = FacesMessage.SEVERITY_ERROR;
-            sMensaje = "Ocurrio un error duracte la operacion: " + ex.getMessage();
-
-        } finally {
-            fm = new FacesMessage(severity, sMensaje, null);
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage(null, fm);
-        }
-    }//fin recuperar
-      
+     
       
      private void limpiar() {
-        this.comision = new Comision();
+        this.cargo = new Cargo();
     }
     
-       private void clear() {
-          this.setComision(new Comision());
-        
-    }//fin limpiar
+     //fin limpiar
+   
+    
 }

@@ -49,7 +49,7 @@
                        >
             <p:ajax event="rowSelect" listener="#{departamentoBean.cargarProvinciasSelect}"   
                     update=":frmMain:pgLugares"
-                    oncomplete="dlgPaisProv.hide()" />
+                    oncomplete="PF('dlgPaisProv').hide()" />
             <p:column>
               <f:facet name="header">
                 <h:outputText value="Código"/>
@@ -123,7 +123,7 @@
               <p:commandButton id="cbBuscarProv" 
                                title="Buscar"
                                icon="ui-icon-search"
-                               onclick="dlgPaisProv.show()"
+                               onclick="PF('dlgPaisProv').show()"
                                action="#{listaProvinciaBean.cargarSIProvincias()}"
                                process="@this"
                                immediate="true"
@@ -198,7 +198,7 @@
       <p:commandButton id="cbCreate"
                        value="Nuevo Departamento"
                        icon="ui-icon-circle-plus" 
-                       oncomplete="dlgDepartamento.show();"
+                       oncomplete="PF('dlgDepartamento').show();"
                        actionListener="#{departamentoBean.setBtnSelect}"
                        update=":frmMain:dDepartamento"
                        process="@this"/><br/><br/>
@@ -221,7 +221,7 @@
                            title="Editar"
                            icon="ui-icon-pencil" 
                            update=":frmMain:dDepartamento"
-                           oncomplete="dlgDepartamento.show();"
+                           oncomplete="PF('dlgDepartamento').show();"
                            actionListener="#{departamentoBean.setBtnSelect}"
                            disabled="#{dpto.borrado}">
             <f:setPropertyActionListener value="#{dpto}" target="#{departamentoBean.departamento}"/>  
@@ -231,7 +231,7 @@
                            title="Eliminar"
                            icon="ui-icon-circle-close" 
                            update=":frmMain:dDepartamento"
-                           oncomplete="dlgDepartamento.show();"
+                           oncomplete="PF('dlgDepartamento').show();"
                            actionListener="#{departamentoBean.setBtnSelect}"
                            disabled="#{dpto.borrado}">
             <f:setPropertyActionListener value="#{dpto}" target="#{departamentoBean.departamento}"/>  
@@ -241,7 +241,7 @@
                            title="Recuperar Borrado"
                            icon="ui-icon-unlocked" 
                            update=":frmMain:dDepartamento, @this"
-                           oncomplete="dlgDepartamento.show();"
+                           oncomplete="PF('dlgDepartamento').show();"
                            actionListener="#{departamentoBean.setBtnSelect}"
                            disabled="#{not dpto.borrado}">
             <f:setPropertyActionListener value="#{dpto}" target="#{departamentoBean.departamento}"/>  

@@ -44,7 +44,8 @@ public class ListaOperacionBean implements Serializable {
     private List<SelectItem> lstSIasesor;
     private ProyectoCodirector proy_codirector;
     private List<SelectItem> lstSIcodirector;
-    
+     private int iActionBtnSelect;
+     
     public ListaOperacionBean() {
         lstOperacion = new ArrayList<Operacion>();
     }
@@ -139,6 +140,14 @@ public class ListaOperacionBean implements Serializable {
 
     public void setLstSIasesor(List<SelectItem> lstSIasesor) {
         this.lstSIasesor = lstSIasesor;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
     }
     
     

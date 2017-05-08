@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <!-- DIALOGO PROFESIONAL !-->
+        <p:dialog id="dCargo" 
+                  widgetVar="dlgCargo" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Cargos"/>
+            </f:facet>
+            <p:panel id="pCargo" style="float:left;">
+                <p:focus context="pCargo"/> 
+                <h:inputHidden value="#{cargoBean.cargo.id}"/>
+
+                <h:inputHidden value="#{listaCargoBean.iActionBtnSelect}"/>
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Cargar Cargo">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Cargo:"/>
+                            <p:inputText value="#{cargoBean.cargo.descripcion}"
+                                         label="Cargo"
+                                         disabled="#{cargoBean.getbCamposEditables()}"/>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{cargoBean.actionBtn()}" 
+                                 update=":frmMain:dtCargo, :frmMain:pCargo, message, @this"
+                                 binding="#{cargoBean.cbAction}">
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="PF('dlgCargo').hide()"
+                                 update=":frmMain:pCargo, 
+                                 :frmMain:dtCargo"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Nuevo Cargo" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="PF('dlgCargo').show();"
+                             actionListener="#{cargoBean.setBtnSelect}"
+                             update=":frmMain:dCargo"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <p:dataTable id="dtCargo"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaCargoBean.lstCargo}"
+                     var="com">
+            <p:column width="152"  headerText="Operaciones">
+                <p:commandButton id="cbEdit"
+                                 title="Edit"
+                                 icon="ui-icon-pencil"
+                                 update=":frmMain:dCargo"
+                                 oncomplete="PF('dlgCargo').show();"
+                                 actionListener="#{cargoBean.setBtnSelect}"
+                                 
+                                 > 
+                    <f:setPropertyActionListener value="#{com}" target="#{cargoBean.cargo}"/>  
+
+                </p:commandButton>
+                <p:commandButton id="cbHabilitado"
+                                 title="Activate"
+                                 icon="ui-icon-unlocked" 
+                                 update=":frmMain:dCargo, @this"
+                                 oncomplete="PF('dlgCargo').show();" 
+                                 actionListener="#{cargoBean.setBtnSelect}"
+                                
+
+                                 > 
+                    <f:setPropertyActionListener value="#{com}" target="#{cargoBean.cargo}"/>  
+
+                </p:commandButton>
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Inactivate"
+                                 icon="ui-icon-circle-close" 
+                                 update=":frmMain:dCargo, @this"
+                                 oncomplete="PF('dlgCargo').show();"
+                                 actionListener="#{cargoBean.setBtnSelect}"
+                                 
+                                 >
+
+
+                    <f:setPropertyActionListener value="#{com}" target="#{cargoBean.cargo}"/>  
+
+                </p:commandButton>
+
+
+            </p:column>
+            <p:column  filterBy="#{com.descripcion}" sortBy="#{com.descripcion}" >
+                <f:facet name="header">
+                    <h:outputText value="Descripción"/>
+                </f:facet>
+                <h:outputText value="#{com.descripcion}"/>
+            </p:column>                
+
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

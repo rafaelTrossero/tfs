@@ -184,7 +184,7 @@ public class DeptoBean {
                 this.limpiar();
             
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("dlgDepartamento.hide()");
+            context.execute("PF('dlgDepartamento').hide()");
         } catch (Exception ex) {
             severity = FacesMessage.SEVERITY_ERROR;
             sMensaje = "Error al crear: " + ex.getMessage();

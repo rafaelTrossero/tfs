@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./Template/TfsTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="content">
+        <!-- DIALOGO PROFESIONAL !-->
+        <p:dialog id="dOperacion" 
+                  widgetVar="dlgOperacion" 
+                  modal="true"
+                  closable="false" resizable="false">
+            <f:facet name="header">
+                <h:outputText value="Gestión de Operaciones"/>
+            </f:facet>
+            <p:panel id="pOperacion" style="float:left;">
+                <p:focus context="pOperacion"/> 
+                <h:inputHidden value="#{operacionBean.operacion.id}"/>
+
+                <h:inputHidden value="#{listaOperacionBean.iActionBtnSelect}"/>
+                <!--<h:inputHidden value="#/{paisBean.pais.id}"/>
+                <h:inputHidden value="#/{paisBean.pais.borrado}"/>
+                <h:inputHidden 
+                value="#/{listaPaisBean.iActionBtnSelect}"/>!-->
+
+                <div style="clear: both;"/>
+
+                <!-- <div> 
+                    <h:outputText value="ID:"/>
+
+                    <p:inputText value="#/{profesionalBean.profesional.id}"
+                                 label="ID"/>
+                </div>-->
+                <p:accordionPanel id ="apAlu" style="width: 600px;">
+
+                    <p:tab title="Cargar Operación">
+
+                        <h:panelGrid columns="2" cellpadding="2" >
+
+                            <h:outputText value="Operacion: "/>
+                            <p:inputText value="#{operacionBean.operacion.operacion}"
+                                         label="Operación"
+                                         disabled="#{operacionBean.getbCamposEditables()}"/>
+
+
+                        </h:panelGrid>
+                    </p:tab>
+
+
+                </p:accordionPanel>
+            </p:panel>
+
+            <div style="clear: both;"/>
+
+            <div>
+                <p:messages autoUpdate="true"/>
+            </div>
+
+
+            <div style="clear: both;"/>
+
+            <div  style="float: left; margin: 10px;
+                  width: 100%;
+                  text-align: center;">
+
+                <p:growl id="message" showDetail="true"  />
+                <div style="clear: both;"/>
+
+                <p:commandButton id="btnAction"
+                                 value=" " 
+                                 icon="ui-icon-disk"
+                                 actionListener="#{operacionBean.actionBtn()}" 
+                                 update=":frmMain:dtOperacion, :frmMain:pOperacion, message, @this"
+                                 binding="#{operacionBean.cbAction}">
+                <p:confirm header="Confirmación" message="¿Seguro?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                     ajax="false"  />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:commandButton id="btnSalir"
+                                 value="Salir" 
+                                 icon="ui-icon-close"
+                                 oncomplete="PF('dlgOperacion').hide()"
+                                 update=":frmMain:pOperacion, 
+                                 :frmMain:dtOperacion"
+                                 process="@this"/>
+            </div>
+
+        </p:dialog>
+
+
+        <!-- PANTALLA PRINCIPAL !-->
+        <div class="camposTexto"
+             style="float: left; margin: 10px;
+             width: 100%;
+             text-align: center;">
+
+            <p:commandButton id="cbCreate"
+                             value="Nueva Operacion" 
+                             icon="ui-icon-circle-plus" 
+                             oncomplete="PF('dlgOperacion').show();"
+                             actionListener="#{operacionBean.setBtnSelect}"
+                             update=":frmMain:dOperacion"
+                             process="@this"/><br/><br/>
+        </div>
+
+        <p:dataTable id="dtOperacion"
+                     paginator="true"
+                     rows="50"
+                     scrollable="true"
+                     value="#{listaOperacionBean.lstOperacion}"
+                     var="com">
+            <p:column width="152"  headerText="Operaciones">
+                <p:commandButton id="cbEdit"
+                                 title="Edit"
+                                 icon="ui-icon-pencil"
+                                 update=":frmMain:dOperacion"
+                                 oncomplete="PF('dlgOperacion').show();"
+                                 actionListener="#{operacionBean.setBtnSelect}"
+                                 
+                                 > 
+                    <f:setPropertyActionListener value="#{com}" target="#{operacionBean.operacion}"/>  
+
+                </p:commandButton>
+                <p:commandButton id="cbHabilitado"
+                                 title="Activate"
+                                 icon="ui-icon-unlocked" 
+                                 update=":frmMain:dOperacion, @this"
+                                 oncomplete="PF('dlgOperacion').show();" 
+                                 actionListener="#{operacionBean.setBtnSelect}"
+                                
+
+                                 > 
+                    <f:setPropertyActionListener value="#{com}" target="#{operacionBean.operacion}"/>  
+
+                </p:commandButton>
+
+                <p:commandButton id="cbDeshabilitado"
+                                 title="Inactivate"
+                                 icon="ui-icon-circle-close" 
+                                 update=":frmMain:dOperacion, @this"
+                                 oncomplete="PF('dlgOperacion').show();"
+                                 actionListener="#{operacionBean.setBtnSelect}"
+                                 
+                                 >
+
+
+                    <f:setPropertyActionListener value="#{com}" target="#{operacionBean.operacion}"/>  
+
+                </p:commandButton>
+
+
+            </p:column>
+            <p:column  filterBy="#{com.operacion}" sortBy="#{com.operacion}" >
+                <f:facet name="header">
+                    <h:outputText value="Descripción"/>
+                </f:facet>
+                <h:outputText value="#{com.operacion}"/>
+            </p:column>                
+
+
+        </p:dataTable>
+    </ui:define>
+
+</ui:composition>

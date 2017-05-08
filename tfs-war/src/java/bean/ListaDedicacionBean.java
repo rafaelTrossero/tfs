@@ -28,6 +28,7 @@ public class ListaDedicacionBean {
     private DedicacionRNLocal dedicacionesRNbeanLocal;
     private List<Dedicacion> lstDedicaciones;
       private List<SelectItem> lstSIDedicacion;
+       private int iActionBtnSelect;
 
    
       
@@ -64,6 +65,14 @@ public class ListaDedicacionBean {
 
     public void setLstSIDedicacion(List<SelectItem> lstSIDedicacion) {
         this.lstSIDedicacion = lstSIDedicacion;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
     }
 
     

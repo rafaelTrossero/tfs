@@ -52,7 +52,7 @@
                     </p:tab>
                     <p:tab title="Director">
 
-                        <p:dataList value="#{presentacionBean.lstProyDirector}"
+                        <p:dataList value="#{borradorBean.lstProyDirector}"
                                     var="dir" 
                                     emptyMessage="No hay existen directores">
                             <h:outputText value="#{dir.docente.apellido},#{dir.docente.nombre},    Dni:#{dir.docente.dni}"/>

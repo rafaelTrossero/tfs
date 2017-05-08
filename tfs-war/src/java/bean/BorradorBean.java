@@ -331,7 +331,7 @@ public class BorradorBean {
             severity = FacesMessage.SEVERITY_INFO;
             
             RequestContext context = RequestContext.getCurrentInstance();
-           context.execute("PF('dlgBorrProyecto').hide();");
+           context.execute("PF('dlgModProyBrr').hide();");
             this.envioMailsBean.ReporteCambioDeEstado(proyecto);
             navegarBean.entrarFormBorradoresProyecto();
             // context.execute("dlgNuevaPresBorrador.hide()");

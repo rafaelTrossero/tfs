@@ -167,9 +167,9 @@
                                 <div class="col-md-7 blog-grid-left">
                                     <h4><a href="single.html">#{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).titulo}</a></h4>
                                     <p>
-                                    <h:outputText>
+                                    <h:outputText  >
                                         #{listaNoticiasBean.lstNoticias.get(listaNoticiasBean.num).fecha_agregado}
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
                                     </h:outputText>
                                         </p>
                                     <div class="rem" >

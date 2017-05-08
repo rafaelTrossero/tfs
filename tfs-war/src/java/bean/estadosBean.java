@@ -173,7 +173,7 @@ public class estadosBean {
             //limpiar campos
             this.limpiar();
              RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('dlgEstados'}.hide()");
+            context.execute("PF('dlgEstados').hide()");
 
         } catch (Exception ex) {
             severity = FacesMessage.SEVERITY_ERROR;
@@ -208,7 +208,7 @@ public class estadosBean {
             this.getCbAction().setValue("Update");
             this.getCbAction().setDisabled(true);
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('dlgEstados'}.hide()");
+            context.execute("PF('dlgEstados').hide()");
 
           //  this.setbCamposRequeridos(false);
 

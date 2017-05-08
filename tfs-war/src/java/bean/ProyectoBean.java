@@ -967,7 +967,7 @@ public class ProyectoBean {
  public void generar(String nombreReporte, Proyecto pro, Docente docente, Integer op, Integer num_estado,String estado, Carrera carrera, Date fecha_1, Date fecha_2) throws SQLException {
 
         Connection conect;
-        conect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tfs-ftyca", "postgres", "AND2015belgrano");
+        conect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tfs-ftyca", "postgres", "123456");
         
         
        

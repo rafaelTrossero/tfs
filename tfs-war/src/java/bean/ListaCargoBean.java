@@ -29,6 +29,7 @@ public class ListaCargoBean {
     private CargoRNLocal cargoRNLocal;
     private List<Cargo> lstCargo;
      private List<SelectItem> lstSICargos;
+      private int iActionBtnSelect;
 
     /**
      * Creates a new instance of ListaCarreraBean
@@ -66,6 +67,22 @@ public class ListaCargoBean {
         this.lstSICargos = lstSICargos;
     }
 
+    public CargoRNLocal getCargoRNLocal() {
+        return cargoRNLocal;
+    }
+
+    public void setCargoRNLocal(CargoRNLocal cargoRNLocal) {
+        this.cargoRNLocal = cargoRNLocal;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
+    }
+
     
     
     /**
@@ -73,7 +90,7 @@ public class ListaCargoBean {
      */
     
 
-    private void cargar_cargos() {
+    public void cargar_cargos() {
          try {
             this.setLstCargo(cargoRNLocal.findAll());
         } catch (Exception ex) {
@@ -81,7 +98,7 @@ public class ListaCargoBean {
         }
     }
 
-    private void cargar_SI_cargos() {
+    public void cargar_SI_cargos() {
         this.setLstSICargos(new ArrayList<SelectItem>());
 
         for (Cargo d : this.getLstCargo()) {

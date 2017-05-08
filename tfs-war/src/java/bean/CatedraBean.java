@@ -250,7 +250,7 @@ public class CatedraBean {
              
            listaHorarioBean.limpiar();
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("dlgCatedra.hide()");
+            context.execute("PF('dlgCatedra').hide()");
 
         } catch (Exception ex) {
             severity = FacesMessage.SEVERITY_ERROR;
@@ -315,7 +315,7 @@ public class CatedraBean {
              
             listaHorarioBean.limpiar();
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("dlgCatedra.hide()");
+            context.execute("PF('dlgCatedra').hide()");
           //  this.setbCamposRequeridos(false);
 
         } catch (Exception ex) {
@@ -358,7 +358,7 @@ public class CatedraBean {
 
             //limíar campos
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("dlgCatedra.hide()");
+            context.execute("PF('dlgCatedra').hide()");
            this.clear();
            listaHorarioBean.limpiar();
            // this.setbCamposRequeridos(false);

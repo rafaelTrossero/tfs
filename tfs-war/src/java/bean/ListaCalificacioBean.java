@@ -42,7 +42,7 @@ public class ListaCalificacioBean {
     
     public Boolean isAprobado2;
     
-    
+    private int iActionBtnSelect;
 
   
     /**
@@ -99,6 +99,22 @@ public class ListaCalificacioBean {
 
     public void setAceptacionBean(AceptacionBean aceptacionBean) {
         this.aceptacionBean = aceptacionBean;
+    }
+
+    public CalificacionRNLocal getCalificacionRNbeanLocal() {
+        return calificacionRNbeanLocal;
+    }
+
+    public void setCalificacionRNbeanLocal(CalificacionRNLocal calificacionRNbeanLocal) {
+        this.calificacionRNbeanLocal = calificacionRNbeanLocal;
+    }
+
+    public int getiActionBtnSelect() {
+        return iActionBtnSelect;
+    }
+
+    public void setiActionBtnSelect(int iActionBtnSelect) {
+        this.iActionBtnSelect = iActionBtnSelect;
     }
 
    

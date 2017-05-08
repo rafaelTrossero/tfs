@@ -408,7 +408,7 @@ public class DepartamentoBean {
         this.setbCamposRequeridos(false);
         //cerrar el dialog
         RequestContext context = RequestContext.getCurrentInstance();
-        context.update("pDialog");
+        
         context.execute("PF('dlgDepartamento').hide()");
 
     }//fin cerrarDialog
